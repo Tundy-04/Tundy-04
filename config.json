@@ -3,5 +3,5 @@
     "subTitle":"个人学习笔记",
     "avatarUrl":"https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4",
     "GMEEK_VERSION":"last"
-    "script":"<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>",
+    "script":"<script src='https://blog.meekdai.com/Gmeek/plugins/articletoc.js'></script>",
 }
