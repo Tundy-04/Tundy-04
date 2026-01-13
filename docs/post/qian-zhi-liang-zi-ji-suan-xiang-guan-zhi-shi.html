@@ -83,11 +83,77 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3>1.2向量内积</h3>
 <p>内积可以看成是一种特殊的矩阵乘法。对于在希尔伯特空间中的两个向量 $|a\rangle$ 和 $|b\rangle$， $\langle a | b \rangle$ 表示它们的内积， $\langle a|$ 定义为向量 $|a\rangle$ 的共轭转置 (conjugate transpose)，也可以记作 $|a\rangle^{\dagger}$，有</p>
 $$\langle a | b \rangle = (a_{1}^{*}, a_{2}^{*}, \dots, a_{n}^{*}) \begin{pmatrix} b_{1} \\ b_{2} \\ \vdots \\ b_{n} \end{pmatrix} = a_{1}^{*}b_{1} + a_{2}^{*}b_{2} + \dots + a_{n}^{*}b_{n}$$
-<p>此处 $*$ 表示共轭复数（对于实数 $a$ 和 $b$，$a+ib$ 的共轭复数是 $a-ib$）。它的意义是量化两个量子态之间的 “<strong>关联程度</strong>”，同时为量子力学的核心规则（如测量、叠加）提供数学支撑，内积的模越大，说明两个向量的 “方向越接近”；模越小，方向越偏离。</p>
+<p>此处 $*$ 表示共轭复数（对于实数 $a$ 和 $b$，$a+ib$ 的共轭复数是 $a-ib$ ）。它的意义是量化两个量子态之间的 “<strong>关联程度</strong>”，同时为量子力学的核心规则（如测量、叠加）提供数学支撑，内积的模越大，说明两个向量的 “方向越接近”；模越小，方向越偏离。</p>
 <h3>1.3向量外积</h3>
-<p>$|a \rangle \langle b|$ 表示希尔伯特空间中两个向量的外积，有</p>
+<p>外积是量子力学线性代数表述的“语法糖”，它让许多量子操作的数学表达变得异常简洁和直观。无论是描述一个简单的量子逻辑门，还是进行复杂的投影测量，外积都扮演着核心角色，是理解和计算量子系统行为不可或缺的工具。<br>
+$|a \rangle \langle b|$ 表示希尔伯特空间中两个向量的外积，有</p>
 $$|a \rangle \langle b| = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix} \left( b_{1}^{*}, b_{2}^{*}, \cdots, b_{n}^{*} \right) = \begin{pmatrix} a_1 b_{1}^{*} &amp; a_1 b_{2}^{*} &amp; \cdots &amp; a_1 b_{n}^{*} \\ a_2 b_{1}^{*} &amp; a_2 b_{2}^{*} &amp; &amp; \vdots \\ \vdots &amp; &amp; \ddots &amp; \vdots \\ a_n b_{1}^{*} &amp; \cdots &amp; \cdots &amp; a_n b_{n}^{*} \end{pmatrix}$$
-<p>其中矩阵元素为 $a_i b_j^{*}$（ $i,j = 1,2,\cdots,n$ ）。</p></div>
+<p>其中矩阵元素为 $a_i b_j^{*}$（ $i,j = 1,2,\cdots,n$ ）。</p>
+<h4>意义：</h4>
+<p>i&gt;<strong>任何线性变换（如量子门）都可以用外积基的线性组合来表示。</strong><br>
+ii&gt;<strong>实现量子测量</strong>。<br>
+💡你可以将外积形式的算符 $O = |a\rangle\langle b|$ 作用于一个态矢量 $|\psi\rangle$ 来直观感受它的作用：</p>
+<p>$$
+O|\psi\rangle = (|a\rangle\langle b|) |\psi\rangle = |a\rangle (\langle b|\psi\rangle)
+$$</p>
+<p>结果是得到一个新的矢量 $|a\rangle$，其幅度由 $|\psi\rangle$ 在 $|b\rangle$ 方向上的分量 $\langle b|\psi\rangle$（一个复数）决定。这完美展示了其“投影”的本质。</p>
+<p>在量子测量中，投影算符的作用尤为关键。例如，想测量一个量子比特是否处于 $|0\rangle$ 状态，就使用投影算符 $M_{0} = |0\rangle\langle 0|$。测量得到 0 的概率就是 $p(0) = \langle\psi|M_{0}|\psi\rangle$，而测量后系统的状态会坍缩到 $\frac{M_{0}|\psi\rangle}{\sqrt{p(0)}}$ 。<br>
+iii&gt;<strong>描述量子纠缠​</strong><br>
+在复合系统中，外积是构造和分析纠缠态密度矩阵的基本工具，对于纯量子态 $|\psi\rangle$ ，它的密度矩阵定义就是 $\rho = |\psi\rangle\langle\psi|$。</p>
+<h3>1.4张量积</h3>
+<p>$|a\rangle \otimes |b\rangle$ 表示希尔伯特空间中两个向量的张量积，有</p>
+$$|a\rangle \otimes |b\rangle=\begin{pmatrix} a_{1} \begin{pmatrix} b_{1} \\ b_{2} \end{pmatrix} \\ a_{2} \begin{pmatrix} b_{1} \\ b_{2} \end{pmatrix}\end{pmatrix}=\begin{pmatrix} a_{1}b_{1} \\ a_{1}b_{2} \\ a_{2}b_{1} \\ a_{2}b_{2}\end{pmatrix}$$
+<p>矩阵也有一样的计算，本质是笛卡尔积式的升维。</p>
+<h4>意义：</h4>
+<p>i&gt;<strong>用于扩展描述多比特联合系统</strong></p>
+<ul>
+<li>
+<p>量子计算的基本单元是量子比特，单比特的状态空间是 2 维（基矢为 $|0\rangle$ , $|1\rangle$ ）。</p>
+</li>
+<li>
+<p>2 个量子比特的联合态空间维度是 $2 \times 2 = 4$ 维，基矢为：</p>
+<p>$$|0\rangle \otimes |0\rangle,\ |0\rangle \otimes |1\rangle,\ |1\rangle \otimes |0\rangle,\ |1\rangle \otimes |1\rangle$$</p>
+<p>简写为： $|00\rangle$ , $|01\rangle$ , $|10\rangle$ , $|11\rangle$ 。</p>
+</li>
+<li>
+<p>$k$ 个量子比特的联合态空间维度是 $2^k$ 维，基矢是所有单比特基矢的张量积组合。</p>
+</li>
+<li>
+<p>💡单比特态 $|\psi\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ , $|\varphi\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$ ，则两比特联合态为： $|\psi\rangle \otimes |\varphi\rangle = \frac{1}{2}(|00\rangle - |01\rangle + |10\rangle - |11\rangle)$</p>
+</li>
+</ul>
+<p>ii&gt;<strong>描述多量子比特门（量子操作）</strong><br>
+量子门是作用于量子比特的幺正变换，单比特门（如 X门、H门）是 $2 \times 2$ 矩阵。</p>
+<ul>
+<li>
+<p>若要让单比特门只作用于多比特系统中的某一个比特，需要用张量积和单位矩阵结合。</p>
+</li>
+<li>
+<p>💡对 3 比特系统的第 2 个比特施加 X门，对应的变换矩阵为：</p>
+<p>$$I \otimes X \otimes I$$</p>
+<p>其中 $I$ 是 $2 \times 2$ 单位矩阵，这个总矩阵的维度是 $8 \times 8$ 。</p>
+</li>
+</ul>
+<p>iii&gt;<strong>区分“可分态”与“纠缠态”</strong></p>
+<ul>
+<li>
+<p>可分态：多比特态可以写成各个单比特态的张量积，比如上面的 $|\psi\rangle \otimes |\varphi\rangle$ 就是可分态。</p>
+</li>
+<li>
+<p>纠缠态：多比特态无法写成各个单比特态的张量积，比如 Bell 态：</p>
+<p>$$\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$$</p>
+</li>
+</ul>
+<blockquote>
+<p>纠缠是量子计算的核心资源，而张量积正是定义“纠缠”的前提——<strong>不能被张量积分解的态就是纠缠态</strong>。</p>
+</blockquote>
+<h3>1.5正交完备集</h3>
+<p>集合只含有单位向量（向量长度为1）<br>
+两两向量之间的内积都为0</p>
+<h3>1.6共轭转置矩阵</h3>
+<p>在转置矩阵的基础上，将<strong>所有数</strong>改成共轭的，符号就是右上角带一个十字 $A^{\dagger}$ 。</p>
+<h3>1.7厄米矩阵</h3>
+<p>满足</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
