@@ -9,11 +9,13 @@
     <link rel="icon" href="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
 <meta name="description" content="# 一、相关定义
 ## 1.线性代数
+
 ### 1.1向量的表示
 在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
 <meta property="og:title" content="前置量子计算相关知识">
 <meta property="og:description" content="# 一、相关定义
 ## 1.线性代数
+
 ### 1.1向量的表示
 在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
 <meta property="og:type" content="article">
@@ -46,7 +48,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 }
 
 </style>
-
+<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
 
 
 
@@ -89,7 +91,7 @@ $$\langle a | b \rangle = (a_{1}^{*}, a_{2}^{*}, \dots, a_{n}^{*}) \begin{pmatri
 $|a \rangle \langle b|$ 表示希尔伯特空间中两个向量的外积，有</p>
 $$|a \rangle \langle b| = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix} \left( b_{1}^{*}, b_{2}^{*}, \cdots, b_{n}^{*} \right) = \begin{pmatrix} a_1 b_{1}^{*} &amp; a_1 b_{2}^{*} &amp; \cdots &amp; a_1 b_{n}^{*} \\ a_2 b_{1}^{*} &amp; a_2 b_{2}^{*} &amp; &amp; \vdots \\ \vdots &amp; &amp; \ddots &amp; \vdots \\ a_n b_{1}^{*} &amp; \cdots &amp; \cdots &amp; a_n b_{n}^{*} \end{pmatrix}$$
 <p>其中矩阵元素为 $a_i b_j^{*}$（ $i,j = 1,2,\cdots,n$ ）。</p>
-<h4>意义：</h4>
+<h4>外积意义</h4>
 <p>i&gt;<strong>任何线性变换（如量子门）都可以用外积基的线性组合来表示。</strong><br>
 ii&gt;<strong>实现量子测量</strong>。<br>
 💡你可以将外积形式的算符 $O = |a\rangle\langle b|$ 作用于一个态矢量 $|\psi\rangle$ 来直观感受它的作用：</p>
@@ -104,7 +106,7 @@ iii&gt;<strong>描述量子纠缠​</strong><br>
 <p>$|a\rangle \otimes |b\rangle$ 表示希尔伯特空间中两个向量的张量积，有</p>
 $$|a\rangle \otimes |b\rangle=\begin{pmatrix} a_{1} \begin{pmatrix} b_{1} \\ b_{2} \end{pmatrix} \\ a_{2} \begin{pmatrix} b_{1} \\ b_{2} \end{pmatrix}\end{pmatrix}=\begin{pmatrix} a_{1}b_{1} \\ a_{1}b_{2} \\ a_{2}b_{1} \\ a_{2}b_{2}\end{pmatrix}$$
 <p>矩阵也有一样的计算，本质是笛卡尔积式的升维。</p>
-<h4>意义：</h4>
+<h4>张量积意义</h4>
 <p>i&gt;<strong>用于扩展描述多比特联合系统</strong></p>
 <ul>
 <li>
@@ -153,7 +155,105 @@ $$|a\rangle \otimes |b\rangle=\begin{pmatrix} a_{1} \begin{pmatrix} b_{1} \\ b_{
 <h3>1.6共轭转置矩阵</h3>
 <p>在转置矩阵的基础上，将<strong>所有数</strong>改成共轭的，符号就是右上角带一个十字 $A^{\dagger}$ 。</p>
 <h3>1.7厄米矩阵</h3>
-<p>满足</p></div>
+<p>满足 $H = H^{\dagger}$ 的,H就可以叫厄米的。2阶厄米矩阵的一般形式为：</p>
+<p>$$ H = \begin{pmatrix} a &amp; b+ci \\
+b-ci &amp; d \end{pmatrix} $$</p>
+<p><strong>数学性质</strong></p>
+<ul>
+<li>
+<p>本征值全为实数<br>
+量子系统中，可观测量（如位置、动量、能量、自旋）的测量结果都是实数，这和厄米矩阵本征值的实数性完全匹配。即所有可观测算子都是厄米的。</p>
+</li>
+<li>
+<p>本征向量彼此正交<br>
+厄米矩阵不同本征值对应的本征向量，相互之间内积为 0，且可以构成一组正交完备基。这保证了厄米矩阵可以被对角化，即  $H = U^{\dagger} \Lambda U$ ，其中 U 是幺正矩阵, $\Lambda$ 是由本征值构成的对角矩阵。</p>
+</li>
+</ul>
+<p><strong>厄米矩阵在量子计算中的核心意义</strong></p>
+<ul>
+<li>代表量子系统的可观测量<br>
+对量子态 $\psi$ 测量可观测量 H 时，测量结果只能是 H 的某一个本征值 $\lambda$ ，概率为 $|\langle \psi_{i} | \psi \rangle|^{2}$ （ $\langle \psi_{i}|$ 是对应本征向量的共轭转置）。<br>
+💡量子比特的泡利矩阵 $(\sigma_{x}, \sigma_{y}, \sigma_{z})$ 都是厄米矩阵，分别对应量子比特在 x,y,z 方向的自旋观测；</li>
+</ul>
+<p>💡量子系统的哈密顿量（描述总能量的算符）也是厄米矩阵，它的本征值就是系统的能级，本征向量就是系统的能量本征态。</p>
+<ul>
+<li>构建幺正变换的基础<br>
+量子计算中的量子门是幺正矩阵，而厄米矩阵可以通过指数映射生成幺正矩阵：若 H 是厄米矩阵，则 $U=e^{-iHt}$ 一定是幺正矩阵（t 为参数）。这描述了量子系统的时间演化—— 量子态随时间的变化由哈密顿量（厄米矩阵）生成的幺正变换决定。</li>
+</ul>
+<h3>1.8幺正矩阵</h3>
+<p>U 是一个幺正矩阵，满足</p>
+<p>$$ U U^{\dagger} = I, $$</p>
+<p>也就是</p>
+<p>$$ \sum_j U_{ij} U_{jk}^{*} = \delta_{ik}. $$</p>
+<p>幺正矩阵的各行和各列可以看做正交完备向量组。幺正矩阵作用在向量上，向量的长度不变。<br>
+<strong>数学性质</strong></p>
+<ul>
+<li>保内积性:对希尔伯特空间中任意两个向量 $\mid \psi \rangle$ 和 $\mid \phi \rangle$ ，幺正算子作用后满足：</li>
+</ul>
+<p>$$\langle U\psi |U\phi \rangle=\langle\psi |U^{\dagger}U|\phi \rangle=\langle\psi |I|\phi \rangle=\langle\psi|\phi\rangle$$</p>
+<p>由内积的衍生意义，保内积等价于两个重要推论：</p>
+<ul>
+<li>
+<p>保范数： $\left|U|\psi\rangle\right|=\sqrt{\langle U\psi |U\psi \rangle}=\sqrt{\langle\psi|\psi \rangle}=\left||\psi\rangle\right|$ ，即向量的“长度”不变；</p>
+</li>
+<li>
+<p>保正交性：若 $\langle\psi|\phi \rangle=0$ ，则 $\langle U\psi |U\phi \rangle=0$ ，即正交的向量经过幺正变换后仍正交。</p>
+</li>
+<li>
+<p>可逆性:幺正算子的逆算子就是自身的共轭转置，即 $U^{-1} = U^{\dagger}$ ，这意味着幺正变换是双向可逆的，没有信息的 “丢失”—— 这和量子计算中 “量子门是可逆操作” 的要求完全匹配。</p>
+</li>
+<li>
+<p>本征值的特性：幺正矩阵的所有本征值的模长都等于 1，这一性质保证了幺正变换不会改变量子态的概率分布特性。</p>
+</li>
+</ul>
+<p><strong>物理意义</strong></p>
+<ul>
+<li>描述量子态的幺正演化（核心物理假设）：<br>
+量子力学的基本假设之一：孤立量子系统的状态随时间的演化，由幺正算子描述。<br>
+具体公式： $|\psi(t)\rangle = U(t)|\psi(0)\rangle$ ，其中 $U(t) = e^{-iHt/\hbar}$ （H 是系统的哈密顿量，属于厄米算子； $\hbar$ 是约化普朗克常数）。<br>
+物理本质：孤立系统与环境无相互作用，总概率必须守恒 —— 而幺正算子的保内积性，正好保证了 $\langle \psi(t) | \psi(t) \rangle = \langle \psi(0) | \psi(0) \rangle = 1$ ，满足概率归一化要求。</li>
+<li>对应量子计算中的量子门:量子门是操控量子比特的基本单元，所有量子门对应的矩阵都是幺正矩阵。<br>
+💡单比特门：泡利X门、Hadamard门 均满足幺正条件。<br>
+💡多比特门：CNOT 门（控制非门），对应的 4×4 矩阵也满足幺正性。<br>
+关键逻辑：量子门是对量子比特的 “操作”，而操作必须可逆（否则会丢失量子信息），同时保证概率守恒 —— 这正是幺正算子的两个核心特性。</li>
+</ul>
+<p><strong>区分幺正演化与非幺正过程</strong></p>
+<p>并非所有量子过程都是幺正的：当量子系统与环境发生相互作用（比如测量、退相干）时，过程是非幺正的，此时量子态会从纯态退化为混合态，需要用密度矩阵描述。</p>
+<p>对比：量子门操作（幺正）是 “可逆、保概率” 的；量子测量（非幺正）是 “不可逆、概率坍缩” 的 —— 这正是量子计算中 “幺正操作构建算法，测量读取结果” 的核心逻辑。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>幺正算子描述量子态演化、量子门操作；厄米算子描述量子可观测量（如能量、自旋）和密度矩阵。</p>
+</div>
+<h3>1.9矩阵本征分解</h3>
+<p>对于一个矩阵 $A$，其<strong>特征方程</strong>定义为：</p>
+<p>$$
+A |\nu\rangle = \lambda |\nu\rangle
+$$</p>
+<p>其中，符合上式的向量 $|\nu\rangle$ 是矩阵 $A$ 的<strong>特征向量 (eigenvector)</strong>， $\lambda$ 是与之对应的<strong>特征值 (eigenvalue)</strong>。</p>
+<p>值得注意的是，任意满足 $AA^{\dagger} = A^{\dagger}A$ 的矩阵（即正规矩阵）可以进行以下谱分解：</p>
+<p>$$
+A = \sum_{j} \lambda_j |\nu_j\rangle \langle \nu_j|
+$$</p>
+<p>在上述分解中：</p>
+<ul>
+<li>
+$\lambda_j$ 是 $A$ 的第 $j$ 个特征值。</li>
+<li>
+$|\nu_j\rangle$ 是特征值 $\lambda_j$ 对应的特征向量。</li>
+<li>特征向量集 ${|\nu_j\rangle}$ 构成一组<strong>正交归一</strong>的基。</li>
+</ul>
+<p>在希尔伯特空间中，矩阵的本征分解是将一个复杂线性算子拆解为 “本征值 + 本征向量” 组合的核心方法，其核心意义是 把抽象的线性变换转化为 “沿特定方向的缩放 / 旋转” 的直观形式，同时为量子力学和量子计算提供了连接数学结构与物理意义的桥梁。<br>
+💡混合态的密度矩阵 $\rho$ 是厄米矩阵，其本征分解为：</p>
+<p>$$
+\rho = \sum_i p_i | v_i \rangle \langle v_i |
+$$</p>
+<p>其中 $p_i$ 是本征值（满足 $\sum_i p_i = 1$ ），对应混合态中各纯态 $| v_i \rangle$ 的概率。</p>
+<p>这一分解直接揭示了混合态的组成，是分析量子系统退相干、噪声影响的关键工具——而 QCNN 需要处理量子态的噪声问题，本征分解是核心分析手段。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>QCNN 的目标是从量子数据中提取特征，而本征分解是量子特征提取的数学基础：<br>
+量子卷积核对应的算子，其本征值就是 QCNN 提取到的 “量子特征”；本征向量则对应这些特征的 “量子特征态”，决定了特征的物理意义。</p>
+</div>
+<h3>1.10矩阵函数</h3>
+<p>对于一个厄米矩阵 A ，它可以被对角化为： $A = U^{\dagger} \Lambda U$ 其中， $\Lambda_{ij} = \lambda_i \delta_{ij}$ 是一个对角矩阵，其对角元是A的特征值 $\lambda_i$ 。</p>
+<p>基于此对角化形式，矩阵函数 $f(A)$ 的计算公式为： $f(A) = U^{\dagger} f(\Lambda) U$<br>
+其中， $f(\Lambda)$ 也是一个对角矩阵，其矩阵元为： $f(\Lambda)<em>{ij} = f(\lambda_i)\delta</em>{ij}$ 即，只需将函数 $f$ 作用于原矩阵的特征值上。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
