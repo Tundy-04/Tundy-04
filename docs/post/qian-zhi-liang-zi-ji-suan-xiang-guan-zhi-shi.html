@@ -81,17 +81,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3>1.1向量的表示</h3>
 <p>在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。<strong>注意在量子力学中讨论的数若无特殊说明都是复数</strong>。</p>
 <h3>1.2向量内积</h3>
-<p>内积可以看成是一种特殊的矩阵乘法。对于在希尔伯特空间中的两个向量 $|a\rangle$ 和 $|b\rangle$，$\langle a|b\rangle$ 表示它们的内积，$\langle a|$ 定义为向量 $|a\rangle$ 的共轭转置 (conjugate transpose)，也可以记作 $|a\rangle^{\dagger}$，有</p>
-<p>$$
-
-\langle a \mid b \rangle = (a_{1}^{_}, a_{2}^{_}, \dots, a_{n}^{_})
-
-\begin{bmatrix} b_{1} \ b_{2} \ \vdots \ b_{n} \end{bmatrix}
-
-= a_{1}^{_}b_{1} + a_{2}^{_}b_{2} + \dots + a_{n}^{_}b_{n}
-
-$$</p>
-<p>此处 $*$ 表示共轭复数（对于实数 $a$ 和 $b$，$a+ib$ 的共轭复数是 $a-ib$）。</p></div>
+<p>内积可以看成是一种特殊的矩阵乘法。对于在希尔伯特空间中的两个向量 $|a\rangle$ 和 $|b\rangle$， $\langle a | b \rangle$ 表示它们的内积， $\langle a|$ 定义为向量 $|a\rangle$ 的共轭转置 (conjugate transpose)，也可以记作 $|a\rangle^{\dagger}$，有</p>
+$$\langle a | b \rangle = (a_{1}^{*}, a_{2}^{*}, \dots, a_{n}^{*}) \begin{pmatrix} b_{1} \\ b_{2} \\ \vdots \\ b_{n} \end{pmatrix} = a_{1}^{*}b_{1} + a_{2}^{*}b_{2} + \dots + a_{n}^{*}b_{n}$$
+<p>此处 $*$ 表示共轭复数（对于实数 $a$ 和 $b$，$a+ib$ 的共轭复数是 $a-ib$）。它的意义是量化两个量子态之间的 “<strong>关联程度</strong>”，同时为量子力学的核心规则（如测量、叠加）提供数学支撑，内积的模越大，说明两个向量的 “方向越接近”；模越小，方向越偏离。</p>
+<h3>1.3向量外积</h3>
+<p>$|a \rangle \langle b|$ 表示希尔伯特空间中两个向量的外积，有</p>
+$$|a \rangle \langle b| = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix} \left( b_{1}^{*}, b_{2}^{*}, \cdots, b_{n}^{*} \right) = \begin{pmatrix} a_1 b_{1}^{*} &amp; a_1 b_{2}^{*} &amp; \cdots &amp; a_1 b_{n}^{*} \\ a_2 b_{1}^{*} &amp; a_2 b_{2}^{*} &amp; &amp; \vdots \\ \vdots &amp; &amp; \ddots &amp; \vdots \\ a_n b_{1}^{*} &amp; \cdots &amp; \cdots &amp; a_n b_{n}^{*} \end{pmatrix}$$
+<p>其中矩阵元素为 $a_i b_j^{*}$（ $i,j = 1,2,\cdots,n$ ）。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
