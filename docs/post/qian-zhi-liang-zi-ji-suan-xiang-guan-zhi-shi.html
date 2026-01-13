@@ -7,13 +7,15 @@
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
     
     <link rel="icon" href="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
-<meta name="description" content="# 一、相关定义
+<meta name="description" content="> 声明：文章源自笔者的个人理解，其中可能存在错误
+# 一、相关定义
 ## 1.线性代数
 
 ### 1.1向量的表示
 在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
 <meta property="og:title" content="前置量子计算相关知识">
-<meta property="og:description" content="# 一、相关定义
+<meta property="og:description" content="> 声明：文章源自笔者的个人理解，其中可能存在错误
+# 一、相关定义
 ## 1.线性代数
 
 ### 1.1向量的表示
@@ -78,7 +80,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><h1>一、相关定义</h1>
+<div class="markdown-body" id="postBody"><blockquote>
+<p>声明：文章源自笔者的个人理解，其中可能存在错误</p>
+</blockquote>
+<h1>一、相关定义</h1>
 <h2>1.线性代数</h2>
 <h3>1.1向量的表示</h3>
 <p>在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。<strong>注意在量子力学中讨论的数若无特殊说明都是复数</strong>。</p>
@@ -210,13 +215,15 @@ b-ci &amp; d \end{pmatrix} $$</p>
 <ul>
 <li>描述量子态的幺正演化（核心物理假设）：<br>
 量子力学的基本假设之一：孤立量子系统的状态随时间的演化，由幺正算子描述。<br>
-具体公式： $|\psi(t)\rangle = U(t)|\psi(0)\rangle$ ，其中 $U(t) = e^{-iHt/\hbar}$ （H 是系统的哈密顿量，属于厄米算子； $\hbar$ 是约化普朗克常数）。<br>
-物理本质：孤立系统与环境无相互作用，总概率必须守恒 —— 而幺正算子的保内积性，正好保证了 $\langle \psi(t) | \psi(t) \rangle = \langle \psi(0) | \psi(0) \rangle = 1$ ，满足概率归一化要求。</li>
+具体公式： $|\psi(t)\rangle = U(t)|\psi(0)\rangle$ ，其中 $U(t) = e^{-iHt/\hbar}$ （H 是系统的哈密顿量，属于厄米算子； $\hbar$ 是约化普朗克常数）。</li>
+</ul>
+<p>物理本质：孤立系统与环境无相互作用，总概率必须守恒 —— 而幺正算子的保内积性，正好保证了 $\langle \psi(t) | \psi(t) \rangle = \langle \psi(0) | \psi(0) \rangle = 1$ ，满足概率归一化要求。</p>
+<ul>
 <li>对应量子计算中的量子门:量子门是操控量子比特的基本单元，所有量子门对应的矩阵都是幺正矩阵。<br>
 💡单比特门：泡利X门、Hadamard门 均满足幺正条件。<br>
-💡多比特门：CNOT 门（控制非门），对应的 4×4 矩阵也满足幺正性。<br>
-关键逻辑：量子门是对量子比特的 “操作”，而操作必须可逆（否则会丢失量子信息），同时保证概率守恒 —— 这正是幺正算子的两个核心特性。</li>
+💡多比特门：CNOT 门（控制非门），对应的 4×4 矩阵也满足幺正性。</li>
 </ul>
+<p>关键逻辑：量子门是对量子比特的 “操作”，而操作必须可逆（否则会丢失量子信息），同时保证概率守恒 —— 这正是幺正算子的两个核心特性。</p>
 <p><strong>区分幺正演化与非幺正过程</strong></p>
 <p>并非所有量子过程都是幺正的：当量子系统与环境发生相互作用（比如测量、退相干）时，过程是非幺正的，此时量子态会从纯态退化为混合态，需要用密度矩阵描述。</p>
 <p>对比：量子门操作（幺正）是 “可逆、保概率” 的；量子测量（非幺正）是 “不可逆、概率坍缩” 的 —— 这正是量子计算中 “幺正操作构建算法，测量读取结果” 的核心逻辑。</p>
@@ -253,7 +260,33 @@ $$</p>
 <h3>1.10矩阵函数</h3>
 <p>对于一个厄米矩阵 A ，它可以被对角化为： $A = U^{\dagger} \Lambda U$ 其中， $\Lambda_{ij} = \lambda_i \delta_{ij}$ 是一个对角矩阵，其对角元是A的特征值 $\lambda_i$ 。</p>
 <p>基于此对角化形式，矩阵函数 $f(A)$ 的计算公式为： $f(A) = U^{\dagger} f(\Lambda) U$<br>
-其中， $f(\Lambda)$ 也是一个对角矩阵，其矩阵元为： $f(\Lambda)<em>{ij} = f(\lambda_i)\delta</em>{ij}$ 即，只需将函数 $f$ 作用于原矩阵的特征值上。</p></div>
+其中， $f(\Lambda)$ 也是一个对角矩阵，其矩阵元为：</p>
+$$f(\Lambda)_{ij} = f(\lambda_{i})\delta_{ij}$$
+<p>即，只需将函数 $f$ 作用于原矩阵的特征值上， $f$ 是矩阵到矩阵的映射，但由于密度矩阵和算子基本都具有厄米性，可以简化为对角特征矩阵的函数。而对于不是厄米的矩阵，可以将函数泰勒展开后带入，比如：</p>
+<p>$$ e^{A} = I + A + \frac{A^{2}}{2!} + \frac{A^{3}}{3!} + \cdots $$</p>
+<h4>💡厄米矩阵函数运算例子</h4>
+$$用泡利 X 矩阵 X = \begin{pmatrix} 0 &amp; 1 \\\\ 1 &amp; 0 \end{pmatrix} 计算 \cos(X)$$
+<p>泡利 X 矩阵的本征值是 $\lambda_1 = 1$，$\lambda_2 = -1$，对应的幺正矩阵为：</p>
+<p>$$
+U = \frac{1}{\sqrt{2}} \begin{pmatrix} -1 &amp; 1 \\ 1 &amp; 1 \end{pmatrix}
+$$</p>
+<p>因此, $X$ 可对角化为：</p>
+<p>$$
+X = U^{\dagger} \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix} U
+$$</p>
+<p>对每个本征值求余弦：</p>
+<p>$$
+f(1) = \cos 1, \quad f(-1) = \cos(-1) = \cos 1
+$$</p>
+<p>所以对角矩阵的余弦为：</p>
+<p>$$
+f(\Lambda) = \begin{pmatrix} \cos 1 &amp; 0 \\ 0 &amp; \cos 1 \end{pmatrix}
+$$</p>
+<p>将上述结果代入矩阵函数公式：</p>
+<p>$$
+\cos(X) = U^{\dagger} \begin{pmatrix} \cos 1 &amp; 0 \\ 0 &amp; \cos 1 \end{pmatrix} U = \cos 1 \cdot U^{\dagger} I U = \cos 1 \cdot I
+$$</p>
+<h2>2.量子力学和量子信息</h2></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
