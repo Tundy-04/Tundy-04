@@ -7,11 +7,15 @@
     <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
     
     <link rel="icon" href="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
-<meta name="description" content="#线性代数
-。">
+<meta name="description" content="# 一、相关定义
+## 1.线性代数
+### 1.1向量的表示
+在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
 <meta property="og:title" content="前置量子计算相关知识">
-<meta property="og:description" content="#线性代数
-。">
+<meta property="og:description" content="# 一、相关定义
+## 1.线性代数
+### 1.1向量的表示
+在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://Tundy-04.github.io/Tundy-04/post/qian-zhi-liang-zi-ji-suan-xiang-guan-zhi-shi.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
@@ -72,7 +76,22 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>#线性代数</p></div>
+<div class="markdown-body" id="postBody"><h1>一、相关定义</h1>
+<h2>1.线性代数</h2>
+<h3>1.1向量的表示</h3>
+<p>在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。<strong>注意在量子力学中讨论的数若无特殊说明都是复数</strong>。</p>
+<h3>1.2向量内积</h3>
+<p>内积可以看成是一种特殊的矩阵乘法。对于在希尔伯特空间中的两个向量 $|a\rangle$ 和 $|b\rangle$，$\langle a|b\rangle$ 表示它们的内积，$\langle a|$ 定义为向量 $|a\rangle$ 的共轭转置 (conjugate transpose)，也可以记作 $|a\rangle^{\dagger}$，有</p>
+<p>$$
+
+\langle a \mid b \rangle = (a_{1}^{_}, a_{2}^{_}, \dots, a_{n}^{_})
+
+\begin{bmatrix} b_{1} \ b_{2} \ \vdots \ b_{n} \end{bmatrix}
+
+= a_{1}^{_}b_{1} + a_{2}^{_}b_{2} + \dots + a_{n}^{_}b_{n}
+
+$$</p>
+<p>此处 $*$ 表示共轭复数（对于实数 $a$ 和 $b$，$a+ib$ 的共轭复数是 $a-ib$）。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
@@ -146,6 +165,6 @@ function iFrameLoading(){
 
 
 </script>
-<script src='https://blog.meekdai.com/Gmeek/plugins/articletoc.js'><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/articletoc.js'><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 </html>
