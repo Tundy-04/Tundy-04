@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark-blue" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
+<meta name="description" content="> 声明：文章源自笔者的个人理解，其中可能存在错误
+# 一、线性代数相关定义
+## 1.向量
+
+### 1.1向量的表示
+在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
+<meta property="og:title" content="前置量子计算相关知识#1">
+<meta property="og:description" content="> 声明：文章源自笔者的个人理解，其中可能存在错误
+# 一、线性代数相关定义
+## 1.向量
+
+### 1.1向量的表示
+在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://Tundy-04.github.io/Tundy-04/post/qian-zhi-liang-zi-ji-suan-xiang-guan-zhi-shi-%231.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
+<title>前置量子计算相关知识#1</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">前置量子计算相关知识#1</h1>
+<div class="title-right">
+    <a href="https://Tundy-04.github.io/Tundy-04" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/Tundy-04/Tundy-04/issues/1" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><blockquote>
+<p>声明：文章源自笔者的个人理解，其中可能存在错误</p>
+</blockquote>
+<h1>一、线性代数相关定义</h1>
+<h2>1.向量</h2>
+<h3>1.1向量的表示</h3>
+<p>在量子力学中， $|v\rangle$  表示列向量， $\langle v |$ 表示行向量，一般用 $|\psi\rangle$ 表示某个量子态。<strong>注意在量子力学中讨论的数若无特殊说明都是复数</strong>。</p>
+<h3>1.2向量内积</h3>
+<p>内积可以看成是一种特殊的矩阵乘法。对于在希尔伯特空间中的两个向量 $|a\rangle$ 和 $|b\rangle$， $\langle a | b \rangle$ 表示它们的内积， $\langle a|$ 定义为向量 $|a\rangle$ 的共轭转置 (conjugate transpose)，也可以记作 $|a\rangle^{\dagger}$，有</p>
+$$\langle a | b \rangle = (a_{1}^{*}, a_{2}^{*}, \dots, a_{n}^{*}) \begin{pmatrix} b_{1} \\ b_{2} \\ \vdots \\ b_{n} \end{pmatrix} = a_{1}^{*}b_{1} + a_{2}^{*}b_{2} + \dots + a_{n}^{*}b_{n}$$
+<p>此处 $*$ 表示共轭复数（对于实数 $a$ 和 $b$，$a+ib$ 的共轭复数是 $a-ib$ ）。它的意义是量化两个量子态之间的 “<strong>关联程度</strong>”，同时为量子力学的核心规则（如测量、叠加）提供数学支撑，内积的模越大，说明两个向量的 “方向越接近”；模越小，方向越偏离。</p>
+<h3>1.3向量外积</h3>
+<p>外积是量子力学线性代数表述的“语法糖”，它让许多量子操作的数学表达变得异常简洁和直观。无论是描述一个简单的量子逻辑门，还是进行复杂的投影测量，外积都扮演着核心角色，是理解和计算量子系统行为不可或缺的工具。<br>
+$|a \rangle \langle b|$ 表示希尔伯特空间中两个向量的外积，有</p>
+$$|a \rangle \langle b| = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix} \left( b_{1}^{*}, b_{2}^{*}, \cdots, b_{n}^{*} \right) = \begin{pmatrix} a_1 b_{1}^{*} &amp; a_1 b_{2}^{*} &amp; \cdots &amp; a_1 b_{n}^{*} \\ a_2 b_{1}^{*} &amp; a_2 b_{2}^{*} &amp; &amp; \vdots \\ \vdots &amp; &amp; \ddots &amp; \vdots \\ a_n b_{1}^{*} &amp; \cdots &amp; \cdots &amp; a_n b_{n}^{*} \end{pmatrix}$$
+<p>其中矩阵元素为 $a_i b_j^{*}$（ $i,j = 1,2,\cdots,n$ ）。</p>
+<h4>外积意义</h4>
+<p>i&gt;<strong>任何线性变换（如量子门）都可以用外积基的线性组合来表示。</strong><br>
+ii&gt;<strong>实现量子测量</strong>。</p>
+<blockquote>
+<p>💡你可以将外积形式的算符 $O = |a\rangle\langle b|$ 作用于一个态矢量 $|\psi\rangle$ 来直观感受它的作用：</p>
+</blockquote>
+<p>$$
+O|\psi\rangle = (|a\rangle\langle b|) |\psi\rangle = |a\rangle (\langle b|\psi\rangle)
+$$</p>
+<p>结果是得到一个新的矢量 $|a\rangle$，其幅度由 $|\psi\rangle$ 在 $|b\rangle$ 方向上的分量 $\langle b|\psi\rangle$（一个复数）决定。这完美展示了其“投影”的本质。</p>
+<p>在量子测量中，投影算符的作用尤为关键。例如，想测量一个量子比特是否处于 $|0\rangle$ 状态，就使用投影算符 $M_{0} = |0\rangle\langle 0|$。测量得到 0 的概率就是 $p(0) = \langle\psi|M_{0}|\psi\rangle$，而测量后系统的状态会坍缩到 $\frac{M_{0}|\psi\rangle}{\sqrt{p(0)}}$ 。<br>
+iii&gt;<strong>描述量子纠缠​</strong><br>
+在复合系统中，外积是构造和分析纠缠态密度矩阵的基本工具，对于纯量子态 $|\psi\rangle$ ，它的密度矩阵定义就是 $\rho = |\psi\rangle\langle\psi|$。</p>
+<h3>1.4张量积</h3>
+<p>$|a\rangle \otimes |b\rangle$ 表示希尔伯特空间中两个向量的张量积，有</p>
+$$|a\rangle \otimes |b\rangle=\begin{pmatrix} a_{1} \begin{pmatrix} b_{1} \\ b_{2} \end{pmatrix} \\ a_{2} \begin{pmatrix} b_{1} \\ b_{2} \end{pmatrix}\end{pmatrix}=\begin{pmatrix} a_{1}b_{1} \\ a_{1}b_{2} \\ a_{2}b_{1} \\ a_{2}b_{2}\end{pmatrix}$$
+<p>矩阵也有一样的计算，本质是笛卡尔积式的升维。</p>
+<h4>张量积意义</h4>
+<p>i&gt;<strong>用于扩展描述多比特联合系统</strong></p>
+<ul>
+<li>
+<p>量子计算的基本单元是量子比特，单比特的状态空间是 2 维（基矢为 $|0\rangle$ , $|1\rangle$ ）。</p>
+</li>
+<li>
+<p>2 个量子比特的联合态空间维度是 $2 \times 2 = 4$ 维，基矢为：</p>
+<p>$$|0\rangle \otimes |0\rangle,\ |0\rangle \otimes |1\rangle,\ |1\rangle \otimes |0\rangle,\ |1\rangle \otimes |1\rangle$$</p>
+<p>简写为： $|00\rangle$ , $|01\rangle$ , $|10\rangle$ , $|11\rangle$ 。</p>
+</li>
+<li>
+<p>$k$ 个量子比特的联合态空间维度是 $2^k$ 维，基矢是所有单比特基矢的张量积组合。</p>
+</li>
+</ul>
+<blockquote>
+<p>💡单比特态 $|\psi\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ , $|\varphi\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$ ，</p>
+</blockquote>
+<p>则两比特联合态为： $|\psi\rangle \otimes |\varphi\rangle = \frac{1}{2}(|00\rangle - |01\rangle + |10\rangle - |11\rangle)$</p>
+<p>ii&gt;<strong>描述多量子比特门（量子操作）</strong><br>
+量子门是作用于量子比特的幺正变换，单比特门（如 X门、H门）是 $2 \times 2$ 矩阵。</p>
+<ul>
+<li>若要让单比特门只作用于多比特系统中的某一个比特，需要用张量积和单位矩阵结合。</li>
+</ul>
+<blockquote>
+<p>💡对 3 比特系统的第 2 个比特施加 X门，对应的变换矩阵为：</p>
+</blockquote>
+<p>$$I \otimes X \otimes I$$</p>
+<p>其中 $I$ 是 $2 \times 2$ 单位矩阵，这个总矩阵的维度是 $8 \times 8$ 。</p>
+<p>iii&gt;<strong>区分“可分态”与“纠缠态”</strong></p>
+<ul>
+<li>
+<p>可分态：多比特态可以写成各个单比特态的张量积，比如上面的 $|\psi\rangle \otimes |\varphi\rangle$ 就是可分态。</p>
+</li>
+<li>
+<p>纠缠态：多比特态无法写成各个单比特态的张量积，比如 Bell 态：</p>
+<p>$$\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$$</p>
+</li>
+</ul>
+<blockquote>
+<p>纠缠是量子计算的核心资源，而张量积正是定义“纠缠”的前提——<strong>不能被张量积分解的态就是纠缠态</strong>。</p>
+</blockquote>
+<h3>1.5正交完备集</h3>
+<p>集合只含有单位向量（向量长度为1）<br>
+两两向量之间的内积都为0</p>
+<h2>2.矩阵</h2>
+<h3>2.1共轭转置矩阵</h3>
+<p>在转置矩阵的基础上，将<strong>所有数</strong>改成共轭的，符号就是右上角带一个十字 $A^{\dagger}$ 。</p>
+<h3>2.2厄米矩阵</h3>
+<p>满足 $H = H^{\dagger}$ 的,H就可以叫厄米的。2阶厄米矩阵的一般形式为：</p>
+<p>$$ H = \begin{pmatrix} a &amp; b+ci \\
+b-ci &amp; d \end{pmatrix} $$</p>
+<p><strong>数学性质</strong></p>
+<ul>
+<li>
+<p>本征值全为实数<br>
+量子系统中，可观测量（如位置、动量、能量、自旋）的测量结果都是实数，这和厄米矩阵本征值的实数性完全匹配。即所有可观测算子都是厄米的。</p>
+</li>
+<li>
+<p>本征向量彼此正交<br>
+厄米矩阵不同本征值对应的本征向量，相互之间内积为 0，且可以构成一组正交完备基。这保证了厄米矩阵可以被对角化，即  $H = U^{\dagger} \Lambda U$ ，其中 U 是幺正矩阵, $\Lambda$ 是由本征值构成的对角矩阵。</p>
+</li>
+</ul>
+<p><strong>厄米矩阵在量子计算中的核心意义</strong></p>
+<ul>
+<li>代表量子系统的可观测量<br>
+对量子态 $\psi$ 测量可观测量 H 时，测量结果只能是 H 的某一个本征值 $\lambda$ ，概率为 $|\langle \psi_{i} | \psi \rangle|^{2}$ （ $\langle \psi_{i}|$ 是对应本征向量的共轭转置）。</li>
+</ul>
+<blockquote>
+<p>💡量子比特的泡利矩阵 $(\sigma_{x}, \sigma_{y}, \sigma_{z})$ 都是厄米矩阵，分别对应量子比特在 x,y,z 方向的自旋观测；</p>
+</blockquote>
+<blockquote>
+<p>💡量子系统的哈密顿量（描述总能量的算符）也是厄米矩阵，它的本征值就是系统的能级，本征向量就是系统的能量本征态。</p>
+</blockquote>
+<ul>
+<li>构建幺正变换的基础<br>
+量子计算中的量子门是幺正矩阵，而厄米矩阵可以通过指数映射生成幺正矩阵：若 H 是厄米矩阵，则 $U=e^{-iHt}$ 一定是幺正矩阵（t 为参数）。这描述了量子系统的时间演化—— 量子态随时间的变化由哈密顿量（厄米矩阵）生成的幺正变换决定。</li>
+</ul>
+<h3>2.3幺正矩阵</h3>
+<p>U 是一个幺正矩阵，满足</p>
+<p>$$ U U^{\dagger} = I, $$</p>
+<p>也就是</p>
+<p>$$ \sum_j U_{ij} U_{jk}^{*} = \delta_{ik}. $$</p>
+<p>幺正矩阵的各行和各列可以看做正交完备向量组。幺正矩阵作用在向量上，向量的长度不变。</p>
+<p><strong>数学性质</strong></p>
+<ul>
+<li>保内积性:对希尔伯特空间中任意两个向量 $\mid \psi \rangle$ 和 $\mid \phi \rangle$ ，幺正算子作用后满足：</li>
+</ul>
+<p>$$\langle U\psi |U\phi \rangle=\langle\psi |U^{\dagger}U|\phi \rangle=\langle\psi |I|\phi \rangle=\langle\psi|\phi\rangle$$</p>
+<p>由内积的衍生意义，保内积等价于两个重要推论：</p>
+<ul>
+<li>
+<p>保范数： $\left|U|\psi\rangle\right|=\sqrt{\langle U\psi |U\psi \rangle}=\sqrt{\langle\psi|\psi \rangle}=\left||\psi\rangle\right|$ ，即向量的“长度”不变；</p>
+</li>
+<li>
+<p>保正交性：若 $\langle\psi|\phi \rangle=0$ ，则 $\langle U\psi |U\phi \rangle=0$ ，即正交的向量经过幺正变换后仍正交。</p>
+</li>
+<li>
+<p>可逆性:幺正算子的逆算子就是自身的共轭转置，即 $U^{-1} = U^{\dagger}$ ，这意味着幺正变换是双向可逆的，没有信息的 “丢失”—— 这和量子计算中 “量子门是可逆操作” 的要求完全匹配。</p>
+</li>
+<li>
+<p>本征值的特性：幺正矩阵的所有本征值的模长都等于 1，这一性质保证了幺正变换不会改变量子态的概率分布特性。</p>
+</li>
+</ul>
+<p><strong>物理意义</strong></p>
+<ul>
+<li>描述量子态的幺正演化（核心物理假设）：<br>
+量子力学的基本假设之一：孤立量子系统的状态随时间的演化，由幺正算子描述。<br>
+具体公式： $|\psi(t)\rangle = U(t)|\psi(0)\rangle$ ，其中 $U(t) = e^{-iHt/\hbar}$ （H 是系统的哈密顿量，属于厄米算子； $\hbar$ 是约化普朗克常数）。</li>
+</ul>
+<p>物理本质：孤立系统与环境无相互作用，总概率必须守恒 —— 而幺正算子的保内积性，正好保证了 $\langle \psi(t) | \psi(t) \rangle = \langle \psi(0) | \psi(0) \rangle = 1$ ，满足概率归一化要求。</p>
+<ul>
+<li>对应量子计算中的量子门:量子门是操控量子比特的基本单元，所有量子门对应的矩阵都是幺正矩阵。<br>
+单比特门：泡利X门、Hadamard门 均满足幺正条件。<br>
+多比特门：CNOT 门（控制非门），对应的 4×4 矩阵也满足幺正性。</li>
+</ul>
+<p>关键逻辑：量子门是对量子比特的 “操作”，而操作必须可逆（否则会丢失量子信息），同时保证概率守恒 —— 这正是幺正算子的两个核心特性。</p>
+<p><strong>区分幺正演化与非幺正过程</strong></p>
+<p>并非所有量子过程都是幺正的：当量子系统与环境发生相互作用（比如测量、退相干）时，过程是非幺正的，此时量子态会从纯态退化为混合态，需要用密度矩阵描述。</p>
+<p>对比：量子门操作（幺正）是 “可逆、保概率” 的；量子测量（非幺正）是 “不可逆、概率坍缩” 的 —— 这正是量子计算中 “幺正操作构建算法，测量读取结果” 的核心逻辑。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>幺正算子描述量子态演化、量子门操作；厄米算子描述量子可观测量（如能量、自旋）和密度矩阵。</p>
+</div>
+<h2>3.矩阵本征分解</h2>
+<p>对于一个矩阵 $A$，其<strong>特征方程</strong>定义为：</p>
+<p>$$
+A |\nu\rangle = \lambda |\nu\rangle
+$$</p>
+<p>其中，符合上式的向量 $|\nu\rangle$ 是矩阵 $A$ 的<strong>特征向量 (eigenvector)</strong>， $\lambda$ 是与之对应的<strong>特征值 (eigenvalue)</strong>。</p>
+<p>值得注意的是，任意满足 $AA^{\dagger} = A^{\dagger}A$ 的矩阵（即正规矩阵）可以进行以下谱分解：</p>
+<p>$$
+A = \sum_{j} \lambda_j |\nu_j\rangle \langle \nu_j|
+$$</p>
+<p>在上述分解中：</p>
+<ul>
+<li>
+$\lambda_j$ 是 $A$ 的第 $j$ 个特征值。</li>
+<li>
+$|\nu_j\rangle$ 是特征值 $\lambda_j$ 对应的特征向量。</li>
+<li>特征向量集 ${|\nu_j\rangle}$ 构成一组<strong>正交归一</strong>的基。</li>
+</ul>
+<p>在希尔伯特空间中，矩阵的本征分解是将一个复杂线性算子拆解为 “本征值 + 本征向量” 组合的核心方法，其核心意义是 把抽象的线性变换转化为 “沿特定方向的缩放 / 旋转” 的直观形式，同时为量子力学和量子计算提供了连接数学结构与物理意义的桥梁。</p>
+<blockquote>
+<p>💡混合态的密度矩阵 $\rho$ 是厄米矩阵，其本征分解为：</p>
+</blockquote>
+<p>$$
+\rho = \sum_i p_i | v_i \rangle \langle v_i |
+$$</p>
+<p>其中 $p_i$ 是本征值（满足 $\sum_i p_i = 1$ ），对应混合态中各纯态 $| v_i \rangle$ 的概率。</p>
+<p>这一分解直接揭示了混合态的组成，是分析量子系统退相干、噪声影响的关键工具——而 QCNN 需要处理量子态的噪声问题，本征分解是核心分析手段。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>QCNN 的目标是从量子数据中提取特征，而本征分解是量子特征提取的数学基础：<br>
+量子卷积核对应的算子，其本征值就是 QCNN 提取到的 “量子特征”；本征向量则对应这些特征的 “量子特征态”，决定了特征的物理意义。</p>
+</div>
+<h2>4.矩阵函数</h2>
+<p>对于一个厄米矩阵 A ，它可以被对角化为： $A = U^{\dagger} \Lambda U$ 其中， $\Lambda_{ij} = \lambda_i \delta_{ij}$ 是一个对角矩阵，其对角元是A的特征值 $\lambda_i$ 。</p>
+<p>基于此对角化形式，矩阵函数 $f(A)$ 的计算公式为： $f(A) = U^{\dagger} f(\Lambda) U$<br>
+其中， $f(\Lambda)$ 也是一个对角矩阵，其矩阵元为：</p>
+$$f(\Lambda)_{ij} = f(\lambda_{i})\delta_{ij}$$
+<p>即，只需将函数 $f$ 作用于原矩阵的特征值上， $f$ 是矩阵到矩阵的映射，但由于密度矩阵和算子基本都具有厄米性，可以简化为对角特征矩阵的函数。而对于不是厄米的矩阵，可以将函数泰勒展开后带入，比如：</p>
+<p>$$ e^{A} = I + A + \frac{A^{2}}{2!} + \frac{A^{3}}{3!} + \cdots $$</p>
+<blockquote>
+<p>💡厄米矩阵函数运算例子</p>
+</blockquote>
+$$用泡利 X 矩阵 X = \begin{pmatrix} 0 &amp; 1 \\\\ 1 &amp; 0 \end{pmatrix} 计算 \cos(X)$$
+<p>泡利 X 矩阵的本征值是 $\lambda_1 = 1$，$\lambda_2 = -1$，对应的幺正矩阵为：</p>
+<p>$$
+U = \frac{1}{\sqrt{2}} \begin{pmatrix} -1 &amp; 1 \\ 1 &amp; 1 \end{pmatrix}
+$$</p>
+<p>因此, $X$ 可对角化为：</p>
+<p>$$
+X = U^{\dagger} \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix} U
+$$</p>
+<p>对每个本征值求余弦：</p>
+<p>$$
+f(1) = \cos 1, \quad f(-1) = \cos(-1) = \cos 1
+$$</p>
+<p>所以对角矩阵的余弦为：</p>
+<p>$$
+f(\Lambda) = \begin{pmatrix} \cos 1 &amp; 0 \\ 0 &amp; \cos 1 \end{pmatrix}
+$$</p>
+<p>将上述结果代入矩阵函数公式：</p>
+<p>$$
+\cos(X) = U^{\dagger} \begin{pmatrix} \cos 1 &amp; 0 \\ 0 &amp; \cos 1 \end{pmatrix} U = \cos 1 \cdot U^{\dagger} I U = \cos 1 \cdot I
+$$</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://Tundy-04.github.io/Tundy-04">Tundy's Blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("01/12/2026"!=""){
+    var startSite=new Date("01/12/2026");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","Tundy-04/Tundy-04");
+    script.setAttribute("issue-term","title");
+    
+    script.setAttribute("theme","dark-blue");
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
