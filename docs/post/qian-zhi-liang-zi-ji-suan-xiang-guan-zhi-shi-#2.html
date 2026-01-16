@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark-blue" data-light-theme="dark" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
+<meta name="description" content="# 二、量子力学
+## 1.三个基本公设
+### 1.1公设一：希尔伯特空间（Hilbert space）
+任意封闭物理系统都具有一个相关联的具有內积结构的复向量空间（希尔伯特空间），称为量子态空间 $\mathcal{H}$ 。">
+<meta property="og:title" content="前置量子计算相关知识#2">
+<meta property="og:description" content="# 二、量子力学
+## 1.三个基本公设
+### 1.1公设一：希尔伯特空间（Hilbert space）
+任意封闭物理系统都具有一个相关联的具有內积结构的复向量空间（希尔伯特空间），称为量子态空间 $\mathcal{H}$ 。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://Tundy-04.github.io/Tundy-04/post/qian-zhi-liang-zi-ji-suan-xiang-guan-zhi-shi-%232.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
+<title>前置量子计算相关知识#2</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">前置量子计算相关知识#2</h1>
+<div class="title-right">
+    <a href="https://Tundy-04.github.io/Tundy-04" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/Tundy-04/Tundy-04/issues/2" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题"style="display:none;">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>二、量子力学</h1>
+<h2>1.三个基本公设</h2>
+<h3>1.1公设一：希尔伯特空间（Hilbert space）</h3>
+<p>任意封闭物理系统都具有一个相关联的具有內积结构的复向量空间（希尔伯特空间），称为量子态空间 $\mathcal{H}$ 。整个系统的物理性质完全由此空间中的向量来描述，称为态向量 $\mid \psi \rangle$ 。</p>
+<p><strong>说明：</strong></p>
+<ul>
+<li>在量子力学中，通常使用狄拉克符号（Dirac notation） $\mid . \rangle$ 来表示希尔伯特空间 $\mathcal{H}$ 中的向量，读作“ket”。</li>
+<li>数学上，我们可以用一个复向量簇（Ray）来表示量子态。这里, $\mid \psi \rangle$ 所在的向量簇指代任意向量 $\mid \psi \rangle = C \mid \psi \rangle$ , $C \in \mathbb{C}$ , $C \neq 0$ ，这些向量在物理上都是等价的。量子态代表物理系统的一种状态，例如具有某个特定的能量，动量，角动量等。我们可能听说过量子力学的叠加性原理（例如著名的薛定谔的猫）。具体来说，对任意两个量子态 $\mid u \rangle$ , $\mid v \rangle \in \mathcal{H}$ , $\mid u \rangle + \mid v \rangle \in \mathcal{H}$ ,即系统可以“同时”处于多种状态。</li>
+<li>在我们关心的量子计算领域, $\mathcal{H}$ 维数是有限的（设为 $N$），那么我们可以选取一组线性无关的向量 ${\mid \phi_i \rangle } = {\mid \phi_i \rangle \mid i=0, \cdots, N-1 }$ 作为基向量（basis，例如日常的三维空间在 $x,y,z$ 方向的三个单位向量 ${e_x, e_y, e_z }$ 即为一组基向量）。 $\mathcal{H}$ 中的任意量子态都可以用这组基线性展开：</li>
+</ul>
+$$|\psi\rangle = \sum_i c_i|\phi_i\rangle,\quad c_i \in \mathbb{C},\;\forall i$$
+<p>这组基向量也称为完备基。方便起见，在这组基向量下，我们可以将 $|\psi\rangle$ 表示成：</p>
+$$|\psi\rangle \cong \left(c_{0}, c_{2}, \cdots, c_{N-1}\right)^{T},$$
+<p>称为 $|\psi\rangle$ 在 ${ |\phi_i\rangle }$ 下的表示。这里的展开系数 $c_i$ 称为几率幅， $T$ 代表向量和矩阵的转置。这就是我们所熟悉的 $n$ 维复数向量（列向量）。</p>
+<ul>
+<li>正如在欧几里得空间可以定义向量内积一样，我们也可以定义希尔伯特空间的向量内积。我们可以定义 $|\boldsymbol{v}\rangle$ 的对偶向量 $\langle \boldsymbol{v} |$ （ $\langle\cdot |$ 称为“bra”）。这样我们就有</li>
+</ul>
+$$|\boldsymbol{v}\rangle \cong \left( v_{0}, \cdots, v_{N-1} \right)^{T}, \quad \langle \boldsymbol{v} | \cong \left( v_{0}^{*}, \cdots, v_{N-1}^{*} \right).$$
+<p>使用 Dirac notation 方便的原因之一是我们可以将内积表示为“braket”：</p>
+$$\langle \boldsymbol{v} | \boldsymbol{w} \rangle = \sum_{i, j=0}^{N-1} v_{i}^{*} w_{j} \langle \phi_{i} \mid \phi_{j} \rangle.$$
+<p>可以看出，内积是一种线性运算，且满足 $\langle \boldsymbol{u} | \boldsymbol{v} \rangle = \langle \boldsymbol{v} | \boldsymbol{u} \rangle^{*}$ 和 $\langle \boldsymbol{v} | \boldsymbol{v} \rangle \ge 0$ 。</p>
+<ul>
+<li>有了内积的概念，我们就可以定义向量的长度：</li>
+</ul>
+$$\|\boldsymbol{v}\|_{2} = \sqrt{\sum_{i=0}^{N-1} |v_{i}|^{2}} = \sqrt{\langle \boldsymbol{v} | \boldsymbol{v} \rangle}.$$
+<p>我们称长度为 $1$ 的向量为单位长度向量。在接下来的讨论中，我们默认描述系统的量子态的长度为 $1$ 。</p>
+<p>至此，我们对 $N$ 维希尔伯特空间有</p>
+$$\mathcal{H} \cong \mathbb{C}^{N}.$$
+<ul>
+<li>如果两个向量 $| v \rangle$ ， $| w \rangle$ 满足 $\langle w | v \rangle = 0$ ，则我们称这两个向量是正交的。如果我们选定一组基 ${ | i \rangle \mid i=0,\cdots,N-1 }$ 满足</li>
+</ul>
+$$\langle j | i \rangle = \delta_{ij} = \begin{cases}
+  1, &amp; i=j \\\
+  0, &amp; i \neq j
+  \end{cases}$$
+<p>且 $| | i \rangle |_2 = 1,\ \forall i$ ，那么这组基称为正交归一。如不明确说明，接下来我们都将使用正交归一基。这样 $| \psi \rangle$ 就可以表示为：</p>
+$$| \psi \rangle = \sum_{i} \psi_i | i \rangle \cong \left( \psi_{0}, \cdots, \psi_{N-1} \right)^T, \quad \psi_i \in \mathbb{C}, \quad \sum_{i} | \psi_i |^2 = 1$$
+<ul>
+<li>例子：考虑一个二维系统 $\mathcal{H} \cong \mathbb{C}^2$ ，定义两个基向量为 $| 0 \rangle$ 和 $| 1 \rangle$ 。这样任意量子态可以表示为</li>
+</ul>
+$$| \psi \rangle = \alpha | 0 \rangle + \beta | 1 \rangle, \quad | \alpha |^2 + | \beta |^2 = 1,$$
+<p>其中 $\alpha$，$\beta$ 都是复数。</p>
+<ul>
+<li>在正交归一基下，任意两个向量 $| u \rangle$ , $| v \rangle$ 的内积可以简化为：</li>
+</ul>
+$$\langle v | w \rangle = \left( v_{0}^{*}, \cdots, v_{N-1}^{*} \right) \begin{pmatrix} w_{0} \\ \vdots \\ w_{N-1} \end{pmatrix} = \sum_{j} v_j^* w_j$$
+<ul>
+<li>类似地，我们可以定义两个向量之间的外积及其在基 ${ | j \rangle }$ 下的表示：</li>
+</ul>
+$$| v \rangle \langle w | \cong \begin{pmatrix} v_{0} \\ \vdots \\ v_{N-1} \end{pmatrix} \left( w_{0}^{*}, \cdots, w_{N-1}^{*} \right) = \begin{pmatrix}
+  v_{0} w_{0}^{*} &amp; \cdots &amp; v_{0} w_{N-1}^{*} \\\
+  \vdots &amp; \ddots &amp; \vdots \\\
+  v_{N-1} w_{0}^{*} &amp; \cdots &amp; v_{N-1} w_{N-1}^{*}
+  \end{pmatrix}$$
+<p>注意，与内积不同，外积是一个作用在 $\mathcal{H}$ 上的算子（矩阵）。</p>
+<h3>1.2公设二：薛定谔方程(Schördinger equation)</h3>
+<p><strong>系统演化</strong>：封闭量子系统的演化由薛定谔方程描述：</p>
+$$i \frac{d|\psi(t)\rangle}{d t}=H(t)|\psi(t)\rangle,$$
+<p>其中 $t$ 是时间， $H(t)$ 是一个厄米算子，称为系统的哈密顿量。</p>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>这里我们使用了原子单位，即约化普朗克常数 $\hbar = 1$ 。</li>
+<li>对量子计算来说，我们可能不用太关心 $H(t)$ 的具体细节（只需要知道它是一个厄米矩阵），而更关心信息的载体——量子态的演化。这样，从时间 $t_{i}$ 到 $t_{f}$ ，由薛定谔方程，系统从 $|\psi(t_{i})\rangle$ 演化至 $|\psi(t_{f})\rangle$ 可以等效地写为：</li>
+</ul>
+$$|\psi(t_{f})\rangle=U(t_{f},t_{i})|\psi(t_{i})\rangle,$$
+<ul>
+<li>这里 $U(t_{f},t_{i})$ 是一个幺正算符（矩阵），具体推导可见 Nielson and Chuang 教科书第二章。</li>
+<li>原则上只要我们知道一个系统的哈密顿量，那么我们就可以完全了解系统的动力学。确定具体的哈密顿量就是在量子力学框架下理论物理的研究目标——不同的物理系统会涉及到不同的哈密顿量，但这不是量子力学作为基本框架所关心的问题。</li>
+<li>在量子计算中，量子逻辑门正是一种幺正变换，其实现是靠工程上构建不同的哈密顿量来产生。</li>
+</ul>
+<h3>1.3公设三: 量子态测量 (state measurement)</h3>
+<p>量子态测量（Born法则）：</p>
+<p>量子测量是由一组 ${ M_{k}}<em>{k=1}^{l}$ 的测量算子组成，这组算子满足 $\sum</em>{k} M_{k}^{\dagger} M_{k}=I$ 。对任意量子态 $|\psi\rangle \in \mathcal{H}$ 在测量之后立刻以概率 $p_{k}$ 变成</p>
+$$|\psi\rangle \mapsto \frac{M_{k}|\psi\rangle}{\sqrt{p_{k}}} = |\psi_{k}\rangle$$
+<p>其中 $p_{k} = \langle M_{k}^{\dagger} M_{k} \rangle \equiv \langle \psi | M_{k}^{\dagger} M_{k} | \psi \rangle = | M_{k} | \psi \rangle |_{2}^{2} \geq 0$ 。</p>
+<p><strong>说明：</strong></p>
+<ul>
+<li>
+$M^{\dagger}$ 代表 $M$ 的共轭转置，即 $M_{ij}^{\dagger} = M_{ji}^{*}$ 。</li>
+<li>测量结果为指标 $k$ ，同时量子态发生了“塌缩”, $|\psi\rangle$ “瞬间”变成了 $|\psi_{k}\rangle$ 。我们可以验证</li>
+</ul>
+$$\sum_{k} p_{k} = \langle \psi | \sum_{k} M_{k}^{\dagger} M_{k} | \psi \rangle = 1。$$
+<ul>
+<li>冯-诺依曼（von Neumann）测量。在实际中，我们需要对一实际物理量进行测量（例如坐标，动量，角动量、能量等）。这些物理量在量子力学中都是厄米算子。原则上，在有限维 $\mathcal{H}$ 上，我们可以对任意厄米算子 $O$ 进行测量。任意厄米算子 $O$ 可以进行如下分解</li>
+</ul>
+$$O = \sum_{j} \lambda_{j} |j\rangle \langle j|$$
+<p>其中， ${ |j\rangle }$ 是一组正交归一基，称为 $O$ 的本征向量（eigenstate）， $\lambda_{j}$ 称为 $|j\rangle$ 对应的本征值（eigenvalue）。对 $O$ 进行测量，即设定</p>
+$$M_{k} = P_{k} = |k\rangle \langle k|,$$
+<p>那么我们测量到 $k$ 的概率为 $p_{k} = \langle \psi | P_{k} | \psi \rangle$ ，对应测到的物理量的值为 $\lambda_{k}$ 。</p>
+<blockquote>
+<p>💡假设 $|\psi\rangle = \alpha |0\rangle + \beta |1\rangle$ ，我们需要测量厄米算子</p>
+</blockquote>
+$$Z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}$$
+<p>那么，我们就有 $M_{0} = |0\rangle\langle 0|$ ， $M_{1} = |1\rangle\langle 1|$ 。我们就会以概率 $|\alpha|^{2}$ 得到 0，量子态塌缩到 $|0\rangle$ （测到相应的物理值 1）；以概率 $|\beta|^{2}$ 得到 1，量子态塌缩到 $|1\rangle$（测到相应的物理值 -1） 。</p>
+<p>现在考虑对另一个厄米算子进行测量：</p>
+$$X = \begin{pmatrix}
+0 &amp; 1 \\\
+1 &amp; 0
+\end{pmatrix}$$
+<p>注意 $X$ 的本征值为 1 和 -1，对应的本征向量为 $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ 和 $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$ （注意 $\langle - | + \rangle = 0$ ）。那么我们可以将量子态表示为</p>
+$$\begin{aligned}
+|\psi\rangle &amp;= \alpha|0\rangle + \beta|1\rangle \\\
+&amp;= \frac{\alpha}{\sqrt{2}}(|+\rangle + |-\rangle) + \frac{\beta}{\sqrt{2}}(|+\rangle - |-\rangle) \\\
+&amp;= \frac{\alpha + \beta}{\sqrt{2}}|+\rangle + \frac{\alpha - \beta}{\sqrt{2}}|-\rangle
+\end{aligned}$$
+<p>这时，我们有 $M_{+} = |+\rangle\langle +|$ , $M_{-} = |-\rangle\langle -|$ , $P_{+} = |\alpha + \beta|^{2}/2$ ， $P_{-} = |\alpha - \beta|^{2}/2$ 。 $|\psi\rangle$ 以概率 $P_{+}$（ $P_{-}$ ）塌缩到 $|+\rangle$（ $|-\rangle$ ），得到测量结果 $+$ （ $-$ ）。</p>
+<ul>
+<li>公设 3 作为一条公设的基础地位非常具有争议性。如果将测量设备看成是量子力学系统，被测量的量子系统和测量设备一起形成一个更大的、孤立的、量子力学系统。根据公设 2，这个更大的孤立系统的演化可以用单一幺正变换来描述。是否有可能根据这种观点推导出公设 3？即测量结果的随机性能否从确定的薛定谔方程推导出来？尽管沿着这些方向进行了大量研究，但仍然面临极大的困难，有些甚至是根本性的。这里，我们将采取非常务实的方法，即在实践中很清楚何时应用公设 2（只涉及微观系统），何时使用公设 3（宏观的仪器参与测量的过程）。这样，我们就必须明确一条宏观和微观的界限。</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://Tundy-04.github.io/Tundy-04">Tundy's Blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("01/12/2026"!=""){
+    var startSite=new Date("01/12/2026");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","Tundy-04/Tundy-04");
+    script.setAttribute("issue-term","title");
+    
+    script.setAttribute("theme","dark-blue");
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
