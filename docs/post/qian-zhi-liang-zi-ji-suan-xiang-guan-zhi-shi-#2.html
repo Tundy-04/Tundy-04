@@ -282,7 +282,18 @@ $$U=\begin{pmatrix}U_{1\mid 1}&amp;U_{1\mid 2}&amp;\cdots &amp;U_{1\mid N}\\ U_{
 我们可以发现，正是由于 Born 法则的要求可以验证，为了满足 $\sum_{j}|\phi_{j}|^{2}=1$ 以保证测量结果的统计解释，$U$ 必须是一个幺正矩阵，这也正呼应了公设 2 的要求。<br>
 我们可以对一个向量 $v$ 定义 $l_{p}$ 长度：</p>
 $$\|v\|_{p}=\left(\sum_{i}|v_{i}|^{p}\right)^{1 / p}, \quad p \in \mathbb{N}_{+}.$$
-<p>那么更抽象地说，经典信息处理是对 $R_{+}^{n}$ 进行保持 $l_1$ 的变换，而量子信息处理是对 $C^n$ 进行保持 $l_{2}$ 的变换（ $N$ 维幺正矩阵）。</p></div>
+<p>那么更抽象地说，经典信息处理是对 $R_{+}^{n}$ 进行保持 $l_1$ 的变换，而量子信息处理是对 $C^n$ 进行保持 $l_{2}$ 的变换（ $N$ 维幺正矩阵）。</p>
+<h2>6.量子比特（qubit）</h2>
+<h3>6.1单量子比特和布洛赫球（Bloch Sphere）</h3>
+<p>简而言之，单个量子比特就是一个二维的希尔伯特空间 $\cong \mathbb{C}^{2}$ 。我们可以分别定义 $|0\rangle$ 和 $|1\rangle$ 态来编码信息 0 和 1：</p>
+$$|0\rangle = \begin{pmatrix}1\\0\end{pmatrix}, \quad
+|1\rangle = \begin{pmatrix}0\\1\end{pmatrix},$$
+<p>$|0\rangle$ 和 $|1\rangle$ 同时也构成希尔伯特空间的基向量。任意单量子比特态可以表示为：</p>
+$$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle = C(\cos (\theta/2)|0\rangle + e^{i\varphi}\sin (\theta/2)|1\rangle) \cong \cos (\theta/2)|0\rangle + e^{i\varphi}\sin (\theta/2)|1\rangle,$$
+<p>其中 $C$ 作为一个常数没有物理意义。另外 $\theta \in [-\pi,\pi], \varphi \in [0,2\pi)$ 。这样，单个量子比特态仅仅需要 2 个角度就能完全刻画，而这两个角正好可以对应球坐标中的方位角 $(\theta)$ 和极角 $(\varphi)$ （如下图所示）。这样就赋予了每个量子态独特的几何意义：单个量子比特的量子态对应一个单位球面上的一点，这个球称为 Bloch 球。我们可以验证， $|0\rangle$ 和 $|1\rangle$ 正位于 Bloch 球的北极和南极。</p>
+<div align="center">
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/52be8c9e-07cf-4a2f-9b02-3a7740f320c3"><img src="https://github.com/user-attachments/assets/52be8c9e-07cf-4a2f-9b02-3a7740f320c3" alt="Image" style="max-width: 100%;"></a>
+</div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
