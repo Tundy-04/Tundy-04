@@ -372,6 +372,8 @@ $$\vert\text{GHZ}\rangle=\frac{1}{\sqrt{2}}(\vert 000\rangle+\vert 111\rangle)=(
 $$P_{0}=\vert 0_{0}\rangle\langle 0_{0}|,\quad P_{1}=\vert 1_{0}\rangle\langle 1_{0}|, \quad \text{和} \quad p_{0}=1/2,\ p_{1}=1/2.$$
 <p>在测量结束后，我们以概率 $1/2$ 得到 $0$ 和 $1$ ，两比特系统相应的最终态为 $\vert 00\rangle$ 和 $\vert 11\rangle$ ，量子纠缠不再存在。这里我们注意到，当测量第一个量子比特得到结果 $0$ 时，第二个量子比特也必须同时塌缩到 $\vert 0\rangle$ 态。</p>
 <h3>6.3 密度矩阵(density matrix)</h3>
+<p><strong>此处只是一个简单的定义，它是量子计算的核心表示，关于它的详细推导和推论请看“6.5通过密度矩阵来判断量子系统的状态<br>
+”</strong></p>
 <p>一个纯态的量子系统，其量子态可以用态向量表示 $|\psi\rangle$ 。而几种纯态依照概率组成的量子态称为<strong>混合态</strong>。例如，假设一个量子系统处于纯态 $|\psi_1\rangle$ 和 $|\psi_2\rangle$ 的概率各为 50%，则这量子系统处于混合态。密度矩阵专门用来表示混合态。任何量子态，不管是纯态，还是混合态，都可以用密度矩阵表示。</p>
 <p><strong>注意</strong>：混合态与叠加态的概念不同。几种纯态通过量子叠加所组成的叠加态仍旧是纯态。例如， $(|\psi_1\rangle + |\psi_2\rangle)/\sqrt{2}$ 是一个纯态。</p>
 <p>假设一个量子系统处于纯态 $|\psi_1\rangle, |\psi_2\rangle, |\psi_3\rangle, \dots$ 的概率分别为 $w_1, w_2, w_3, \dots$ ，则这混合态量子系统的密度算符 $\rho$ 为</p>
@@ -391,11 +393,11 @@ $$\sum_i w_i = 1.$$
 </ul>
 <h3>6.4概念辨析</h3>
 <h4>纯态&amp;混合态&amp;完全混合态</h4>
-<p><a href="https://zhuanlan.zhihu.com/p/90976246" rel="nofollow">详细推导</a>.</p>
+<p><a href="https://zhuanlan.zhihu.com/p/90976246" rel="nofollow">关于量子系统在布洛赫球表示的推导</a></p>
 <p><strong>一图辨清：</strong></p>
 <div align="center">
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/93e3bc9f-1c6b-490e-a7aa-68c6ecce3747"><img width="299" height="236" alt="Image" src="https://github.com/user-attachments/assets/93e3bc9f-1c6b-490e-a7aa-68c6ecce3747" style="max-width: 100%; height: auto; max-height: 236px;"></a>
-<div>
+</div>
 <ul>
 <li>
 <p>纯态就是布洛赫球面上的向量，就是最普通的量子叠加态，可以用态矢量存储，比如: $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ ,可以存成 $[\alpha , \beta].$  同理，更高维的纯态也可以这么表示。</p>
@@ -410,7 +412,7 @@ $$\sum_i w_i = 1.$$
 </ul>
 <div align="center">
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/2c9ef0fe-2b8d-4afe-ad6e-e6b13672cea5"><img width="253" height="239" alt="Image" src="https://github.com/user-attachments/assets/2c9ef0fe-2b8d-4afe-ad6e-e6b13672cea5" style="max-width: 100%; height: auto; max-height: 239px;"></a>
-<div>
+</div>
 <ul>
 <li>完全混合态：系统在所有正交基上的测量概率都完全均匀，没有任何偏好，是 “最混乱” 的混合态，相当于是个全方向概率相等的叠加，自然全部抵消，成为布洛赫球球心的一点。它的密度矩阵可以表示为 $\rho = \frac{I}{d}$<br>
 单量子比特： $\rho = \frac{|0\rangle\langle 0| + |1\rangle\langle 1|}{2} = \frac{I}{2}$<br>
@@ -429,7 +431,7 @@ $$\sum_i w_i = 1.$$
 </ul>
 <p>**混合可分离态：**对应 QCNN 中无量子关联的含噪量子态（如量子比特的独立噪声、退相干），这类态的量子特征与经典统计特征等价，QCNN 无法提取独特的量子关联信息；</p>
 <p>**混合纠缠态：**对应 QCNN 中含噪但仍保留量子纠缠的多体态（量子计算的核心资源），QCNN 的核心任务之一就是从混合纠缠态中提取鲁棒的量子纠缠特征，这是经典 CNN 无法实现的；</p>
-<h4>通过密度矩阵来判断量子系统的状态</h4></div></div></div></div></div>
+<h3>6.5通过密度矩阵来判断量子系统的状态</h3></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
