@@ -529,12 +529,11 @@ $$\text{Tr}(\rho^{2}) = \text{Tr}(\rho) = 1$$
 $$\left( \sum_{k} \lambda_{k} \right)^{2} = 1 \leq \left( \sum_{k} 1^{2} \right) \left( \sum_{k} \lambda_{k}^{2} \right) = d \cdot \text{Tr}(\rho^{2}) = d$$
 <p>当且仅当所有 $\lambda_{k}$ 中仅有一个为 1，其余为 0 时等号成立，即 $\rho$ 可表示为 $|\psi\rangle\langle\psi|$ （纯态）。</p>
 <ul>
-<li>
-<strong>混合态的判定</strong>： $ 0 &lt; Tr(\rho^{2}) &lt; 1 $</li>
+<li><strong>混合态的判定</strong>：</li>
 </ul>
+$$0 &lt; \text{Tr}(\rho^{2}) &lt; 1$$
 <p>推导：</p>
-<p>混合态 $\rho = \sum_{i} p_{i}|\psi_{i}\rangle\langle\psi_{i}|$ （至少两个 $p_{i}&amp;gt;0$ ，<br>
-且 ${ |\psi_{i}\rangle }$ 线性无关），由正定性和迹的循环性：</p>
+<p>混合态 $\rho = \sum_{i} p_{i}|\psi_{i}\rangle\langle\psi_{i}|$ （至少两个 $p_{i}&amp;gt;0$ , 且 ${ |\psi_{i}\rangle }$ 线性无关），由正定性和迹的循环性：</p>
 $$\rho^{2} = \sum_{i} \sum_{j} p_{i} p_{j}|\psi_{i}\rangle\langle\psi_{i}|\psi_{j}\rangle\langle\psi_{j}| = \sum_{i} p_{i}^{2}|\psi_{i}\rangle\langle\psi_{i}| + \sum_{i \neq j} p_{i} p_{j}\langle\psi_{i}|\psi_{j}\rangle|\psi_{i}\rangle\langle\psi_{j}|$$
 <p>取迹：</p>
 $$\text{Tr}(\rho^{2}) = \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j}\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2}$$
@@ -542,10 +541,9 @@ $$\text{Tr}(\rho^{2}) = \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j}\left|\l
 $$\text{Tr}(\rho^{2}) &lt; \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j} = \left(\sum_{i} p_{i}\right)^{2} = 1$$
 <p>同时， $\text{Tr}(\rho^{2}) = \sum_{k} \lambda_{k}^{2} &amp;gt; 0$ （本征值非负且和为 1），故 $0 &amp;lt; \text{Tr}(\rho^{2}) &amp;lt; 1$ 。</p>
 <ul>
-<li>
-<strong>完全混合态的判定</strong>: $ \rho = \frac{I_{d}}{d} $ 且 $\text{Tr}(\rho^{2}) = \frac{1}{d}$
-</li>
+<li><strong>完全混合态的判定</strong>:</li>
 </ul>
+$$\rho = \frac{I_{d}}{d} 且 \text{Tr}(\rho^{2}) = \frac{1}{d}$$
 <p>推导：</p>
 <p>完全混合态是“所有正交基等概率”的混合态，其密度矩阵为单位矩阵的均分： $\rho = \frac{I_{d}}{d}$（ $ I_{d}$ 为 $d$ 维单位矩阵）；</p>
 <ul>
