@@ -372,8 +372,7 @@ $$\vert\text{GHZ}\rangle=\frac{1}{\sqrt{2}}(\vert 000\rangle+\vert 111\rangle)=(
 $$P_{0}=\vert 0_{0}\rangle\langle 0_{0}|,\quad P_{1}=\vert 1_{0}\rangle\langle 1_{0}|, \quad \text{和} \quad p_{0}=1/2,\ p_{1}=1/2.$$
 <p>在测量结束后，我们以概率 $1/2$ 得到 $0$ 和 $1$ ，两比特系统相应的最终态为 $\vert 00\rangle$ 和 $\vert 11\rangle$ ，量子纠缠不再存在。这里我们注意到，当测量第一个量子比特得到结果 $0$ 时，第二个量子比特也必须同时塌缩到 $\vert 0\rangle$ 态。</p>
 <h3>6.3 密度矩阵(density matrix)</h3>
-<p><strong>此处只是一个简单的定义，它是量子计算的核心表示，关于它的详细推导和推论请看“6.5通过密度矩阵来判断量子系统的状态<br>
-”</strong></p>
+<p><strong>此处只是一个简单的定义，它是量子计算的核心表示，关于它的详细推导和推论请看第七节：“通过密度矩阵来判断量子系统的状态”</strong></p>
 <p>一个纯态的量子系统，其量子态可以用态向量表示 $|\psi\rangle$ 。而几种纯态依照概率组成的量子态称为<strong>混合态</strong>。例如，假设一个量子系统处于纯态 $|\psi_1\rangle$ 和 $|\psi_2\rangle$ 的概率各为 50%，则这量子系统处于混合态。密度矩阵专门用来表示混合态。任何量子态，不管是纯态，还是混合态，都可以用密度矩阵表示。</p>
 <p><strong>注意</strong>：混合态与叠加态的概念不同。几种纯态通过量子叠加所组成的叠加态仍旧是纯态。例如， $(|\psi_1\rangle + |\psi_2\rangle)/\sqrt{2}$ 是一个纯态。</p>
 <p>假设一个量子系统处于纯态 $|\psi_1\rangle, |\psi_2\rangle, |\psi_3\rangle, \dots$ 的概率分别为 $w_1, w_2, w_3, \dots$ ，则这混合态量子系统的密度算符 $\rho$ 为</p>
@@ -431,7 +430,221 @@ $$\sum_i w_i = 1.$$
 </ul>
 <p>**混合可分离态：**对应 QCNN 中无量子关联的含噪量子态（如量子比特的独立噪声、退相干），这类态的量子特征与经典统计特征等价，QCNN 无法提取独特的量子关联信息；</p>
 <p>**混合纠缠态：**对应 QCNN 中含噪但仍保留量子纠缠的多体态（量子计算的核心资源），QCNN 的核心任务之一就是从混合纠缠态中提取鲁棒的量子纠缠特征，这是经典 CNN 无法实现的；</p>
-<h3>6.5通过密度矩阵来判断量子系统的状态</h3></div>
+<h2>7.通过密度矩阵来判断量子系统的状态</h2>
+<h3>7.1密度矩阵的引入</h3>
+<p>在使用密度矩阵之前，先补充一下前面没说清楚的密度矩阵的引入和相关性质。</p>
+<p><strong>内积与迹</strong>：<br>
+对线性算子 A, B： $\mathcal{H}\to\mathcal{H}$ ，迹的核心性质是循环不变性： $\text{Tr}(AB)=\text{Tr}(BA)$ ，且 $\text{Tr}(|\psi\rangle\langle\phi|)=\langle\phi|\psi\rangle$ ；</p>
+<p><strong>共轭转置</strong>：<br>
+对算子 A，其共轭转置 $A^{\dagger}$ 满足 $\langle\psi|A^{\dagger}|\phi\rangle=\langle\phi|A|\psi\rangle^{*}$ （*为复数共轭）。</p>
+<p><strong>纯态的密度矩阵（推导动机：统一期望值计算）</strong><br>
+对纯态 $|\psi\rangle$，任意可观测量（厄米算子） $\hat{O}$ 的期望值为：</p>
+$$\langle\hat{O}\rangle=\langle\psi|\hat{O}|\psi\rangle$$
+<p>利用迹的循环性质，可改写为：</p>
+$$\langle\hat{O}\rangle=\text{Tr}\left(|\psi\rangle\langle\psi|\hat{O}\right)=\text{Tr}\left(\hat{O}|\psi\rangle\langle\psi|\right)$$
+<p>定义纯态的密度矩阵：</p>
+<p>$$ \rho_{\text{pure}}=|\psi\rangle\langle\psi| $$</p>
+<p>此时期望值可统一表示为 $\langle\hat{O}\rangle=\text{Tr}(\hat{O}\rho)$</p>
+<p><strong>混合态的密度矩阵（推导动机：描述经典统计混合）</strong></p>
+<p>若系统并非处于单一纯态，而是以经典概率 $p_{i}$ 处于纯态 ${ |\psi_{i} \rangle }$ （满足 $\sum_{i} p_{i} = 1$ ， $p_{i} \geq 0$ ，且 $\langle \psi_{i} \vert \psi_{i} \rangle = 1$ ），这种“经典统计混合”无法用单一态矢量描述，需对纯态密度矩阵做统计平均：</p>
+<p>定义混合态的密度矩阵：</p>
+<p>$$
+\rho_{\text{mixed}} = \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert
+$$</p>
+<p>此时可观测量的期望值为各纯态期望值的统计平均：</p>
+<p>$$
+\begin{aligned}
+\langle \hat{O} \rangle &amp;= \sum_{i} p_{i} \langle \psi_{i} \vert \hat{O} \vert \psi_{i} \rangle \\
+&amp;= \sum_{i} p_{i} \text{Tr} \left( \hat{O} \vert \psi_{i} \rangle \langle \psi_{i} \vert \right) \\
+&amp;= \text{Tr} \left( \hat{O} \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert \right) \\
+&amp;= \text{Tr} (\hat{O} \rho)
+\end{aligned}
+$$</p>
+<p>这也满足我们的数学直觉——纯态是一个向量，那多个向量加权的混合态应该就可以用矩阵统一表示。</p>
+<h3>7.2密度矩阵的性质</h3>
+<p>密度矩阵的物理合法性由以下三个性质保证，且可从定义严格推导：</p>
+<p><strong>性质1：厄米性</strong>（ $\rho^{\dagger}=\rho$ ）</p>
+<p>推导：</p>
+<ul>
+<li>
+<p>对纯态密度矩阵：<br>
+$\rho^{\dagger} = (\vert\psi\rangle\langle\psi\vert)^{\dagger} = \langle\psi\vert^{\dagger}\vert\psi\rangle^{\dagger} = \vert\psi\rangle\langle\psi\vert = \rho$<br>
+（因为 $\vert\psi\rangle^{\dagger} = \langle\psi\vert,\ \langle\psi\vert^{\dagger} = \vert\psi\rangle$ ）；</p>
+</li>
+<li>
+<p>对混合态密度矩阵：</p>
+</li>
+</ul>
+$$\rho^{\dagger} = \left( \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi_{i}\vert \right)^{\dagger} = \sum_{i} p_{i}^{*}(\vert\psi_{i}\rangle\langle\psi_{i}\vert)^{\dagger}，  
+而 p_{i} 是经典概率（实数， p_{i}^{*} = p_{i} ）
+,因此$$
+<p>$$ \rho^{\dagger} = \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi_{i}\vert = \rho $$</p>
+<ul>
+<li>物理意义：<br>
+厄米性保证可观测量的期望值为实数（ $\langle\hat{O}\rangle = \text{Tr}(\hat{O}\rho) = \text{Tr}(\rho\hat{O}) = \text{Tr}((\hat{O}\rho)^{\dagger}) = \langle\hat{O}\rangle^{*}$ ）。</li>
+</ul>
+<hr>
+<p><strong>性质2：迹为1</strong>（ $\text{Tr}(\rho) = 1$ ）</p>
+<p>推导：</p>
+<ul>
+<li>
+<p>对纯态：<br>
+$\text{Tr}(\rho) = \text{Tr}(\vert\psi\rangle\langle\psi\vert) = \langle\psi\vert\psi\rangle = 1$ （归一化条件）；</p>
+</li>
+<li>
+<p>对混合态：<br>
+$\text{Tr}(\rho) = \text{Tr}\left( \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi_{i}\vert \right) = \sum_{i} p_{i}\text{Tr}(\vert\psi_{i}\rangle\langle\psi_{i}\vert) = \sum_{i} p_{i} \cdot 1 = 1$ （概率归一化）；</p>
+</li>
+<li>
+<p>物理意义：<br>
+总概率为1，是量子态的基本要求。</p>
+</li>
+</ul>
+<hr>
+<p><strong>性质3：正定性</strong>（所有本征值 $\lambda_{k} \geq 0$ ）</p>
+<p>推导：</p>
+<p>密度矩阵的本征方程为 $\rho \vert \phi_{k} \rangle = \lambda_{k} \vert \phi_{k} \rangle$ ，对任意归一化矢量 $\vert \phi \rangle \in \mathcal{H}$ ，有：</p>
+<p>$$
+\begin{aligned}
+\langle \phi \vert \rho \vert \phi \rangle &amp;= \langle \phi \vert \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert \phi \rangle \\
+&amp;= \sum_{i} p_{i} \vert \langle \psi_{i} \vert \phi \rangle \vert^{2} \geq 0
+\end{aligned}
+$$</p>
+<p>取 $\vert \phi \rangle = \vert \phi_{k} \rangle$ （本征矢量），则：</p>
+<p>$$
+\langle \phi_{k} \vert \rho \vert \phi_{k} \rangle = \lambda_{k} \langle \phi_{k} \vert \phi_{k} \rangle = \lambda_{k} \geq 0
+$$</p>
+<ul>
+<li>物理意义：<br>
+概率非负，保证测量结果的物理合理性。</li>
+</ul>
+<h3>7.3用密度矩阵判定纯态/混合态/完全混合态</h3>
+<p>核心判定量为 $\text{Tr}(\rho^{2})$ ，其取值直接反映量子态的“纯度”，以下严格推导其与态类型的关系：</p>
+<ul>
+<li>
+<strong>纯态的判定</strong>： $\text{Tr}(\rho^{2}) = 1$
+</li>
+</ul>
+<p>推导：</p>
+<p>纯态密度矩阵满足 $\rho = |\psi\rangle\langle\psi|$ ，因此：</p>
+<p>$$
+\begin{aligned}
+\rho^{2} &amp;= |\psi\rangle\langle\psi| \cdot |\psi\rangle\langle\psi| \\
+&amp;= |\psi\rangle (\langle\psi|\psi\rangle) \langle\psi| \\
+&amp;= |\psi\rangle \cdot 1 \cdot \langle\psi| \\
+&amp;= |\psi\rangle\langle\psi| = \rho
+\end{aligned}
+$$</p>
+<p>（利用了 $\langle\psi|\psi\rangle = 1$ ）</p>
+<p>对两边取迹：</p>
+<p>$$
+\text{Tr}(\rho^{2}) = \text{Tr}(\rho) = 1
+$$</p>
+<p><strong>逆命题也成立</strong>：若 $\text{Tr}(\rho^{2}) = 1$ ，结合正定性（ $\lambda_{k} \geq 0$ ）和迹为 1（ $\sum_{k} \lambda_{k} = 1$ ），由柯西不等式：</p>
+<p>$$
+\left( \sum_{k} \lambda_{k} \right)^{2} = 1 \leq \left( \sum_{k} 1^{2} \right) \left( \sum_{k} \lambda_{k}^{2} \right) = d \cdot \text{Tr}(\rho^{2}) = d
+$$</p>
+<p>当且仅当所有 $\lambda_{k}$ 中仅有一个为 1，其余为 0 时等号成立，即 $\rho$ 可表示为 $|\psi\rangle\langle\psi|$ （纯态）。</p>
+<ul>
+<li>
+<strong>混合态的判定</strong>： $0 &amp;lt; \text{Tr}(\rho^{2}) &amp;lt; 1$
+</li>
+</ul>
+<p>推导：</p>
+<p>混合态 $\rho = \sum_{i} p_{i}|\psi_{i}\rangle\langle\psi_{i}|$ （至少两个 $p_{i}&amp;gt;0$ ，且 ${ |\psi_{i}\rangle }$ 线性无关），由正定性和迹的循环性：</p>
+<p>$$
+\rho^{2} = \sum_{i} \sum_{j} p_{i} p_{j}|\psi_{i}\rangle\langle\psi_{i}|\psi_{j}\rangle\langle\psi_{j}| = \sum_{i} p_{i}^{2}|\psi_{i}\rangle\langle\psi_{i}| + \sum_{i \neq j} p_{i} p_{j}\langle\psi_{i}|\psi_{j}\rangle|\psi_{i}\rangle\langle\psi_{j}|
+$$</p>
+<p>取迹：</p>
+<p>$$
+\text{Tr}(\rho^{2}) = \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j}\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2}
+$$</p>
+<p>由施瓦茨不等式 $\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2} \leq 1$ ，且 $i \neq j$ 时 $\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2} &amp;lt; 1$ （线性无关），因此：</p>
+<p>$$
+\text{Tr}(\rho^{2}) &lt; \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j} = \left(\sum_{i} p_{i}\right)^{2} = 1
+$$</p>
+<p>同时， $\text{Tr}(\rho^{2}) = \sum_{k} \lambda_{k}^{2} &amp;gt; 0$ （本征值非负且和为 1），故 $0 &amp;lt; \text{Tr}(\rho^{2}) &amp;lt; 1$ 。</p>
+<ul>
+<li>
+<strong>完全混合态的判定</strong>： $\rho = \frac{I_{d}}{d}$ 且 $\text{Tr}(\rho^{2}) = \frac{1}{d}$
+</li>
+</ul>
+<p>推导：</p>
+<p>完全混合态是“所有正交基等概率”的混合态，其密度矩阵为单位矩阵的均分： $\rho = \frac{I_{d}}{d} $（$ I_{d}$ 为 $d$ 维单位矩阵）；</p>
+<ul>
+<li>验证性质：</li>
+</ul>
+<p>$\text{Tr}(\rho) = \text{Tr}\left(\frac{I_{d}}{d}\right) = \frac{1}{d} \cdot d = 1$ （满足迹为 1）；<br>
+$\rho^{2} = \left(\frac{I_{d}}{d}\right)^{2} = \frac{I_{d}}{d^{2}}$ ，因此 $\text{Tr}(\rho^{2}) = \frac{1}{d^{2}} \cdot d = \frac{1}{d}$ ；</p>
+<ul>
+<li>结论：完全混合态是混合态的特例，且 $\text{Tr}(\rho^{2})$ 取最小值（ $d$ 越大，混合度越高）。</li>
+</ul>
+<h3>7.4多体系统：可分离态/纠缠态的判定</h3>
+$$多体系统（以两体 \mathcal{H}_{AB} = \mathcal{H}_{A} \otimes \mathcal{H}_{B} 为例,
+ \dim\mathcal{H}_{A} = d_{A} ， \dim\mathcal{H}_{B} = d_{B} ）$$
+<p>的核心是“是否可拆分为子系统密度矩阵的张量积”，需先推导部分迹（提取子系统密度矩阵的工具），再推导判定规则。</p>
+<p><strong>前置：部分迹（Partial Trace）的数学定义</strong></p>
+<p>对两体密度矩阵 $ \rho_{AB} \in \mathcal{H}_{AB} $ ，其在子系统 $A$ 上的约化密度矩阵定义为：</p>
+<p>$$
+
+\rho_{A} = \text{Tr}_{B}(\rho_{AB}) = \sum_{k=1}^{d_{B}} \langle b_{k} | \rho_{AB} | b_{k} \rangle
+
+$$</p>
+<p>其中 ${ | b_{k} \rangle }$ 是 $\mathcal{H}_{B}$ 的一组正交完备基；</p>
+<p><strong>核心性质</strong>：对任意 $A$ 上的算子 $\hat{O}<em>{A}$ 和 $B$ 上的算子 $\hat{O}</em>{B}$ ，有：</p>
+<p>$$
+
+\begin{aligned}
+
+\text{Tr}\big( \hat{O}_{A} \otimes \hat{O}_{B} \cdot \rho_{AB} \big)
+
+&amp;amp;= \text{Tr}\Big( \hat{O}_{A} \cdot \text{Tr}_{B}\big( \rho_{AB} \cdot I_{A} \otimes \hat{O}_{B} \big) \Big)
+
+\end{aligned}
+
+$$</p>
+<p>（将两体算子的迹转化为单体算子的迹）</p>
+<hr>
+<p><strong>纯态多体系统的可分离/纠缠判定</strong></p>
+<ul>
+<li>
+<p>纯可分离态：<br>
+$\vert\psi_{AB}\rangle = \vert\psi_{A}\rangle \otimes \vert\psi_{B}\rangle$ ，<br>
+对应密度矩阵<br>
+$\rho_{AB} = \vert\psi_{A}\rangle\langle\psi_{A}\vert\otimes\vert\psi_{B}\rangle\langle\psi_{B}\vert = \rho_{A} \otimes \rho_{B}$ ；</p>
+</li>
+<li>
+<p>纯纠缠态：<br>
+无法将 $\vert\psi_{AB}\rangle$ 表示为子系统态的张量积。</p>
+</li>
+<li>
+<p>判定推导</p>
+</li>
+</ul>
+<p>核心判定：$\text{Tr}(\rho_{A}^{2}) = 1 \Longleftrightarrow \text{纯可分离态}$</p>
+<p><strong>推导</strong>：</p>
+<ol>
+<li>
+<p>若为纯可分离态：<br>
+$\rho_{A} = \text{Tr}<em>{B}(\rho</em>{A} \otimes \rho_{B}) = \rho_{A} \cdot \text{Tr}(\rho_{B}) = \rho_{A}$ （因 $\text{Tr}(\rho_{B}) = 1$ ），<br>
+且 $\rho_{A} = \vert\psi_{A}\rangle\langle\psi_{A} \vert$ （纯态），故 $\text{Tr}(\rho_{A}^{2}) = 1$ ；</p>
+</li>
+<li>
+<p>若 $\text{Tr}(\rho_{A}^{2}) = 1$ ：<br>
+则 $\rho_{A}$ 是纯态（ $\rho_{A} = \vert\psi_{A}\rangle\langle\psi_{A}\vert$ ），同理 $\rho_{B} = \vert\psi_{B}\rangle\langle\psi_{B}\vert$ ，<br>
+因此 $\rho_{AB} = \vert\psi_{A}\rangle\langle\psi_{A} \vert \otimes \vert\psi_{B}\rangle\langle\psi_{B}\vert$ （纯可分离态）；</p>
+</li>
+<li>
+<p>若为纯纠缠态：<br>
+$\rho_{A}$ 是混合态（ $\text{Tr}(\rho_{A}^{2}) &amp;lt; 1$ ），例如 <strong>Bell态</strong>：<br>
+$$ \vert\Phi^{+}\rangle = \frac{1}{\sqrt{2}}(\vert 00\rangle + \vert 11\rangle) $$<br>
+其约化密度矩阵为<br>
+$$ \rho_{A} = \frac{1}{2}(\vert 0\rangle\langle 0\vert + \vert 1\rangle\langle 1\vert) $$<br>
+计算得<br>
+$$ \text{Tr}(\rho_{A}^{2}) = \frac{1}{2} &lt; 1 $$<br>
+故为纠缠态。</p>
+</li>
+</ol></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
