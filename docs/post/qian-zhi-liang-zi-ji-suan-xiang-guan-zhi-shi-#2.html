@@ -448,37 +448,30 @@ $$\langle\hat{O}\rangle=\text{Tr}\left(|\psi\rangle\langle\psi|\hat{O}\right)=\t
 <p><strong>混合态的密度矩阵（推导动机：描述经典统计混合）</strong></p>
 <p>若系统并非处于单一纯态，而是以经典概率 $p_{i}$ 处于纯态 ${ |\psi_{i} \rangle }$ （满足 $\sum_{i} p_{i} = 1$ ， $p_{i} \geq 0$ ，且 $\langle \psi_{i} \vert \psi_{i} \rangle = 1$ ），这种“经典统计混合”无法用单一态矢量描述，需对纯态密度矩阵做统计平均：</p>
 <p>定义混合态的密度矩阵：</p>
-<p>$$
-\rho_{\text{mixed}} = \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert
-$$</p>
+$$\rho_{\text{mixed}} = \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert$$
 <p>此时可观测量的期望值为各纯态期望值的统计平均：</p>
-<p>$$
-\begin{aligned}
-\langle \hat{O} \rangle &amp;= \sum_{i} p_{i} \langle \psi_{i} \vert \hat{O} \vert \psi_{i} \rangle \\
-&amp;= \sum_{i} p_{i} \text{Tr} \left( \hat{O} \vert \psi_{i} \rangle \langle \psi_{i} \vert \right) \\
-&amp;= \text{Tr} \left( \hat{O} \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert \right) \\
+$$\begin{aligned}
+\langle \hat{O} \rangle &amp;= \sum_{i} p_{i} \langle \psi_{i} \vert \hat{O} \vert \psi_{i} \rangle \\\
+&amp;= \sum_{i} p_{i} \text{Tr} \left( \hat{O} \vert \psi_{i} \rangle \langle \psi_{i} \vert \right) \\\
+&amp;= \text{Tr} \left( \hat{O} \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert \right) \\\
 &amp;= \text{Tr} (\hat{O} \rho)
-\end{aligned}
-$$</p>
+\end{aligned}$$
 <p>这也满足我们的数学直觉——纯态是一个向量，那多个向量加权的混合态应该就可以用矩阵统一表示。</p>
 <h3>7.2密度矩阵的性质</h3>
 <p>密度矩阵的物理合法性由以下三个性质保证，且可从定义严格推导：</p>
 <p><strong>性质1：厄米性</strong>（ $\rho^{\dagger}=\rho$ ）</p>
 <p>推导：</p>
 <ul>
-<li>
-<p>对纯态密度矩阵：<br>
-$\rho^{\dagger} = (\vert\psi\rangle\langle\psi\vert)^{\dagger} = \langle\psi\vert^{\dagger}\vert\psi\rangle^{\dagger} = \vert\psi\rangle\langle\psi\vert = \rho$<br>
-（因为 $\vert\psi\rangle^{\dagger} = \langle\psi\vert,\ \langle\psi\vert^{\dagger} = \vert\psi\rangle$ ）；</p>
-</li>
-<li>
-<p>对混合态密度矩阵：</p>
-</li>
+<li>对纯态密度矩阵：</li>
+</ul>
+$$\rho^{\dagger} = (\vert\psi\rangle\langle\psi\vert)^{\dagger} = \langle\psi\vert^{\dagger}\vert\psi\rangle^{\dagger} = \vert\psi\rangle\langle\psi\vert = \rho$$
+<p>（因为 $\vert\psi\rangle^{\dagger} = \langle\psi\vert,\ \langle\psi\vert^{\dagger} = \vert\psi\rangle$ ）；</p>
+<ul>
+<li>对混合态密度矩阵：</li>
 </ul>
 $$\rho^{\dagger} = \left( \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi_{i}\vert \right)^{\dagger} = \sum_{i} p_{i}^{*}(\vert\psi_{i}\rangle\langle\psi_{i}\vert)^{\dagger}，  
 而 p_{i} 是经典概率（实数， p_{i}^{*} = p_{i} ）
-,因此$$
-<p>$$ \rho^{\dagger} = \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi_{i}\vert = \rho $$</p>
+,因此 \rho^{\dagger} = \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi_{i}\vert = \rho$$
 <ul>
 <li>物理意义：<br>
 厄米性保证可观测量的期望值为实数（ $\langle\hat{O}\rangle = \text{Tr}(\hat{O}\rho) = \text{Tr}(\rho\hat{O}) = \text{Tr}((\hat{O}\rho)^{\dagger}) = \langle\hat{O}\rangle^{*}$ ）。</li>
@@ -504,16 +497,12 @@ $\text{Tr}(\rho) = \text{Tr}\left( \sum_{i} p_{i}\vert\psi_{i}\rangle\langle\psi
 <p><strong>性质3：正定性</strong>（所有本征值 $\lambda_{k} \geq 0$ ）</p>
 <p>推导：</p>
 <p>密度矩阵的本征方程为 $\rho \vert \phi_{k} \rangle = \lambda_{k} \vert \phi_{k} \rangle$ ，对任意归一化矢量 $\vert \phi \rangle \in \mathcal{H}$ ，有：</p>
-<p>$$
-\begin{aligned}
-\langle \phi \vert \rho \vert \phi \rangle &amp;= \langle \phi \vert \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert \phi \rangle \\
+$$\begin{aligned}
+\langle \phi \vert \rho \vert \phi \rangle &amp;= \langle \phi \vert \sum_{i} p_{i} \vert \psi_{i} \rangle \langle \psi_{i} \vert \phi \rangle \\\
 &amp;= \sum_{i} p_{i} \vert \langle \psi_{i} \vert \phi \rangle \vert^{2} \geq 0
-\end{aligned}
-$$</p>
+\end{aligned}$$
 <p>取 $\vert \phi \rangle = \vert \phi_{k} \rangle$ （本征矢量），则：</p>
-<p>$$
-\langle \phi_{k} \vert \rho \vert \phi_{k} \rangle = \lambda_{k} \langle \phi_{k} \vert \phi_{k} \rangle = \lambda_{k} \geq 0
-$$</p>
+$$\langle \phi_{k} \vert \rho \vert \phi_{k} \rangle = \lambda_{k} \langle \phi_{k} \vert \phi_{k} \rangle = \lambda_{k} \geq 0$$
 <ul>
 <li>物理意义：<br>
 概率非负，保证测量结果的物理合理性。</li>
@@ -527,23 +516,17 @@ $$</p>
 </ul>
 <p>推导：</p>
 <p>纯态密度矩阵满足 $\rho = |\psi\rangle\langle\psi|$ ，因此：</p>
-<p>$$
-\begin{aligned}
-\rho^{2} &amp;= |\psi\rangle\langle\psi| \cdot |\psi\rangle\langle\psi| \\
-&amp;= |\psi\rangle (\langle\psi|\psi\rangle) \langle\psi| \\
-&amp;= |\psi\rangle \cdot 1 \cdot \langle\psi| \\
+$$\begin{aligned}
+\rho^{2} &amp;= |\psi\rangle\langle\psi| \cdot |\psi\rangle\langle\psi| \\\
+&amp;= |\psi\rangle (\langle\psi|\psi\rangle) \langle\psi| \\\
+&amp;= |\psi\rangle \cdot 1 \cdot \langle\psi| \\\
 &amp;= |\psi\rangle\langle\psi| = \rho
-\end{aligned}
-$$</p>
+\end{aligned}$$
 <p>（利用了 $\langle\psi|\psi\rangle = 1$ ）</p>
 <p>对两边取迹：</p>
-<p>$$
-\text{Tr}(\rho^{2}) = \text{Tr}(\rho) = 1
-$$</p>
+$$\text{Tr}(\rho^{2}) = \text{Tr}(\rho) = 1$$
 <p><strong>逆命题也成立</strong>：若 $\text{Tr}(\rho^{2}) = 1$ ，结合正定性（ $\lambda_{k} \geq 0$ ）和迹为 1（ $\sum_{k} \lambda_{k} = 1$ ），由柯西不等式：</p>
-<p>$$
-\left( \sum_{k} \lambda_{k} \right)^{2} = 1 \leq \left( \sum_{k} 1^{2} \right) \left( \sum_{k} \lambda_{k}^{2} \right) = d \cdot \text{Tr}(\rho^{2}) = d
-$$</p>
+$$\left( \sum_{k} \lambda_{k} \right)^{2} = 1 \leq \left( \sum_{k} 1^{2} \right) \left( \sum_{k} \lambda_{k}^{2} \right) = d \cdot \text{Tr}(\rho^{2}) = d$$
 <p>当且仅当所有 $\lambda_{k}$ 中仅有一个为 1，其余为 0 时等号成立，即 $\rho$ 可表示为 $|\psi\rangle\langle\psi|$ （纯态）。</p>
 <ul>
 <li>
@@ -552,26 +535,19 @@ $$</p>
 </ul>
 <p>推导：</p>
 <p>混合态 $\rho = \sum_{i} p_{i}|\psi_{i}\rangle\langle\psi_{i}|$ （至少两个 $p_{i}&amp;gt;0$ ，且 ${ |\psi_{i}\rangle }$ 线性无关），由正定性和迹的循环性：</p>
-<p>$$
-\rho^{2} = \sum_{i} \sum_{j} p_{i} p_{j}|\psi_{i}\rangle\langle\psi_{i}|\psi_{j}\rangle\langle\psi_{j}| = \sum_{i} p_{i}^{2}|\psi_{i}\rangle\langle\psi_{i}| + \sum_{i \neq j} p_{i} p_{j}\langle\psi_{i}|\psi_{j}\rangle|\psi_{i}\rangle\langle\psi_{j}|
-$$</p>
+$$\rho^{2} = \sum_{i} \sum_{j} p_{i} p_{j}|\psi_{i}\rangle\langle\psi_{i}|\psi_{j}\rangle\langle\psi_{j}| = \sum_{i} p_{i}^{2}|\psi_{i}\rangle\langle\psi_{i}| + \sum_{i \neq j} p_{i} p_{j}\langle\psi_{i}|\psi_{j}\rangle|\psi_{i}\rangle\langle\psi_{j}|$$
 <p>取迹：</p>
-<p>$$
-\text{Tr}(\rho^{2}) = \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j}\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2}
-$$</p>
+$$\text{Tr}(\rho^{2}) = \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j}\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2}$$
 <p>由施瓦茨不等式 $\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2} \leq 1$ ，且 $i \neq j$ 时 $\left|\left\langle\psi_{i} \mid \psi_{j}\right\rangle\right|^{2} &amp;lt; 1$ （线性无关），因此：</p>
-<p>$$
-\text{Tr}(\rho^{2}) &lt; \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j} = \left(\sum_{i} p_{i}\right)^{2} = 1
-$$</p>
+$$\text{Tr}(\rho^{2}) &lt; \sum_{i} p_{i}^{2} + \sum_{i \neq j} p_{i} p_{j} = \left(\sum_{i} p_{i}\right)^{2} = 1$$
 <p>同时， $\text{Tr}(\rho^{2}) = \sum_{k} \lambda_{k}^{2} &amp;gt; 0$ （本征值非负且和为 1），故 $0 &amp;lt; \text{Tr}(\rho^{2}) &amp;lt; 1$ 。</p>
 <ul>
 <li>
-<strong>完全混合态的判定</strong>：<br>
-$\rho = \frac{I_{d}}{d}$ 且 $\text{Tr}(\rho^{2}) = \frac{1}{d}$
+<strong>完全混合态的判定</strong>: $ \rho = \frac{I_{d}}{d} $ 且 $\text{Tr}(\rho^{2}) = \frac{1}{d}$
 </li>
 </ul>
 <p>推导：</p>
-<p>完全混合态是“所有正交基等概率”的混合态，其密度矩阵为单位矩阵的均分： $\rho = \frac{I_{d}}{d} $（ $ I_{d}$ 为 $d$ 维单位矩阵）；</p>
+<p>完全混合态是“所有正交基等概率”的混合态，其密度矩阵为单位矩阵的均分： $\rho = \frac{I_{d}}{d}$（ $ I_{d}$ 为 $d$ 维单位矩阵）；</p>
 <ul>
 <li>验证性质：</li>
 </ul>
@@ -586,24 +562,13 @@ $$多体系统（以两体 \mathcal{H}_{AB} = \mathcal{H}_{A} \otimes \mathcal{H
 <p>的核心是“是否可拆分为子系统密度矩阵的张量积”，需先推导部分迹（提取子系统密度矩阵的工具），再推导判定规则。</p>
 <p><strong>前置：部分迹（Partial Trace）的数学定义</strong></p>
 <p>对两体密度矩阵 $\rho_{AB} \in \mathcal{H}_{AB}$ ，其在子系统 $A$ 上的约化密度矩阵定义为：</p>
-<p>$$
-
-\rho_{A} = \text{Tr}_{B}(\rho_{AB}) = \sum_{k=1}^{d_{B}} \langle b_{k} | \rho_{AB} | b_{k} \rangle
-
-$$</p>
+$$\rho_{A} = \text{Tr}_{B}(\rho_{AB}) = \sum_{k=1}^{d_{B}} \langle b_{k} | \rho_{AB} | b_{k} \rangle$$
 <p>其中 ${ | b_{k} \rangle }$ 是 $\mathcal{H}_{B}$ 的一组正交完备基；</p>
 <p><strong>核心性质</strong>：对任意 $A$ 上的算子 $\hat{O}_A$ 和 $B$ 上的算子 $\hat{O}_B$ ，有：</p>
-<p>$$
-
-\begin{aligned}
-
-\text{Tr}\big( \hat{O}_{A} \otimes \hat{O}_{B} \cdot \rho_{AB} \big)
-
-&amp;amp;= \text{Tr}\Big( \hat{O}_{A} \cdot \text{Tr}_{B}\big( \rho_{AB} \cdot I_{A} \otimes \hat{O}_{B} \big) \Big)
-
-\end{aligned}
-
-$$</p>
+$$\begin{aligned}
+\text{Tr}\big( \hat{O}_{A} \otimes \hat{O}_{B} \cdot \rho_{AB} \big) 
+&amp;= \text{Tr}\Big( \hat{O}_{A} \cdot \text{Tr}_{B}\big( \rho_{AB} \cdot I_{A} \otimes \hat{O}_{B} \big) \Big)
+\end{aligned}$$
 <p>（将两体算子的迹转化为单体算子的迹）</p>
 <hr>
 <p><strong>纯态多体系统的可分离/纠缠判定</strong></p>
@@ -637,7 +602,7 @@ $$\rho_{A} = \text{Tr}_{B}(\rho_{A} \otimes \rho_{B}) = \rho_{A} \cdot \text{Tr}
 </li>
 <li>
 <p>若为纯纠缠态：<br>
-$\rho_{A}$ 是混合态（ $\text{Tr}(\rho_{A}^{2}) &amp;lt; 1$ ），例如 <strong>Bell态</strong>：</p>
+$\rho_{A}$ 是混合态 $\text{Tr}(\rho_{A}^{2}) &amp;lt; 1$ ，例如 <strong>Bell态</strong>：</p>
 </li>
 </ol>
 $$\vert\Phi^{+}\rangle = \frac{1}{\sqrt{2}}(\vert 00\rangle + \vert 11\rangle)$$
