@@ -570,7 +570,7 @@ $$</p>
 </li>
 </ul>
 <p>推导：</p>
-<p>完全混合态是“所有正交基等概率”的混合态，其密度矩阵为单位矩阵的均分： $\rho = \frac{I_{d}}{d} $（$ I_{d}$ 为 $d$ 维单位矩阵）；</p>
+<p>完全混合态是“所有正交基等概率”的混合态，其密度矩阵为单位矩阵的均分： $\rho = \frac{I_{d}}{d} $（ $ I_{d}$ 为 $d$ 维单位矩阵）；</p>
 <ul>
 <li>验证性质：</li>
 </ul>
@@ -584,14 +584,14 @@ $$多体系统（以两体 \mathcal{H}_{AB} = \mathcal{H}_{A} \otimes \mathcal{H
  \dim\mathcal{H}_{A} = d_{A} ， \dim\mathcal{H}_{B} = d_{B} ）$$
 <p>的核心是“是否可拆分为子系统密度矩阵的张量积”，需先推导部分迹（提取子系统密度矩阵的工具），再推导判定规则。</p>
 <p><strong>前置：部分迹（Partial Trace）的数学定义</strong></p>
-<p>对两体密度矩阵 $ \rho_{AB} \in \mathcal{H}_{AB} $ ，其在子系统 $A$ 上的约化密度矩阵定义为：</p>
+<p>对两体密度矩阵 $\rho_{AB} \in \mathcal{H}_{AB}$ ，其在子系统 $A$ 上的约化密度矩阵定义为：</p>
 <p>$$
 
 \rho_{A} = \text{Tr}_{B}(\rho_{AB}) = \sum_{k=1}^{d_{B}} \langle b_{k} | \rho_{AB} | b_{k} \rangle
 
 $$</p>
 <p>其中 ${ | b_{k} \rangle }$ 是 $\mathcal{H}_{B}$ 的一组正交完备基；</p>
-<p><strong>核心性质</strong>：对任意 $A$ 上的算子 $\hat{O}<em>{A}$ 和 $B$ 上的算子 $\hat{O}</em>{B}$ ，有：</p>
+<p><strong>核心性质</strong>：对任意 $A$ 上的算子 $\hat{O}_A$ 和 $B$ 上的算子 $\hat{O}_B$ ，有：</p>
 <p>$$
 
 \begin{aligned}
@@ -621,14 +621,14 @@ $\rho_{AB} = \vert\psi_{A}\rangle\langle\psi_{A}\vert\otimes\vert\psi_{B}\rangle
 <p>判定推导</p>
 </li>
 </ul>
-<p>核心判定：$\text{Tr}(\rho_{A}^{2}) = 1 \Longleftrightarrow \text{纯可分离态}$</p>
+<p>核心判定: $\text{Tr}(\rho_{A}^{2}) = 1 \Longleftrightarrow \text{纯可分离态}$</p>
 <p><strong>推导</strong>：</p>
 <ol>
-<li>
-<p>若为纯可分离态：<br>
-$\rho_{A} = \text{Tr}<em>{B}(\rho</em>{A} \otimes \rho_{B}) = \rho_{A} \cdot \text{Tr}(\rho_{B}) = \rho_{A}$ （因 $\text{Tr}(\rho_{B}) = 1$ ），<br>
-且 $\rho_{A} = \vert\psi_{A}\rangle\langle\psi_{A} \vert$ （纯态），故 $\text{Tr}(\rho_{A}^{2}) = 1$ ；</p>
-</li>
+<li>若为纯可分离态：</li>
+</ol>
+$$\rho_{A} = \text{Tr}_{B}(\rho_{A} \otimes \rho_{B}) = \rho_{A} \cdot \text{Tr}(\rho_{B}) = \rho_{A}$$
+<p>（因 $\text{Tr}(\rho_{B}) = 1$ ）,且 $\rho_{A} = \vert\psi_{A}\rangle\langle\psi_{A} \vert$ （纯态），故 $\text{Tr}(\rho_{A}^{2}) = 1$ ；</p>
+<ol start="2">
 <li>
 <p>若 $\text{Tr}(\rho_{A}^{2}) = 1$ ：<br>
 则 $\rho_{A}$ 是纯态（ $\rho_{A} = \vert\psi_{A}\rangle\langle\psi_{A}\vert$ ），同理 $\rho_{B} = \vert\psi_{B}\rangle\langle\psi_{B}\vert$ ，<br>
@@ -636,15 +636,68 @@ $\rho_{A} = \text{Tr}<em>{B}(\rho</em>{A} \otimes \rho_{B}) = \rho_{A} \cdot \te
 </li>
 <li>
 <p>若为纯纠缠态：<br>
-$\rho_{A}$ 是混合态（ $\text{Tr}(\rho_{A}^{2}) &amp;lt; 1$ ），例如 <strong>Bell态</strong>：<br>
-$$ \vert\Phi^{+}\rangle = \frac{1}{\sqrt{2}}(\vert 00\rangle + \vert 11\rangle) $$<br>
-其约化密度矩阵为<br>
-$$ \rho_{A} = \frac{1}{2}(\vert 0\rangle\langle 0\vert + \vert 1\rangle\langle 1\vert) $$<br>
-计算得<br>
-$$ \text{Tr}(\rho_{A}^{2}) = \frac{1}{2} &lt; 1 $$<br>
-故为纠缠态。</p>
+$\rho_{A}$ 是混合态（ $\text{Tr}(\rho_{A}^{2}) &amp;lt; 1$ ），例如 <strong>Bell态</strong>：</p>
 </li>
-</ol></div>
+</ol>
+$$\vert\Phi^{+}\rangle = \frac{1}{\sqrt{2}}(\vert 00\rangle + \vert 11\rangle)$$
+<p>其约化密度矩阵为</p>
+$$\rho_{A} = \frac{1}{2}(\vert 0\rangle\langle 0\vert + \vert 1\rangle\langle 1\vert)$$
+<p>计算得</p>
+$$\text{Tr}(\rho_{A}^{2}) = \frac{1}{2} &lt; 1$$
+<p>故为纠缠态。</p>
+<hr>
+<p><strong>混合态多体系统的可分离/纠缠判定（PPT判据）</strong></p>
+<p>定义</p>
+<ul>
+<li>混合可分离态：<br>
+密度矩阵可表示为子系统密度矩阵的凸组合（经典概率混合）：</li>
+</ul>
+$$\rho_{AB} = \sum_{i} p_i \, \rho_A^{(i)} \otimes \rho_B^{(i)} \quad (p_i \geq 0, \sum_i p_i = 1)$$
+<p>其中 $\rho_A^{(i)}$ 和 $\rho_B^{(i)}$ 分别为子系统 $A$ 和 $B$ 的密度矩阵。</p>
+<ul>
+<li>
+<p>混合纠缠态：<br>
+无法表示为上述形式的混合态。</p>
+</li>
+<li>
+<p>部分转置（Partial Transpose）的定义</p>
+</li>
+</ul>
+<p>对两体算子 $A \otimes B$ ，定义对 $A$ 子系统的部分转置为：</p>
+$$(A \otimes B)^{T_A} = A^T \otimes B$$
+<p>其中 $A^T$ 表示 $A$ 的转置（在给定基下的矩阵转置）。</p>
+<p>对任意两体密度矩阵（在给定基下展开）：</p>
+$$\rho_{AB} = \sum_{ijkl} c_{ijkl} \, |i\rangle\langle j| \otimes |k\rangle\langle l|$$
+<p>其对 $A$ 子系统的部分转置定义为：</p>
+$$\rho_{AB}^{T_A} = \sum_{ijkl} c_{ijkl} \, |j\rangle\langle i| \otimes |k\rangle\langle l|$$
+<p>（即仅对子系统 $A$ 对应的指标进行转置，而子系统 $B$ 不变。）</p>
+<ul>
+<li>PPT 判据推导（两体系统的充要条件）</li>
+</ul>
+<p>核心结论：<br>
+对于两体混合态 $\rho_{AB}$ ，其为可分离态的<strong>充要条件</strong>是：</p>
+$$\rho_{AB}^{T_A} \text{ 是正定矩阵（所有本征值 } \geq 0\text{）}$$
+<p>推导思路：</p>
+<ol>
+<li>若为混合可分离态：</li>
+</ol>
+$$\rho_{AB} = \sum_{i} p_i \, \rho_A^{(i)} \otimes \rho_B^{(i)}$$
+<p>则其部分转置为：</p>
+$$\rho_{AB}^{T_A} = \sum_{i} p_i \, (\rho_A^{(i)})^T \otimes \rho_B^{(i)}$$
+<p>由于 $\rho_A^{(i)}$ 是密度矩阵，故 $(\rho_A^{(i)})^T$ 也是正定矩阵（本征值非负），且 $\rho_B^{(i)}$ 也是正定矩阵。因此， $(\rho_A^{(i)})^T \otimes \rho_B^{(i)}$ 是正定矩阵，而正定矩阵的凸组合（加权和）仍为正定矩阵（本征值非负）。<br>
+结论：可分离态的部分转置矩阵 $\rho_{AB}^{T_A}$ 是正定的。</p>
+<ol start="2">
+<li>若 $\rho_{AB}^{T_A}$ 非正定（存在负本征值）：<br>
+则 $\rho_{AB}$ 不可能表示为子系统密度矩阵张量积的凸组合，即 $\rho_{AB}$ 为纠缠态。<br>
+逆否命题：若 $\rho_{AB}$ 是可分离态，则 $\rho_{AB}^{T_A}$ 必为正定；因此，部分转置出现负本征值（非正定）是纠缠态的标志。</li>
+</ol>
+<ul>
+<li>物理意义</li>
+</ul>
+<p>部分转置操作<strong>破坏了纠缠态的量子关联</strong>，导致密度矩阵出现负本征值（违背物理合法性）；而可分离态只具有经典关联，其部分转置不改变本征值的非负性。因此，PPT判据通过检查部分转置矩阵的正定性，可以有效区分两体系统的可分离态与纠缠态。</p>
+<ul>
+<li>注意：PPT判据对两体系统是充要条件，但对多体（三体及以上）系统只是纠缠的必要条件（存在束缚纠缠态，其部分转置仍正定，但却是纠缠态）。</li>
+</ul></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
