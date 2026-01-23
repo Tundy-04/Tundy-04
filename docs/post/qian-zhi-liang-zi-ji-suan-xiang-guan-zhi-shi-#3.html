@@ -297,7 +297,40 @@ $$T^{\dagger}=\left(\begin{array}{cc}1 &amp;0\\0&amp;e^{-i\pi /4}\end{array}\rig
 <div align="center">
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/ed9efc12-2159-471e-945e-3c45b9713127"><img src="https://github.com/user-attachments/assets/ed9efc12-2159-471e-945e-3c45b9713127" alt="Image" style="max-width: 100%;"></a></p>
 <p><em>Toffoli门的分解</em></p>
-</div></div>
+</div>
+<h2>4.量子线路</h2>
+<h3>4.1 可逆性</h3>
+<p>20 世纪中叶，人们发现计算机芯片的能耗会导致芯片发热，限制芯片集成度，进而影响计算机的运行速度。依据<a href="https://en.wikipedia.org/wiki/Landauer%27s_principle" rel="nofollow">兰道尔原理</a> ,芯片能耗主要源于计算中的不可逆操作。但在<a href="https://en.wikipedia.org/wiki/Reversible_computing" rel="nofollow">可逆计算</a>中，使用的能量很低，熵的增加会最小化，换句话说，它几乎不会产生额外的热。</p>
+<p>我们可能已经发现，经典逻辑门和量子逻辑门的一个区别在于，经典逻辑门有时是不可逆的（例如AND门的输出0对应00，10，01三个输入状态，我们无法判断哪一个是真正的输入态），而量子逻辑门必须是可逆的（因为幺正变换是可逆的，且有 $U^{-1}=U^\dagger$ ）。</p>
+<p>但其实任意的经典计算都可以通过<a href="https://en.wikipedia.org/wiki/Fredkin_gate" rel="nofollow">Fredkin门</a>构造成为可逆的计算，只是需要额外的控制比特。</p>
+<p>了解到经典计算线路都可以改造成可逆计算线路，逻辑门由矩阵表示后。结合量子线路所有的量子门都是幺正可逆的，我们就知道，量子线路能够实现的计算模型是经典计算的一个超集。</p>
+<p>事实上，我们相信对于量子线路多项式时间可以解决的问题 BQP 集合是严格大于经典线路多项式时间可以解决的问题 P 集合的，也即量子计算具有本质上超越经典计算的优势。</p>
+<h3>4.2 不可克隆定理</h3>
+<p>不可克隆定理指出：未知的量子态 $|\psi\rangle$ 不可能通过酉变换复制信息。换言之，不存在满足形式如 $U|0, \psi\rangle = |\psi, \psi\rangle$ 的量子门，对任意 $|\psi\rangle$ 成立：</p>
+<p>反证法，取正交的两个量子态 $|\psi\rangle, |\varphi\rangle$ ，则：</p>
+$$\begin{aligned}
+U|0, \psi\rangle = |\psi, \psi\rangle \\\
+U|0, \varphi\rangle = |\varphi, \varphi\rangle \\\
+U|0, \frac{1}{\sqrt{2}}(|\psi\rangle + |\varphi\rangle) &amp;= \frac{1}{\sqrt{2}}(U|0, \psi\rangle + U|0, \varphi\rangle) \\\
+&amp;= \frac{1}{\sqrt{2}}(|\psi, \psi\rangle + |\varphi, \varphi\rangle) \quad (1) \\\
+U|0, \frac{1}{\sqrt{2}}(|\psi\rangle + |\varphi\rangle) &amp;= \frac{1}{2}(|\psi\rangle + |\varphi\rangle)(|\psi\rangle + |\varphi\rangle) \\\
+&amp;= \frac{1}{2}(|\psi, \psi\rangle + |\psi, \varphi\rangle + |\varphi, \psi\rangle + |\varphi, \varphi\rangle) \quad (2)
+\end{aligned}$$
+<p>比较(1),(2)系数，导出矛盾。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>一个ket中写几个量子态的写法就是张量积（中间也可以逗号隔开，比如上面这种写法），直接写在一起类似乘法表示的也是张量积，有些地方也叫直积、克罗克积，满足分配律。</p>
+</div>
+<ul>
+<li>
+<p>不可克隆定理指出：不存在酉变换，可以复制任意量子态的信息。</p>
+</li>
+<li>
+<p>如果未知量子态取值局限在 $|0\rangle$ 和 $|1\rangle$，通过 CNOT 门就能复制：</p>
+</li>
+</ul>
+$$|i, 0 \rangle \xrightarrow{U_{CNOT}} |i, i \oplus 0 \rangle = |i, i \rangle$$
+<ul>
+<li>类似还有“不可删除定理”，一种理解是：酉变换为可逆计算，因而信息不增不减。</li>
+</ul></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
