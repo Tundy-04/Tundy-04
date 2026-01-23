@@ -111,7 +111,34 @@ $$f:\{0,1\}^n \to \{0,1\}^l$$
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/80d660d2-956e-436e-81dc-38c5b65eb230"><img src="https://github.com/user-attachments/assets/80d660d2-956e-436e-81dc-38c5b65eb230" alt="Image" style="max-width: 100%;"></a></p>
 <p><em>量子计算过程</em></p>
 </div>
-接下来，我们将具体介绍不同类型的量子门，并演示他们如何组合成一些量子电路。
+<h4>经典计算与量子计算对比</h4>
+<p>数据和运算是计算机的两个重要部分。</p>
+<p><strong>数据单位</strong></p>
+<ul>
+<li>
+<p><strong>经典计算</strong>：数据单位为<strong>比特 (bit)</strong>。</p>
+<ul>
+<li>取值：0 或 1。</li>
+<li>物理实现：由二极管的通电/断电实现。</li>
+</ul>
+</li>
+<li>
+<p><strong>量子计算</strong>：数据单位为<strong>量子比特 (qubit)</strong>。</p>
+<ul>
+<li>取值：Bloch球面向量，为无穷集。</li>
+<li>物理实现：由偏振光子、自旋 $\frac{1}{2}$ 粒子等实现。</li>
+</ul>
+</li>
+</ul>
+<p><strong>运算方式</strong></p>
+<ul>
+<li><strong>经典计算</strong>：运算使用<strong>逻辑门</strong>，通过电路实现。</li>
+<li><strong>量子计算</strong>：运算使用<strong>量子门</strong>，通过磁场等方式实现。</li>
+<li><strong>量子门</strong>：对应薛定谔方程的时间演化算子，是一个酉变换。但在量子电路中常简化为常量矩阵，属于理想化模型。</li>
+<li><strong>经典电路</strong>：具有现实物理意义，电路图与实际连线方式直接相关，运算在<strong>空间上</strong>连接。</li>
+<li><strong>量子电路</strong>：仅是运算过程的抽象表示，电路图与物理实现方式无直接关联，运算在<strong>时间上</strong>连接。</li>
+</ul>
+<p>接下来，我们将具体介绍不同类型的量子门，并演示他们如何组合成一些量子电路。</p>
 <h2>2.量子比特门</h2>
 <h3>2.1单量子比特门</h3>
 <p>单量子比特门介绍</p>
@@ -149,6 +176,22 @@ $H|+\rangle = |0\rangle$， $H|-\rangle = |1\rangle$ → H门也是自逆门（ 
 <p>在Bloch球上，H门等价于绕y轴旋转 $\frac{\pi}{2}$ 角，将z轴的极点（ $|0\rangle/|1\rangle$ ）转到x轴的极点（ $|+\rangle/|-\rangle$ ）。</p>
 <p>QCNN中的应用：</p>
 <p>H门是量子特征提取的起点，通过将量子比特置于叠加态，让量子卷积核能同时作用于多个基态，提取更丰富的量子关联特征。</p>
+<hr>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/68791d85-a312-48e2-bb78-a65f805cd592"><img src="https://github.com/user-attachments/assets/68791d85-a312-48e2-bb78-a65f805cd592" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>常用单量子门</em></p>
+</div>
+<ul>
+<li><strong>Y门的生成</strong>：Y门可以由X门和Z门组合生成，其关系式为(Y = ZX)。</li>
+<li><strong>X门的别名</strong>：X门在量子计算中也常被称为<strong>反门</strong>或<strong>非门</strong> (Negation Gate)。</li>
+<li><strong>狄拉克符号读法</strong>：
+<ul>
+<li>基本规则为 (|像⟩⟨原像|)。</li>
+<li>示例：对于Hadamard门 (H门)，其作用可以表示为 (|0⟩ + |1⟩)⟨0|。这表示该门作用在基态|0⟩上后，会得到一个叠加态（或纠缠态|0⟩ + |1⟩。</li>
+</ul>
+</li>
+</ul>
+<hr>
 <h4>Phase门（S门）——π/2相位门</h4>
 <p>S门是相位调控门，核心作用是对 $|1\rangle$ 态引入 $\pi/2$ （90°）的相位翻转，不改变量子比特的测量概率，只改变相位。</p>
 <p>矩阵形式：</p>
@@ -194,7 +237,67 @@ $$U_1 \cong R_{\hat{n}}(\theta),$$
 <p>如果我们只能进行绕固定轴的旋转，我们仍然可以实现任意单量子比特门的幺正变化。这里我们有以下非常有用的定理：</p>
 <p><strong>定理</strong>：任意作用在单量子比特上的幺正操作 $U_1$ ，都可以分解为绕任意2根固定的互相垂直的轴的旋转。以 $y$ 轴和 $z$ 轴为例，我们有：</p>
 $$U_1 \cong R_z(\beta) R_y(\gamma) R_z(\delta),$$
-<p>其中 $\beta , \gamma , \delta$ 由 $U_1$ 决定。</p></div>
+<p>其中 $\beta , \gamma , \delta$ 由 $U_1$ 决定。</p>
+<h3>2.2两量子比特门</h3>
+<p>如果我们只能使用单量子比特门，那么能做的事情是相当有限的，因为每个量子比特都相互独立。为了充分利用量子力学的特性，我们需要考虑作用在多个量子比特上的量子门。本节考虑作用在两个量子比特上的量子门。数学上，两量子比特门只是一个4维的幺正矩阵。这里我们着重介绍一个特别重要的两量子比特门——受控非门 (controlled NOT 或者 CNOT)。</p>
+<p>由于幺正变换是一个线性变换，我们只需要考察基向量在CNOT的变换，即可完全确定这个幺正变换。这是因为</p>
+$$\begin{aligned}\mathrm{CNOT}|\psi\rangle &amp;= \mathrm{CNOT}(\alpha|00\rangle+\beta|01\rangle+\gamma|10\rangle+\delta|11\rangle)\\&amp;=\alpha \mathrm{CNOT}|00\rangle+\beta \mathrm{CNOT}|01\rangle+\gamma \mathrm{CNOT}|10\rangle+\delta \mathrm{CNOT}|11\rangle)\end{aligned}$$
+<p>如果我们定义CNOT对基向量做了以下变换：</p>
+$$\begin{aligned}|00\rangle &amp;\rightarrow|00\rangle,\\|01\rangle &amp;\rightarrow|01\rangle,\\|10\rangle &amp;\rightarrow|11\rangle,\\|11\rangle &amp;\rightarrow|10\rangle,\end{aligned}$$
+<p>那么CNOT $|\psi\rangle$ 的状态就完全确定了。</p>
+<p>我们可以发现，当第一个量子比特处在 $|0\rangle$ 时，第二个量子比特的状态不变；如果第一个量子比特处于 $|1\rangle $ 态时，那么第二个量子比特状态发生翻转。这就像是第一个量子比特控制了第二个量子比特，这就是“受控”一词的来源。因此，第一个量子比特也叫控制比特（Control或者C），第二个量子比特称为目标比特（Target或者T）。将CNOT写成矩阵的形式，我们就有：</p>
+$$\mathrm{CNOT}=\begin{pmatrix}1&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0\\0&amp;0&amp;0&amp;1\\0&amp;0&amp;1&amp;0\end{pmatrix},$$
+<p>其中第1-4列分别对应 $|00\rangle$ ， $|01\rangle$ ， $|10\rangle$ ， $|11\rangle$ 。通常，我们用以下符号来表示CNOT：</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/af3b111f-fbe3-402a-a2b7-4fb8240201c3"><img src="https://github.com/user-attachments/assets/af3b111f-fbe3-402a-a2b7-4fb8240201c3" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>CNOT门</em></p>
+</div>
+<p>其中，●所在的横线代表控制量子比特，⊕所在的横线代表目标量子比特。</p>
+<p>CNOT门一个重要的作用就是制备纠缠态。考虑三个量子比特初始制备于 $|000\rangle$ 态（可以通过分别对三个量子比特进行Z的测量来完成），那么我们就能通过下图所示的电路来制备3比特的GHZ态：</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/b38c4327-5c79-4051-9306-708dc3644d0b"><img src="https://github.com/user-attachments/assets/b38c4327-5c79-4051-9306-708dc3644d0b" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>GHZ态的制备电路</em></p>
+</div>
+<ul>
+<li>GHZ态的制备：经过第一个H门后，量子态变为</li>
+</ul>
+$$|\psi\rangle_{1}=1 / \sqrt{2}(|0\rangle+|1\rangle)|00\rangle=1 / \sqrt{2}(|0\rangle|00\rangle+|1\rangle|00\rangle),$$
+<p>经过第一个CNOT门后，量子态变成</p>
+$$|\psi\rangle_{2}=1 / \sqrt{2}(|0\rangle|00\rangle+|1\rangle|10\rangle)=1 / \sqrt{2}(|00\rangle+|11\rangle)|0\rangle,$$
+<p>经过第二个CNOT门后，量子态变成</p>
+$$|\psi\rangle_{3}=1 / \sqrt{2}(|000\rangle+|111\rangle)。$$
+<hr>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/2a7f2dcc-7bc5-4c4e-80f4-d5d35c06627d"><img src="https://github.com/user-attachments/assets/2a7f2dcc-7bc5-4c4e-80f4-d5d35c06627d" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>量子门记号和矩阵汇总</em></p>
+<p><a href="https://en.wikipedia.org/wiki/Quantum_logic_gate#Serially_wired_gates" rel="nofollow">更多写法和规则请查阅维基百科</a></p>
+</div>
+<h2>3.量子门的普适性（universality）</h2>
+<p>正如经典逻辑电路都可以用NAND门来构造一样，对量子电路，我们也希望可以找到一个固定的量子门的集合，并通过这个集合中的量子门来构造所有的量子电路。但是注意，这里的挑战在于，幺正变换是连续变换，而给定的一个量子门集合，有限个量子门所能实现的幺正变换数量是有限的。</p>
+<p>但实际上，我们仍然可以用有限的量子门“足够好”地近似任意幺正变换。这里我们不加证明地给出以下重要定理：</p>
+<p><strong>量子普适性定理</strong>：任意作用在n个量子比特上的幺正变换 $U_{n}$ ，都可以拆分成包含 $m=O(4^{n})$ 个单量子比特门和CNOT门电路。更进一步，我们可以仅通过{H, S, T和CNOT}这组有限个量子门所组成的电路 $\tilde{U}<em>{n}$ 来近似这m个量子门组成的电路 $U</em>{n}$ ，所需要H, S, T和CNOT量子门的总数为 $O(m\log(m/\epsilon))$ ，其中 $\epsilon$ 为 $U_{n}$ 与 $\tilde{U}_{n}$ 间的误差。{H, S, T和CNOT}称为<strong>普适门集</strong>（universal gate set）</p>
+<p>这样，我们可以通过增加少量的量子门，使量子电路产生的幺正变化和目标幺正变换之间的差距指数地减少！</p>
+<p>💡<strong>例子：Toffoli门</strong>。这种门可以看成是CNOT门的一种拓展——它有两个控制量子比特和一个目标量子比特。只有当两个控制量子比特处于 $|11\rangle$ 态时，目标量子比特才会翻转。它的电路符号如下图所示，其矩阵表示是：</p>
+$$\text{Toffoli}=\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0
+\end{pmatrix}$$
+<ul>
+<li>作用：用 Toffoli 门和 $X$ 门可以生成基本逻辑门的“与”，“或”和“非”，继而构造所有经典逻辑门。</li>
+<li>Toffoli 门的分解：正如普适性定律所陈述的，我们可以通过H，T，S和CNOT门来构造Toffoli门，具体的电路图如下图所示，其中</li>
+</ul>
+$$T^{\dagger}=\left(\begin{array}{cc}1 &amp;0\\0&amp;e^{-i\pi /4}\end{array}\right)=S^{3}T_{\circ}$$
+<p>称为T的共轭。注意，这里对Toffoli的构造是精确无误差的。</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/ed9efc12-2159-471e-945e-3c45b9713127"><img src="https://github.com/user-attachments/assets/ed9efc12-2159-471e-945e-3c45b9713127" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>Toffoli门的分解</em></p>
+</div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
