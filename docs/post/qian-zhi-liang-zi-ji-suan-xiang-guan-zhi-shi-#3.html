@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark_dimmed" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 量子线路 (Quantum Circuit)
+## 1.逻辑门与电路
+量子计算通过量子电路来实现。">
+<meta property="og:title" content="前置量子计算相关知识#3">
+<meta property="og:description" content="# 量子线路 (Quantum Circuit)
+## 1.逻辑门与电路
+量子计算通过量子电路来实现。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://Tundy-04.github.io/Tundy-04/post/qian-zhi-liang-zi-ji-suan-xiang-guan-zhi-shi-%233.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
+<title>前置量子计算相关知识#3</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">前置量子计算相关知识#3</h1>
+<div class="title-right">
+    <a href="https://Tundy-04.github.io/Tundy-04" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/Tundy-04/Tundy-04/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>量子线路 (Quantum Circuit)</h1>
+<h2>1.逻辑门与电路</h2>
+<p>量子计算通过量子电路来实现。量子电路的本质是幺正变换和测量的组合。在物理上，我们无法直接实现过分复杂的幺正变换，所以期望通过一些容易实现的幺正变化来产生更复杂的幺正变换，这些较容易实现的变换则称为量子门。这个过程就类似于通过最基本的逻辑操作（与非门）来搭建大规模的数字电路一样。在本小节，我们将学习最基本的量子门，并简单了解一下如何通过她们来搭建复杂的量子电路。</p>
+<h3>1.1 经典逻辑门与电路</h3>
+<p>在了解量子电路之前我们可以先看一下经典计算是如何进行的。在本节中，我们介绍一种直观的经典计算模型，即电路模型。电路模型不只是一种数学模型，它也是真实计算机的实际物理实现方式。一个电路由导线和门组成，它们分别携带信息并执行简单的计算任务。例如，下图显示了一些简单的电路，他们只包含单个逻辑门进行逻辑上的非（NOT），与(AND)，或(OR) ，异或（XOR），NAND（与非）和或非（NOR）操作，称为量子门。输入和输出都只能是0（False）或者1(True)，称为经典比特（简称比特，和量子比特进行区分）。电路可以代表比特在空间中的运动，或者经过一段时间的状态变换。</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/f8c1ea2b-f9f0-4348-9592-0f95dc57cf47"><img src="https://github.com/user-attachments/assets/f8c1ea2b-f9f0-4348-9592-0f95dc57cf47" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>经典逻辑门</em></p>
+</div>
+- 例: 给出一个稍微复杂点的电路，由两个逻辑门组成，称为半加器（half-adder）。我们可以验证以下输入输出关系：
+$$\begin{array}{l}
+x=0, y=0 \rightarrow c=0, x \oplus y=0 \\\
+x=0, y=1 \rightarrow c=0, x \oplus y=1
+\end{array}$$
+<p>而这正是两个比特相加的结果（包括进位比特）。这个电路称为半加器的原因是，其输入并没有包含进位比特。</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/ace40de5-639a-4837-989e-9093550824db"><img src="https://github.com/user-attachments/assets/ace40de5-639a-4837-989e-9093550824db" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>半加器电路，其中c是进位符</em></p>
+</div>
+我们可以发现，这里的“电路”是指代数字逻辑电路，与高中所学到的电阻、电源组成的电路有一定的区别。真实的计算机（包括电脑，手机等）通过使用高级语言的编程来实现算法功能。在计算机芯片层面，这些高级语言（Java, C, Python等）写的程序最终被转换（编译）成二进制数据，驱动CPU上一个个的逻辑门，并最终完成算法运算（本质是逻辑运算）。
+<p>更一般地，一个电路可以有很多输入和输出比特。任意一般的逻辑函数可以定义为</p>
+$$f:\{0,1\}^n \to \{0,1\}^l$$
+<p>例如，半加器就是一个 $\{ 0,1\}^2$ 到 $\{0,1\}^2$ 的逻辑函数。</p>
+<p>这里有一个重要的结论:</p>
+<ul>
+<li>(经典电路)普适性定理：任意逻辑函数，都可以由仅仅包含NAND门的电路来实现。我们称NAND门对经典逻辑计算是普适（universal）的。</li>
+</ul>
+<p>由于篇幅限制，我们这里不给出相关的证明，有兴趣的读者可以参考任意一本数字逻辑电路的教科书。这个定理的意义在于，我们只需要实现一种类型的逻辑门，就能实现所有的逻辑电路，这将极大地简化理论分析和工程实现。</p>
+<h3>1.2 量子逻辑门与电路</h3>
+<p>与经典计算类似，在本节中，我们提供量子电路这种语言来描述量子计算过程的离散单元（量子门）的集合。对量子信息的处理本质上是一种幺正变换（配合额外的测量）。在我们考虑量子电路时，不失一般性，总是将测量放到整个计算过程的最后。这样，我们也可以仅将整个幺正变换看成是量子电路。这样，通用的量子计算过程可以如下图所示：</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/80d660d2-956e-436e-81dc-38c5b65eb230"><img src="https://github.com/user-attachments/assets/80d660d2-956e-436e-81dc-38c5b65eb230" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>量子计算过程</em></p>
+</div>
+接下来，我们将具体介绍不同类型的量子门，并演示他们如何组合成一些量子电路。
+<h2>2.量子比特门</h2>
+<h3>2.1单量子比特门</h3>
+<p>单量子比特门介绍</p>
+<p>与经典逻辑门不同，量子电路对单个比特的操作要丰富得多。直觉地理解，经典比特对应 $|0\rangle$ 和 $|1\rangle$ 两个量子态，在Bloch球上分别是北极和南极，唯一能涉及的操作也就是在这两个点之间翻转（NOT门）。与之不同，单量子比特态却对应整个球面，我们可以通过变换连接球面上任意两个点。一些最重要的量子门包括泡利（Pauli）矩阵：</p>
+<h4>泡利（Pauli）矩阵</h4>
+$$X = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix},\quad Y = \begin{pmatrix} 0 &amp; -i \\ i &amp; 0 \end{pmatrix},\quad Z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}$$
+<p>要注意 $X$ ， $Y$ 和 $Z$ 这三个矩阵既是幺正的，又是厄米的。所以我们可以将他们看做量子门，也可以对他们进行测量。</p>
+<ul>
+<li>
+<p>作为量子门的作用：X 门、Y 门、Z 门是量子电路的 “基础逻辑门”，X 门对应经典的 “非门”，负责翻转量子比特状态；Z 门负责调控相位；</p>
+</li>
+<li>
+<p>作为观测算子：测量量子比特在X、Y、Z方向的自旋，本质就是测量对应的泡利矩阵的本征值；</p>
+</li>
+<li>
+<p>构建其他量子门：很多复杂单比特门可以用泡利矩阵的线性组合表示，以便理解具体的变换方式</p>
+</li>
+</ul>
+<p>另外三个在量子计算中极为重要的量子门包括:</p>
+$$H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{pmatrix},\quad S = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; i \end{pmatrix},\quad T = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; e^{i\pi/4} \end{pmatrix}$$
+<p>H、S、T门是单量子比特的三类相位与叠加调控门，均为幺正矩阵，是量子计算中构建叠加态、调控量子相位的核心工具，常与泡利门配合使用。</p>
+<h4>Hadamard门（H门）——叠加态构建门</h4>
+<p>H门是量子计算中最常用的门，核心作用是将量子比特从计算基（ $|0\rangle/|1\rangle$ ）转换到Hadamard基（ $|+\rangle/|-\rangle$ ），产生均匀叠加态。</p>
+<p>矩阵形式：</p>
+$$H = \frac{1}{\sqrt{2}}\begin{pmatrix}1 &amp; 1 \\ 1 &amp; -1\end{pmatrix}$$
+<p>从泡利矩阵角度， $H = \frac{1}{\sqrt{2}}(\sigma_{x} + \sigma_{z})$ ，完美体现了泡利矩阵的组合价值。</p>
+<p>核心作用（态演化）：</p>
+<ul>
+<li>$H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) = |+\rangle$</li>
+<li>$H|1\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) = |-\rangle$</li>
+<li>
+$H|+\rangle = |0\rangle$， $H|-\rangle = |1\rangle$ → H门也是自逆门（ $H^2 = I$ ）</li>
+</ul>
+<p>物理意义：</p>
+<p>在Bloch球上，H门等价于绕y轴旋转 $\frac{\pi}{2}$ 角，将z轴的极点（ $|0\rangle/|1\rangle$ ）转到x轴的极点（ $|+\rangle/|-\rangle$ ）。</p>
+<p>QCNN中的应用：</p>
+<p>H门是量子特征提取的起点，通过将量子比特置于叠加态，让量子卷积核能同时作用于多个基态，提取更丰富的量子关联特征。</p>
+<h4>Phase门（S门）——π/2相位门</h4>
+<p>S门是相位调控门，核心作用是对 $|1\rangle$ 态引入 $\pi/2$ （90°）的相位翻转，不改变量子比特的测量概率，只改变相位。</p>
+<p>矩阵形式：</p>
+$$S = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; i\end{pmatrix}$$
+<p>其中 $i = e^{i\pi/2}$ ，对应相位因子。</p>
+<p>核心作用（态演化）：</p>
+<ul>
+<li>$S|0\rangle = |0\rangle$</li>
+<li>$S|1\rangle = i|1\rangle = e^{i\pi/2}|1\rangle$</li>
+<li>S门不是自逆门，其逆门为</li>
+</ul>
+$$S^{\dagger} = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; -i\end{pmatrix}（共轭转置）,满足 S \cdot S^{\dagger} = I$$
+<p>物理意义：</p>
+<p>在Bloch球上，S门等价于绕z轴旋转 $\pi/2$ 角，只改变量子态的相位，不改变其在z轴上的投影。</p>
+<h4>π/8门（T门）——π/4相位门</h4>
+<p>T门是S门的“细分版”，核心作用是对 $|1\rangle$ 态引入 $\pi/4$ （45°）的相位翻转，是量子计算中实现任意相位旋转的基础门（与H门、S门共同构成单比特门的通用集）。</p>
+<p>矩阵形式：</p>
+$$T = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; e^{i\pi/4}\end{pmatrix} = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; \frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}\end{pmatrix}$$
+<p>核心作用（态演化）：</p>
+<ul>
+<li>$T|0\rangle = |0\rangle$</li>
+<li>$T|1\rangle = e^{i\pi/4}|1\rangle$</li>
+<li>逆门为</li>
+</ul>
+$$T^{\dagger} = \begin{pmatrix}1 &amp; 0 \\ 0 &amp; e^{-i\pi/4}\end{pmatrix} ,且T^{8} = I（连续施加8次等价于单位操作）$$
+<p>物理意义：</p>
+<p>在Bloch球上，T门等价于绕z轴旋转 $\pi/4$ 角，是实现高精度相位调控的核心组件。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>为什么绕Z轴旋转？<br>
+量子→经典中的测量是测量Z轴上的投影，绕Z旋转可以在不改变概率的情况下改变相位，改变相位在组合其他门时有特殊的算法意义。</p>
+</div>
+<hr>
+<p>为了更深入地理解单量子比特门，我们可以用泡利矩阵定义如下三个幺正矩阵：</p>
+$$R_x(\theta) = \cos(\theta/2)I - i\sin(\theta/2)X = \begin{pmatrix} \cos(\theta/2) &amp; -i\sin(\theta/2) \\ -i\sin(\theta/2) &amp; \cos(\theta/2) \end{pmatrix},$$
+$$R_y(\theta) = \cos(\theta/2)I - i\sin(\theta/2)Y = \begin{pmatrix} \cos(\theta/2) &amp; -\sin(\theta/2) \\ \sin(\theta/2) &amp; \cos(\theta/2) \end{pmatrix},$$
+$$R_z(\theta) = \cos(\theta/2)I - i\sin(\theta/2)Z = \begin{pmatrix} e^{-i\theta/2} &amp; 0 \\ 0 &amp; e^{i\theta/2} \end{pmatrix}.$$
+<p>这三个矩阵分别称为绕Bloch球上的 $x,y,z$ 轴顺时针旋转 $\theta$ 角。我们以 $R_z$ 为例：</p>
+$$R_z(\alpha)\big(\cos(\theta/2)|0\rangle + \sin(\theta/2)e^{i\varphi}|1\rangle\big) \cong \cos(\theta/2)|0\rangle + \sin(\theta/2)e^{i(\varphi+\theta)}|1\rangle$$
+<p>而这正是量子态在Bloch球上绕着Z轴顺时针旋转了 $\theta$ 。 $R_x$ ， $R_y$ 的验证要复杂些，我们这边不做展开。除了 $x,y,z$ 轴的旋转外，我们也可以找到绕任意单位向量 $\hat{n}=(n_x,n_y,n_z)$ 旋转的单量子比特门：</p>
+$$R_{\hat{n}}(\theta) = \cos(\theta/2)I + i\sin(\theta/2)\big(n_xX + n_yY + n_zZ\big)$$
+<p>事实上，任意单量子比特门都可以看成是绕某根特定轴 $\hat{n}$ 的旋转，满足：</p>
+$$U_1 \cong R_{\hat{n}}(\theta),$$
+<p>其中 $\theta$ ， $\hat{n}$ 完全由 $U_1$ 决定。</p>
+<p>如果我们只能进行绕固定轴的旋转，我们仍然可以实现任意单量子比特门的幺正变化。这里我们有以下非常有用的定理：</p>
+<p><strong>定理</strong>：任意作用在单量子比特上的幺正操作 $U_1$ ，都可以分解为绕任意2根固定的互相垂直的轴的旋转。以 $y$ 轴和 $z$ 轴为例，我们有：</p>
+$$U_1 \cong R_z(\beta) R_y(\gamma) R_z(\delta),$$
+<p>其中 $\beta , \gamma , \delta$ 由 $U_1$ 决定。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://Tundy-04.github.io/Tundy-04">Tundy's Blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("01/12/2026"!=""){
+    var startSite=new Date("01/12/2026");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","Tundy-04/Tundy-04");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
