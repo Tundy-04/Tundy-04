@@ -10,11 +10,11 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="# 变分量子算法
+<meta name="description" content="# 1.变分量子算法
 
  变分量子算法是一种适合“近期有噪声中等规模量子线路”（Noisy Intermediate-Scale Quantum, NISQ）的基于变分优化的量子经典混合算法。">
 <meta property="og:title" content="QCNN基本介绍">
-<meta property="og:description" content="# 变分量子算法
+<meta property="og:description" content="# 1.变分量子算法
 
  变分量子算法是一种适合“近期有噪声中等规模量子线路”（Noisy Intermediate-Scale Quantum, NISQ）的基于变分优化的量子经典混合算法。">
 <meta property="og:type" content="article">
@@ -77,7 +77,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><h1>变分量子算法</h1>
+<div class="markdown-body" id="postBody"><h1>1.变分量子算法</h1>
 <p> 变分量子算法是一种适合“近期有噪声中等规模量子线路”（Noisy Intermediate-Scale Quantum, NISQ）的基于变分优化的量子经典混合算法。其是在近期最有希望达成量子优势的算法方向。通过充分利用大量含噪声的量子比特的表征能力（提取特征的能力），来实现无完整纠错情况下相关问题的近似和解决。</p>
 <p>变分量子算法典型的工作流类似于深度学习，主要区别是深度学习中的神经网络组件被参数化的量子线路替代。所谓参数化量子线路 $U(\theta)$ 指的是对应线路矩阵由可变参数组 $\theta$ 决定的线路。实现上，一般以旋转角度可变的参数化量子门来表达参数化量子线路，旋转门上的参数构成了参数集。我们通过经典的优化器来调整线路上的参数，使得参数化量子线路输出的波函数为 $|\psi\rangle=U(\theta)|0\rangle$，其对应的具体问题损失函数 $L(|\psi\rangle)$ 最小。</p>
 <div align="center">
@@ -108,15 +108,15 @@ $U(\vec{\theta})$ 的设计是影响变分量子算法性能的一个重要因�
 <p>(c) Chain 结构中，所有量子比特通过链式连接逐一作用。每个量子比特仅与其直接相邻的比特进行 CNOT 操作，形成线性结构，适合简单的数据传递。</p>
 <p>(d) Star Connection 结构中，一个中心量子比特与所有其他量子比特直接相连，形成星形结构。这种设计集中化信息处理，适合快速分发或收集信息。</p>
 <p>四种不同门的排列顺序和连接方式带来的是置乱能力的不同，置乱能力指的是 QNN 在信息处理过程中对输入信息的混淆和重组能力。具体而言，置乱能力是通过操作符大小的增长来表征的，这种增长反映了在量子线路中信息如何从读取量子比特扩散到所有输入量子比特，且 QNN 的学习效率与其置乱能力密切相关。在训练过程中，若 QNN 能够有效地将信息从输出量子比特传递到输入量子比特，则其提取信息的效率也会提高。其中用得最多的是Chain结构，因为它效果较好。</p>
-<h1>QCNN基本结构</h1>
-<h2>QCNN分类</h2>
+<h1>2.QCNN基本结构</h1>
+<h2>2.1 QCNN分类</h2>
 <p>在<a href="https://en.wikipedia.org/wiki/Quantum_machine_learning" rel="nofollow">量子机器学习</a>中，按照数据类型和算法类型的不同可以将它们简单分为四类（经典-量子的排列组合）</p>
 <div align="center">
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/50cedf6a-ccf3-46e1-9808-3fd82409bf71"><img src="https://github.com/user-attachments/assets/50cedf6a-ccf3-46e1-9808-3fd82409bf71" alt="Image" style="max-width: 100%;"></a></p>
 <p><em>量子机器学习分类</em></p>
 </div>
 <p>其中Q-C是量子数据来源，经典计算机分析，多用于化学物理的量子分析；而Q-Q使用全量子数据和计算，需要量子计算机才能实现；我们讨论的范畴主要是C-Q即数据集经典，算法量子化的量子机器学习（当然我们的实践也仅仅是在算法上模拟量子计算机，实际整个架构还在经典计算机上运行）。</p>
-<h2>QCNN基本结构</h2>
+<h2>2.2 QCNN基本结构</h2>
 <p>经典卷积神经网络是传统机器学习中最常见的一种模型，常用于图像处理任务，用于提取特征相关任务。其主要特点是卷积神经网络主要关注的是局部信息的特征，而不是全局数据。以图像输入为例，卷积神经网络通过设定的卷积核依次对图像中的局部区域进行处理，处理后的结果构成了新的对象，一般称之为特征图，随后可以由后续层进行下一步的处理。</p>
 <p>同样的思想可以应用到量子计算当中，量子卷积神经网络就是经典卷积神经网络的量子对应物，其实现的方法一般有两种：</p>
 <ul>
@@ -133,11 +133,123 @@ $U(\vec{\theta})$ 的设计是影响变分量子算法性能的一个重要因�
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/5ee8da42-17b2-4168-a08a-7e2aba7b89e0"><img src="https://github.com/user-attachments/assets/5ee8da42-17b2-4168-a08a-7e2aba7b89e0" alt="Image" style="max-width: 100%;"></a></p>
 <p><em>QCNN的基本流程框架</em></p>
 </div>
-<h1>编码层</h1>
-<h1>卷积层</h1>
-<h1>池化层</h1>
-<h1>全连接层</h1>
-<h1>损失&amp;梯度选择</h1></div>
+<h1>3.编码层</h1>
+<h2>3.1 维度挑战</h2>
+<p>编码向量 $x=(x_{1},x_{2},...,x_{N})$ 最直接、信息无损的方式似乎是振幅编码。在这里，$N=2^{n}$ 个特征被归一化并编码为 n 个量子比特量子态的振幅：</p>
+$$|\phi(x)\rangle=\frac{1}{\|x\|}\sum_{i=1}^{N}x_{i}|i\rangle$$
+<p>这里 $|i\rangle$ 代表与 i 的二进制表示对应的计算基态。这实现了指数级压缩，仅使用 n 个量子比特编码了 $2^{n}$ 个特征。然而，制备像 $|\phi(x)\rangle$ 这样的任意量子态通常很困难。已知算法通常需要电路深度与 n 成多项式甚至指数级增长，可能抵消所寻求的量子优势。此外，从结果状态中提取有关特定特征（振幅）的信息并非易事。</p>
+<p>基编码中，每个特征可能控制一个特定量子比特或一组量子比特的状态，它随特征数量 (N) 线性扩展（N 个特征需要 $\mathcal{O}(N)$ 个量子比特），使其在当前硬件上不适合高维数据。</p>
+<p>角度编码将特征 $x_{i}$ 映射到应用于单个量子比特的旋转角度 $\theta_{i}(x_{i})$ （例如， $R_{X}(\theta_{i}(x_{i}))$  、 $R_{Y}(\theta_{i}(x_{i}))$  、 $R_{Z}(\theta_{i}(x_{i}))$ ），如果每个特征都有自己的旋转门，通常需要 $n\approx N$ 个量子比特。尽管存在使用更少量子比特但电路更复杂的变体（例如密集角度编码或数据重上传），但基本的难题依然存在：我们如何有效地压缩高维信息？</p>
+<h2>3.2 高维数据编码策略</h2>
+<p>面对这些限制，采用了一些策略，通常是<strong>组合使用</strong>：</p>
+<h3>经典降维</h3>
+<p>在考虑量子编码之前，应用经典降维技术通常是最实用的第一步。如果数据的固有维度远低于环境维度N，可以采用以下方法：</p>
+<ul>
+<li>主成分分析(PCA)：找到数据中最大方差的正交方向。将数据投影到前k个主成分上，可以在显著降低维度的同时保留大部分方差。</li>
+<li>自动编码器：训练用于将数据压缩成低维潜在表示(编码)然后重建(解码)的神经网络。压缩后的潜在向量可以随后编码到量子比特上。</li>
+<li>特征选择：识别并选择原始特征中最具信息量的子集的算法，基于统计属性或模型性能。</li>
+</ul>
+<p>目标是获得一个低维表示 $x' \in \mathbb{R}^{N'}$ ，其中 $N' \ll N$ ，这样更容易使用量子方法编码到 $n \approx N'$ 或更少量子比特上。这种预处理步骤利用强大的经典机器学习工具，并将量子资源集中在最重要的信息上。</p>
+<h3>量子比特高效的量子编码方案</h3>
+<p>即使经过经典降维，N'对于朴素编码可能仍然太大。量子比特高效的量子编码策略旨在利用 $n &amp;lt; N'$ 个量子比特：</p>
+<ul>
+<li>振幅编码（再审视）：尽管其状态制备存在挑战，但如果 $N' = 2^{n}$ ，它仍然是最量子比特高效的方法。针对与机器学习任务相关的特定状态类别的有效制备方法正在进行研究。如果后续量子算法能够整体处理振幅中的信息而无需单独访问它们，则尤其重要。</li>
+<li>角度编码变体：
+<ul>
+<li>密集角度编码：多个特征(k)可以通过围绕不同轴的旋转序列编码到单个量子比特上，例如 $R_{Z}(\theta_{1})R_{Y}(\theta_{2})R_{Z}(\theta_{3})\dots$ ，并且 $\theta_{j}$ 取决于特征的某个子集。如果每个量子比特编码k个特征，N'个特征大约需要 $n \approx N'/k$ 个量子比特。</li>
+<li>数据重上传：采用数据重上传的电路可以使用固定且可能较少量的量子比特(n)处理高维数据。经典数据x影响整个电路中的多个参数化门。这隐式地创建了一个复杂的特征映射，而无需N'个量子比特。表达能力取决于电路深度和结构，而不仅仅是量子比特的数量。</li>
+</ul>
+</li>
+</ul>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/98f7e90f-ffdf-4ca1-862a-0d2068fb6f9a"><img src="https://github.com/user-attachments/assets/98f7e90f-ffdf-4ca1-862a-0d2068fb6f9a" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>数据重上传/增量数据上传（Incremental Data-Uploading，IDU）</em></p>
+</div>
+<hr>
+<h4>数据重上传的益处与挑战</h4>
+<p>数据重上传的主要益处在于其增加表达能力的潜力。这意味着模型可能能够：</p>
+<ul>
+<li>
+<p>表示更复杂的函数或决策边界。</p>
+</li>
+<li>
+<p>相较于尝试学习相同功能的单次上传模型，可能以更少的量子位达到良好性能。</p>
+</li>
+<li>
+<p>创建在经典计算中可能难以复制的有效特征映射。</p>
+</li>
+</ul>
+<p>然而，也存在重要的设计选择和潜在挑战：</p>
+<ul>
+<li>
+<p><strong>电路设计</strong>：多少个重上传层L最优？U(x)和W(θi)应包含哪些特定门？这些选择严重依赖于具体问题和可用的量子硬件。没有放之四海而皆准的答案。</p>
+</li>
+<li>
+<p><strong>可训练性</strong>：尽管表达能力增加，训练的复杂度也可能增加。深度重上传电路可能更容易受到优化困难的影响，例如贫瘠高原（我们将在第4章详细讨论）。梯度可能消失，使得训练非常缓慢或不可能。</p>
+</li>
+<li>
+<p><strong>过拟合</strong>：高度表达能力模型有时可能过拟合训练数据，无法泛化到新的、未见的数据。正则化技术可能变得有必要。</p>
+</li>
+<li>
+<p><strong>硬件资源</strong>：每个重上传步骤都会增加电路深度，从而增加计算时间以及当前量子设备对噪声的敏感性。设计硬件高效的U(x)和W(θi)层非常重要。</p>
+</li>
+</ul>
+<hr>
+<h3>随机投影</h3>
+<p>受约翰逊-林登施特劳斯引理等经典技术启发，随机投影可以将高维数据映射到较低维空间，同时近似保持距离。量子对应方法涉及应用由数据参数化的随机（或伪随机）量子电路。尽管在电路深度方面可能高效，但分析此类随机特征映射的特性是一个活跃的研究方向（就是映射关系不好分析，毕竟是随机生成的，有点玄学的意思）。</p>
+<h1>4.卷积层和池化层</h1>
+<p>经典卷积神经网络（CNN）在处理图像识别等网格状数据结构的任务中表现出色。它们通过应用卷积滤波器捕获局部模式的层以及在保留重要特征的同时降低维度的池化层来实现这一目的，从而形成输入的层次化表示。量子卷积神经网络（QCNN）的目标是将这些成功方法应用于量子环境，运用量子电路进行类似卷积和池化的操作。</p>
+<p>主要原因在于处理量子态或编码为量子态的经典数据，这可能发现经典CNN无法获取的特征或关联。QCNN尤其适合处理具有固有空间结构的问题，例如分析多体系统量子模拟的数据或某些经典图像处理任务。</p>
+<h2>4.1 QCNN的核心组成部分</h2>
+<p>QCNN通常包含与经典对应物相似的量子层：</p>
+<ul>
+<li>
+<p><strong>量子卷积层</strong>： 这一层在输入量子比特上局部施加参数化量子电路（通常是少量子比特酉算符）。可以设想一个小型量子电路在输入寄存器上“滑动”，如同经典滤波核。这些电路，即“量子滤波器”，通常是参数化的，并在不同空间位置共享相同参数，如同经典CNN中的权重共享。其作用是获取局部特征，并可能在相邻量子比特间产生纠缠。</p>
+</li>
+<li>
+<p><strong>量子池化层</strong>： 卷积之后，池化层减少表示数据的量子比特数量，从而降低空间维度。一种常见方法是测量特定量子比特（通常是卷积步骤中纠缠的辅助量子比特或用于池化的量子比特），并根据测量结果应用后续的受控酉操作。这个过程能有效选择并保留特征，同时减小系统规模。与经典池化（例如最大池化）不同，量子池化由于测量而可能具有固有的概率性，并且可以根据结果进一步改变状态。</p>
+</li>
+</ul>
+<p>这些层通常呈<strong>分层排列</strong>，一个池化层的输出量子比特作为下一个卷积层的输入。</p>
+<h2>4.2 构建量子卷积和池化层</h2>
+<p><strong>量子卷积</strong></p>
+<p>设输入状态由N个量子比特表示，它们可能线性排列或在2D网格上。量子卷积层对k个相邻量子比特的一小部分施加参数化酉算符U(θ)(例如k=2或k=3)。这个酉算符在输入寄存器上重复应用，可能带步长，类似于经典卷积。</p>
+<p>例如，作用于量子比特i和i+1：</p>
+$$|\psi_{out}\rangle = \dots U_{i+2,i+3}(\theta) \dots U_{i,i+1}(\theta) \dots |\psi_{in}\rangle$$
+<p>参数θ在U的所有应用中共享，这大大减少了参数数量，与作用于所有量子比特的通用PQC相比。U(θ)的选择决定了滤波器；它可能是一种硬件高效的拟设或旨在产生特定关联的电路。</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/47c67121-cae1-4b71-a724-6a2fddbb088c"><img src="https://github.com/user-attachments/assets/47c67121-cae1-4b71-a724-6a2fddbb088c" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>密集角度编码+卷积示意图</em></p>
+</div>
+<p><strong>量子池化</strong></p>
+<p>池化操作会减少量子比特的数量。一个简单的方案可以是：根据相邻量子比特的测量结果应用受控酉操作。例如，对于量子比特i和i+1，我们可以施加一个CNOT门使它们纠缠，测量量子比特i+1，然后将其舍弃。量子比特i的状态现在可能根据i和i+1之间共享的属性而被改变，且量子比特总数也减少了。</p>
+<p>更复杂的池化操作也存在，有时会涉及多个量子比特、测量以及受经典控制的量子门。核心在于在减少量子比特数量的同时，保留剩余量子态中编码的相关特征。</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/c23dd8ad-ea59-484b-81b6-5c40b18f1086"><img src="https://github.com/user-attachments/assets/c23dd8ad-ea59-484b-81b6-5c40b18f1086" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>池化线路示意图</em></p>
+</div>
+<p>一个完整的QCNN架构通常是堆叠多个卷积层和池化层。最终层的输出可以直接测量以获得用于分类的经典结果，或者传递给另一个量子电路（如全连接层PQC），甚至是一个经典神经网络进行最终处理。</p>
+<p>分层结构和参数共享使得QCNN与通用PQC相比，可能更能扩展到更多输入量子比特，尽管在深层架构中仍可能出现贫瘠高原等难题。卷积酉算符U(θ)的选择和池化策略是影响网络表达能力和可训练性的重要设计环节。</p>
+<h1>5.全连接层</h1>
+<p><strong>这个层和池化层一样，并不是必须的</strong>，通过前面提到的参数化量子电路(PQCs/Ansätze)或者叫变分量子电路实现，并利用损失和梯度函数进行优化参数。在这层之后进行测量得到经典数据输入后续的CNN经典全连接层。</p>
+<ul>
+<li>
+<p>前面提过，有仅把卷积核量子化的模型存在，也有把全连接层简化为随机的量子电路的模型，这类模型的量子化部分是静态的。或者可以说是部分量子化的。<a href="https://deepquantum.turingq.com/2024/05/23/%E9%87%8F%E5%AD%90%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="nofollow">一个利用随机全连接层实现QCNN的例子</a></p>
+</li>
+<li>
+<p>全连接层可以通过 $R_Y$ 或者 $R_Z R_Y R_Z$ 两种结构实现（后者参数更多），具体单层电路如下：</p>
+</li>
+</ul>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/732a0127-12eb-40ee-b8cb-e660868fa067"><img src="https://github.com/user-attachments/assets/732a0127-12eb-40ee-b8cb-e660868fa067" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>量子全连接层网络的两种量子线路实现</em></p>
+</div>
+<p>整体来看是这样的：</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/32a324fb-757c-46f4-8cea-162d763bca63"><img src="https://github.com/user-attachments/assets/32a324fb-757c-46f4-8cea-162d763bca63" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>单卷积层的QCNN量子线路</em></p>
+</div>
+<h1>6.损失&amp;梯度选择</h1></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
