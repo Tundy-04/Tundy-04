@@ -6,7 +6,7 @@
     "themeMode":"manual",
     "dayTheme":"light",
     "nightTheme":"dark_dimmed",
-    "allHead":"<link rel=\"preconnect\" href=\"https://code.buxiantang.top\"><link rel=\"preconnect\" href=\"https://blog.meekdai.com\"><link rel=\"stylesheet\" href=\"https://github.com/Tundy-04/Tundy-04/blob/756db7d6b838570e709120bd23145b166d744c41/static/GmeekBaseTheme.css\"><script src=\"https://github.com/Tundy-04/Tundy-04/blob/756db7d6b838570e709120bd23145b166d744c41/static/GmeekCustomizeCss.js\"></script>",
+    "allHead": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/Tundy-04/Tundy-04@main/static/GmeekBaseTheme.css\"><script src=\"https://cdn.jsdelivr.net/gh/Tundy-04/Tundy-04@main/static/GmeekCustomizeCss.js\"></script>",
     "script":"<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script src='https://blog.meekdai.com/Gmeek/plugins/lightbox.js'></script>",
     "onePageListNum":5,
     "bottomText":"转载请注明出处",
