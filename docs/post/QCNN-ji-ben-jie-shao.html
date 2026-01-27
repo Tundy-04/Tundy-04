@@ -10,19 +10,35 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="# QCNN基本结构
+<meta name="description" content="# 变分量子算法
+
+# QCNN基本结构
 ## QCNN基本分类
-# 卷积层
-# 池化层
-# 全连接层
-# 损失&梯度选择。">
+在[量子机器学习](https://en.wikipedia.org/wiki/Quantum_machine_learning)中，按照数据类型和算法类型的不同可以将它们简单分为四类（经典-量子的排列组合）
+
+<div align='center'>
+
+![Image](https://github.com/user-attachments/assets/50cedf6a-ccf3-46e1-9808-3fd82409bf71)
+
+*量子机器学习分类*
+</div>
+
+其中Q-C是量子数据来源，经典计算机分析，多用于化学物理的量子分析；而Q-Q使用全量子数据和计算，需要量子计算机才能实现；我们讨论的范畴主要是C-Q即数据集经典，算法量子化的量子机器学习（当然我们的实践也仅仅是在算法上模拟量子计算机，实际整个架构还在经典计算机上运行）。">
 <meta property="og:title" content="QCNN基本介绍">
-<meta property="og:description" content="# QCNN基本结构
+<meta property="og:description" content="# 变分量子算法
+
+# QCNN基本结构
 ## QCNN基本分类
-# 卷积层
-# 池化层
-# 全连接层
-# 损失&梯度选择。">
+在[量子机器学习](https://en.wikipedia.org/wiki/Quantum_machine_learning)中，按照数据类型和算法类型的不同可以将它们简单分为四类（经典-量子的排列组合）
+
+<div align='center'>
+
+![Image](https://github.com/user-attachments/assets/50cedf6a-ccf3-46e1-9808-3fd82409bf71)
+
+*量子机器学习分类*
+</div>
+
+其中Q-C是量子数据来源，经典计算机分析，多用于化学物理的量子分析；而Q-Q使用全量子数据和计算，需要量子计算机才能实现；我们讨论的范畴主要是C-Q即数据集经典，算法量子化的量子机器学习（当然我们的实践也仅仅是在算法上模拟量子计算机，实际整个架构还在经典计算机上运行）。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://Tundy-04.github.io/Tundy-04/post/QCNN-ji-ben-jie-shao.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
@@ -83,8 +99,16 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><h1>QCNN基本结构</h1>
+<div class="markdown-body" id="postBody"><h1>变分量子算法</h1>
+<h1>QCNN基本结构</h1>
 <h2>QCNN基本分类</h2>
+<p>在<a href="https://en.wikipedia.org/wiki/Quantum_machine_learning" rel="nofollow">量子机器学习</a>中，按照数据类型和算法类型的不同可以将它们简单分为四类（经典-量子的排列组合）</p>
+<div align="center">
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/50cedf6a-ccf3-46e1-9808-3fd82409bf71"><img src="https://github.com/user-attachments/assets/50cedf6a-ccf3-46e1-9808-3fd82409bf71" alt="Image" style="max-width: 100%;"></a></p>
+<p><em>量子机器学习分类</em></p>
+</div>
+<p>其中Q-C是量子数据来源，经典计算机分析，多用于化学物理的量子分析；而Q-Q使用全量子数据和计算，需要量子计算机才能实现；我们讨论的范畴主要是C-Q即数据集经典，算法量子化的量子机器学习（当然我们的实践也仅仅是在算法上模拟量子计算机，实际整个架构还在经典计算机上运行）。</p>
+<h2>QCNN基本结构</h2>
 <h1>卷积层</h1>
 <h1>池化层</h1>
 <h1>全连接层</h1>
