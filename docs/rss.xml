@@ -1,5 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Tundy's Blog</title><link>https://Tundy-04.github.io/Tundy-04</link><description>生活不是我们活过的日子，而是我们记住的日子</description><copyright>Tundy's Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/172103124?s=400&amp;u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&amp;v=4</url><title>avatar</title><link>https://Tundy-04.github.io/Tundy-04</link></image><lastBuildDate>Tue, 27 Jan 2026 12:53:14 +0000</lastBuildDate><managingEditor>Tundy's Blog</managingEditor><ttl>60</ttl><webMaster>Tundy's Blog</webMaster><item><title>QCNN基本介绍</title><link>https://Tundy-04.github.io/Tundy-04/post/QCNN-ji-ben-jie-shao.html</link><description># 1.变分量子算法
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Tundy's Blog</title><link>https://Tundy-04.github.io/Tundy-04</link><description>生活不是我们活过的日子，而是我们记住的日子</description><copyright>Tundy's Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/172103124?s=400&amp;u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&amp;v=4</url><title>avatar</title><link>https://Tundy-04.github.io/Tundy-04</link></image><lastBuildDate>Tue, 27 Jan 2026 16:18:25 +0000</lastBuildDate><managingEditor>Tundy's Blog</managingEditor><ttl>60</ttl><webMaster>Tundy's Blog</webMaster><item><title>我母亲的口述史</title><link>https://Tundy-04.github.io/Tundy-04/post/wo-mu-qin-de-kou-shu-shi.html</link><description># 口述史
+
+&gt; 此文是我大一下学期四史课程的期末作业，在我一节课都没去过的情况下让我这门课程成绩在301位同学中排名第一,而其中基本用的都是平淡的叙事写法甚至于有些流水账，可见我母亲前半生之跌宕，在这里做个记录
+
+写于2023年6月23号
+
+## 我母亲的前半生:改革开放中农民创业的经典个例
+
+### 一家九子，艰苦童年:
+1972年，我的母亲于湖南岳阳的一户务农家庭中出生。</description><guid isPermaLink="true">https://Tundy-04.github.io/Tundy-04/post/wo-mu-qin-de-kou-shu-shi.html</guid><pubDate>Tue, 27 Jan 2026 16:17:55 +0000</pubDate></item><item><title>QCNN基本介绍</title><link>https://Tundy-04.github.io/Tundy-04/post/QCNN-ji-ben-jie-shao.html</link><description># 1.变分量子算法
 
  变分量子算法是一种适合“近期有噪声中等规模量子线路”（Noisy Intermediate-Scale Quantum, NISQ）的基于变分优化的量子经典混合算法。</description><guid isPermaLink="true">https://Tundy-04.github.io/Tundy-04/post/QCNN-ji-ben-jie-shao.html</guid><pubDate>Mon, 26 Jan 2026 08:50:39 +0000</pubDate></item><item><title>前置量子计算相关知识#3</title><link>https://Tundy-04.github.io/Tundy-04/post/qian-zhi-liang-zi-ji-suan-xiang-guan-zhi-shi-%233.html</link><description># 量子线路 (Quantum Circuit)
 ## 1.逻辑门与电路
