@@ -238,4 +238,150 @@ QCNN通常包含与经典对应物相似的量子层：
 </div>
 
 
-# 6.损失&梯度选择
+# 6.损失函数
+
+## 6.1 期望和损失函数
+
+在变分量子算法(VQA)框架中，参数化量子电路(PQC)准备量子态 $|\psi(\boldsymbol{\theta})\rangle$ ，其中 $\boldsymbol{\theta}$ 表示我们希望优化的经典参数。然而，为了引导这种优化，我们需要一种方法来衡量量子态 $|\psi(\boldsymbol{\theta})\rangle$ 达到目标机器学习目的的程度。这就是代价函数C( $\boldsymbol{\theta}$ )的作用。它充当量子处理单元(QPU)和经典优化程序之间的重要连接，将量子测量结果转换为表示性能的标量值。
+
+### 量子测量的期望
+
+VQA评估步骤的核心在于量子测量。通常，在量子态 $|\psi(\boldsymbol{\theta})\rangle$ 准备好之后，我们会以特定的基（通常是计算基，Z-基）测量一个或多个量子比特。这个测量过程本质上是概率性的，会产生经典比特串作为结果。
+
+为了形成适合优化的可微分代价函数，我们通常不直接使用这些比特串的原始概率。相反，我们计算所选可观测量的期望值，这是一个厄米算子 $\hat{O}$ 。对于由PQC使用参数 $\boldsymbol{\theta}$ 准备的给定量子态 $|\psi(\boldsymbol{\theta})\rangle$ ，期望值计算如下：
+
+```math
+\langle\hat{O}\rangle_{\boldsymbol{\theta}}=\langle\psi(\boldsymbol{\theta})|\hat{O}|\psi(\boldsymbol{\theta})\rangle
+```
+
+这个期望值 $\langle\hat{O}\rangle_{\boldsymbol{\theta}}$ 提供一个平滑的实数值输出，它取决于电路参数 $\boldsymbol{\theta}$ 。它表示如果我们多次测量量子态 $|\psi(\boldsymbol{\theta})\rangle$ 上的可观测物 $\hat{O}$ 将会得到的平均值。这个期望值，或从中及目标数据标签导出的函数，构成我们代价函数C( $\boldsymbol{\theta}$ )的根本。
+
+整个过程可以如下图所示：
+<div align="center">
+
+![Image](https://github.com/user-attachments/assets/d724d4e5-2aee-4c1b-b0c2-461d4a74eea1)
+
+*PQC的参数更新过程*
+</div>
+
+### 基于期望为不同任务设计代价函数
+
+$C(\boldsymbol{\theta})$ 的具体形式在很大程度上取决于当前的机器学习任务。让我们查看一些常见情况：
+
+#### 分类
+
+在分类任务中，目标是将输入数据 $x_{i}$ 分配到几个离散类别中的一个。
+
+- **二分类**：对于具有两个类别（例如，标记为 +1 和 -1）的问题，一种常见方法是设计 PQC 和可观测物 $\hat{O}$ ，使得期望值 $\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)}$ （为输入 $x_{i}$ 计算）与类别标签 $y_{i}$ 相关。例如，我们可以在第一个量子比特上测量泡利 Z 算子 $\hat{Z}_{0}$ ，目标是对于一个类别使其约为 +1，对于另一个类别约为 -1。
+
+- **均方误差（MSE）**：一个直接的代价函数是预测期望值与目标标签之间的 MSE：
+
+```math
+C_{\text{MSE}}(\boldsymbol{\theta})=\frac{1}{N}\sum_{i=1}^{N}(\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)}-y_{i})^{2} 
+```
+
+其中 N 是训练样本的数量。尽管简单，但 MSE 会二次方地惩罚偏差，这对于分类而言可能并非总是最有效的损失。
+
+- **合页损失（Hinge Loss）**：受到支持向量机（SVM）的启发，合页损失鼓励期望值具有正确的符号并高于某个裕度：
+
+```math
+C_{\text{Hinge}}(\boldsymbol{\theta})=\frac{1}{N}\sum_{i=1}^{N}\max(0,1-y_{i}\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)})
+```
+
+如果预测 $\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)}$ 具有正确的符号（ $y_{i}\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)}\geq 1$ ），则此损失为零，否则线性增加。
+
+- **交叉熵损失**：这种损失在经典机器学习中常用于概率分类器。如果我们将测量结果解释为概率，则可以进行调整。例如，如果我们测量量子比特 0 并估计测量 $\vert 0\rangle$ （与标签 $y_{i}=1$ 相关联）的概率 $p(+1\vert\boldsymbol{\theta}, x_{i})$ 和测量 $\vert 1\rangle$ （与标签 $y_{i}=0$ 相关联）的概率 $p(-1\vert\boldsymbol{\theta}, x_{i})$ ，则二元交叉熵为：
+
+```math
+C_{\text{XEnt}}(\boldsymbol{\theta})=-\frac{1}{N}\sum_{i=1}^{N}\left[y_{i}\log p(+1\vert\boldsymbol{\theta}, x_{i})+(1-y_{i})\log p(-1\vert\boldsymbol{\theta}, x_{i})\right] 
+```
+
+使用交叉熵需要从测量计数中仔细估计概率，这可能是样本密集型的。它通常需要将二元标签 $\{0,1\}$ 或 $\{-1,+1\}$ 适当映射到从特定测量结果得出的概率。
+
+- **多分类**： 将这些想法扩展到两个以上的类别通常涉及使用多个输出量子比特、不同的测量策略（例如，测量多个泡利算子）或组合二分类器。代价函数需要相应调整，通常使用 MSE 或交叉熵的多类别版本。
+
+#### 回归
+
+在回归中，目标是为输入 $x_{i}$ 预测一个连续值 $y_{i}$ 。
+
+- 期望值 $\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)}$ 本身可以作为预测的连续输出。可观测物 $\hat{O}$ 的比例和范围理想情况下应与目标值 $y_{i}$ 的预期范围匹配，否则输出需要重新缩放。
+- **均方误差（MSE）**：这是 VQA 中回归最常用的代价函数：
+
+```math
+C_{\text{MSE}}(\boldsymbol{\theta})=\frac{1}{N} \sum_{i=1}^{N} \left(\langle\hat{O}\rangle_{\boldsymbol{\theta}}^{(i)} - y_{i}\right)^{2}
+```
+  它直接惩罚量子模型预测与真实连续值之间的平方差。
+
+#### 生成模型
+
+用于生成任务的代价函数，例如使用量子电路玻恩机（QCBM）学习概率分布或训练量子生成对抗网络（QGAN），有所不同。它们通常涉及比较量子电路生成的概率分布与目标数据分布的度量（例如，最大平均差异、库尔巴克-莱布勒散度估计）或源自判别器网络的对抗性损失,感兴趣可以另行了解。
+
+
+## 6.2 QCNN中PQC的损失函数选择
+
+### 损失函数=期望？
+
+> ❓：目标如果是用QCNN完成二分类任务，这里的损失（代价）函数应该是刚刚提到的均方误差（MSE）吗？
+
+**并不是**
+
+训练变分量子算法（VQA）高度依赖于经典优化循环。如我们所论，VQA包含一个参数化量子电路（PQC） $U(\theta)$ 和一个代价函数 $C(\theta)$ ，该函数通常定义为在PQC准备的输出态上测量的可观测量 $H$ 的**期望值**:
+
+```math
+C(\theta)=\langle\psi(\theta)|H|\psi(\theta)\rangle=\langle 0|U^{\dagger}(\theta)HU(\theta)|0\rangle 
+```
+
+在变分量子算法（VQA）中，我们的核心目标不是拟合 “经典数据”，而是**求解量子系统本身的极值问题**（例如基态能量、最优策略等）。
+
+当 VQA 被用于量子机器学习（如分类、回归）时，代价函数确实会包含经典数据的误差项（比如MSE），这里的量子机器学习指的是测量即结果的那种纯纯的量子神经网络，后续不再接入经典模型。
+
+但是回顾一下前面我们提到的QCNN模型，其中量子部分更像是一个巨大的卷积核，虽然有类似神经网络的结构，但其实仅仅是把经典数据特征映射为高维的量子特征再进行一系列变换来映射到我们的测量轴上，而后测量回到经典CNN。这部分PQC**并非直接进行分类任务**，而是完成某种高维映射后的量子核计算，这种计算至少在原则上可能是经典不可解的，所以在这里我们的损失对象是测量期望而非数据误差。
+
+### QCNN训练梯度传递
+
+为了更好地说明PQC的训练损失选用期望的原因，以及各组件的作用，这里展示一下QCNN中的梯度传递，其中详细的梯度计算与梯度下降将在下一篇中介绍。
+
+#### 1. 前向传播（数据流向）
+
+1. **经典输入**：图像或向量数据 `x`
+2. **经典预处理层**：提取低级特征 $f_{\text{classical}}(x)$
+3. **量子数据编码**：将经典特征映射为量子态 $|\psi_{\text{enc}}(x)\rangle$
+4. **量子卷积层（QConv）**：提取量子特征 $|\psi_{\text{conv}}(x,\theta_{\text{conv}})\rangle$
+5. **量子全连接层（PQC）**：高维特征映射 $|\psi_{\text{fc}}(x,\theta_{\text{fc}})\rangle$
+6. **量子测量**：得到期望值 $\langle\hat{O}\rangle=\langle\psi_{\text{fc}}|\hat{O}|\psi_{\text{fc}}\rangle$
+7. **经典分类头**：输出预测概率 $\hat{y}=f_{\text{head}}(\langle\hat{O}\rangle)$
+
+#### 2. 损失计算
+
+- 经典损失函数（如交叉熵）：
+```math
+\mathcal{L}=\mathbb{E}\left[\text{CrossEntropy}(\hat{y}, y_{\text{true}})\right]
+```
+
+#### 3. 反向传播（梯度流向）
+
+1. **经典分类头梯度**：
+```math
+\frac{\partial \mathcal{L}}{\partial \langle\hat{O}\rangle}
+```
+
+2. **量子全连接层（PQC）梯度**：
+   - **用参数位移规则计算**：
+```math
+\frac{\partial\langle\hat{O}\rangle}{\partial \theta_{\mathrm{fc}, j}}=\frac{1}{2}\left[ C\left(\theta_{\mathrm{fc}}+\frac{\pi}{2} e_{j}\right)-C\left(\theta_{\mathrm{fc}}-\frac{\pi}{2} e_{j}\right)\right]
+```
+   - **链式法则传递**：
+```math
+\frac{\partial \mathcal{L}}{\partial \theta_{\mathrm{fc}, j}}=\frac{\partial \mathcal{L}}{\partial\langle\hat{O}\rangle} \cdot \frac{\partial\langle\hat{O}\rangle}{\partial \theta_{\mathrm{fc}, j}}
+```
+3. **量子卷积层梯度**：
+   - 对卷积层参数 $\theta_{\mathrm{conv}}$ 重复类似梯度计算
+
+4. **经典预处理层梯度**：
+   - 标准反向传播更新经典层权重
+
+#### 4. 参数更新
+
+- 经典优化器（如 Adam）使用所有梯度更新：
+  - 量子层参数 $\theta_{\mathrm{fc}}$ 和 $\theta_{\mathrm{conv}}$
+  - 经典层权重
