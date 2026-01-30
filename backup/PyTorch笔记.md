@@ -4,10 +4,66 @@
 
 这里收集一些可能会引起冲突的数据改变操作。比如你改了某个数据，但它可能会连带着其他共享同一片内存的其他相关变量一起改变了而不自知。它是内存优化带来的弊端，这些错误往往出现在一些非常基本的函数中，但我们没有细究过通过这些函数改变某个值意味着什么。
 
+对于张量的冲突检查，你可以使用.storage().data_ptr()直接比较两个张量的地址来确认。但是提前了解那些操作是共用数据的，在新建张量时根据用途决定是否使用复制的方法来创建，避免一些最后查不出来的可能bug会更好。
+```
+y.storage().data_ptr() == x.storage().data_ptr()
+```
+
 ## 用Numpy导致的
 
 NumPy 数组和 PyTorch 张量可以方便转换，但其中有冲突的隐患。 
 
 NumPy → PyTorch
 
-使用 $\color{red}{torch.from_numpy()}$ 时，生成的 PyTorch 张量和原始 NumPy 数组在 CPU 上共享相同的底层内存位置。这意味着修改一个对象会影响另一个。这种行为很高效，因为它避免了数据复制，但你需要注意这一点。
+使用**torch.from_numpy**()时，生成的 PyTorch 张量和原始 NumPy 数组在 CPU 上共享相同的底层内存位置。这意味着修改一个对象会影响另一个。这种行为很高效，因为它避免了数据复制，但你需要注意这一点。
+
+```python
+# 创建一个 NumPy 数组
+numpy_array = np.array([[1, 2], [3, 4]], dtype=np.float32)
+print(f"NumPy 数组:\n{numpy_array}")
+print(f"NumPy 数组类型: {numpy_array.dtype}")
+
+# 将 NumPy 数组转换为 PyTorch 张量
+pytorch_tensor = torch.from_numpy(numpy_array)
+print(f"\nPyTorch 张量:\n{pytorch_tensor}")
+print(f"PyTorch 张量类型: {pytorch_tensor.dtype}")
+
+# 修改 NumPy 数组
+numpy_array[0, 0] = 99
+print(f"\n修改后的 NumPy 数组:\n{numpy_array}")
+print(f"修改 NumPy 数组后的 PyTorch 张量:\n{pytorch_tensor}")
+
+# 修改 PyTorch 张量
+pytorch_tensor[1, 1] = -1
+print(f"\n修改后的 PyTorch 张量:\n{pytorch_tensor}")
+print(f"修改 PyTorch 张量后的 NumPy 数组:\n{numpy_array}")
+```
+
+<details>
+  <summary>点我看输出</summary>
+  <pre><code>
+NumPy 数组:
+[[1. 2.]
+ [3. 4.]]
+NumPy 数组类型: float32
+
+PyTorch 张量:
+tensor([[1., 2.],
+        [3., 4.]])
+PyTorch 张量类型: torch.float32
+
+修改后的 NumPy 数组:
+[[99.  2.]
+ [ 3.  4.]]
+修改 NumPy 数组后的 PyTorch 张量:
+tensor([[99.,  2.],
+        [ 3.,  4.]])
+
+修改后的 PyTorch 张量:
+tensor([[99.,  2.],
+        [ 3., -1.]])
+修改 PyTorch 张量后的 NumPy 数组:
+[[99.  2.]
+ [ 3. -1.]]
+  </code></pre>
+</details>
