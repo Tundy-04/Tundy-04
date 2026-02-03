@@ -12,13 +12,17 @@
     </script>
 <meta name="description" content="本文记录我认为有意义的或者可能以后会忘掉的PyTorch小知识
 
-# 存储冲突
+# 内存共享
+
+在pytorch中有很多操作提供两个版本的函数：共享内存或者复制一份
 
 这里收集一些可能会引起冲突的数据改变操作。">
 <meta property="og:title" content="PyTorch笔记">
 <meta property="og:description" content="本文记录我认为有意义的或者可能以后会忘掉的PyTorch小知识
 
-# 存储冲突
+# 内存共享
+
+在pytorch中有很多操作提供两个版本的函数：共享内存或者复制一份
 
 这里收集一些可能会引起冲突的数据改变操作。">
 <meta property="og:type" content="article">
@@ -92,7 +96,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><p>本文记录我认为有意义的或者可能以后会忘掉的PyTorch小知识</p>
-<h1>存储冲突</h1>
+<h1>内存共享</h1>
+<p>在pytorch中有很多操作提供两个版本的函数：共享内存或者复制一份</p>
 <p>这里收集一些可能会引起冲突的数据改变操作。比如你改了某个数据，但它可能会连带着其他共享同一片内存的其他相关变量一起改变了而不自知。它是内存优化带来的弊端，这些错误往往出现在一些非常基本的函数中，但我们没有细究过通过这些函数改变某个值意味着什么。</p>
 <p>对于张量的冲突检查，你可以使用.storage().data_ptr()直接比较两个张量的地址来确认。但是提前了解那些操作是共用数据的，在新建张量时根据用途决定是否使用复制的方法来创建，避免一些最后查不出来的可能bug会更好。</p>
 <pre class="notranslate"><code class="notranslate">y.storage().data_ptr() == x.storage().data_ptr()
@@ -262,6 +267,67 @@ tensor([[  1, 101,   3],<br>
 </code></p></pre><p></p>
 </details>
 如果您需要一个不共享内存的副本，请在切片上使用 .clone(): sub_tensor_copy = x_2d[0:2, 1:3].clone()
+<h2>View重塑张量</h2>
+<p>view() 方法返回一个新的张量，该张量与原始张量共享相同的底层数据，但具有不同的形状。它非常高效，因为它避免了数据复制。然而，view() 要求张量在内存中是连续的。一般用的比较多的是.reshape</p>
+<p>连续张量是指其元素在内存中按维度顺序连续存储，没有间隙的张量。大多数新创建的张量是连续的，但某些操作（如切片或使用 t() 进行转置）会产生非连续张量。</p>
+<p>你可以在 view() 调用中对一个维度使用 -1，PyTorch 将根据总元素数量和其它维度的尺寸自动推断出该维度的正确尺寸。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个连续张量</span>
+<span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">12</span>) <span class="pl-c"># tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"原始张量: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span><span class="pl-kos">}</span></span>"</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"原始形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"是否连续? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span>.<span class="pl-c1">is_contiguous</span>()<span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-c"># 使用 view() 重塑</span>
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>.<span class="pl-c1">view</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>view(3, 4) 后的张量:"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">y</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"新形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"与 x 共享存储吗? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>() <span class="pl-c1">==</span> <span class="pl-s1">x</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>()<span class="pl-kos">}</span></span>"</span>) <span class="pl-c"># 检查它们是否共享内存</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"y 是否连续? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span>.<span class="pl-c1">is_contiguous</span>()<span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-c"># 尝试另一个视图</span>
+<span class="pl-s1">z</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>.<span class="pl-c1">view</span>(<span class="pl-c1">2</span>, <span class="pl-c1">6</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>view(2, 6) 后的张量:"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">z</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"新形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"与 x 共享存储吗? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>() <span class="pl-c1">==</span> <span class="pl-s1">x</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>()<span class="pl-kos">}</span></span>"</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"z 是否连续? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>.<span class="pl-c1">is_contiguous</span>()<span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-c"># 使用 -1 进行推断</span>
+<span class="pl-s1">w</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>.<span class="pl-c1">view</span>(<span class="pl-c1">2</span>, <span class="pl-c1">2</span>, <span class="pl-c1">-</span><span class="pl-c1">1</span>) <span class="pl-c"># 推断出最后一个维度为 3 (12 / (2*2) = 3)</span>
+<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>view(2, 2, -1) 后的张量:"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">w</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"新形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">w</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<details>
+  <summary>点我看输出</summary>
+  <pre class="notranslate"><code class="notranslate">
+原始张量: tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+原始形状: torch.Size([12])
+是否连续? True
+<p>view(3, 4) 后的张量:<br>
+tensor([[ 0,  1,  2,  3],<br>
+[ 4,  5,  6,  7],<br>
+[ 8,  9, 10, 11]])<br>
+新形状: torch.Size([3, 4])<br>
+与 x 共享存储吗? True<br>
+y 是否连续? True</p>
+<p>view(2, 6) 后的张量:<br>
+tensor([[ 0,  1,  2,  3,  4,  5],<br>
+[ 6,  7,  8,  9, 10, 11]])<br>
+新形状: torch.Size([2, 6])<br>
+与 x 共享存储吗? True<br>
+z 是否连续? True</p>
+<p>view(2, 2, -1) 后的张量:<br>
+tensor([[[ 0,  1,  2],<br>
+[ 3,  4,  5]],</p>
+<pre class="notranslate"><code class="notranslate">    [[ 6,  7,  8],
+     [ 9, 10, 11]]])
+</code></pre>
+</code><p><code class="notranslate">新形状: torch.Size([2, 2, 3])<br>
+</code></p></pre><p></p>
+</details>
+<p>使用 permute() 调整维度顺序：</p>
+<p>和 view() 一样，permute() 返回一个与原始张量共享底层数据的张量。它不复制数据。然而，生成的张量通常不是连续的。如果你在调换维度后需要一个连续张量（例如，为了后续使用 view()），你可以链式调用 .contiguous() 方法</p>
 <h1>张量操作</h1>
 <p>这里记录一些张量操作</p>
 <h2>索引和切片</h2>
