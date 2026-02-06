@@ -93,16 +93,356 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>QNode是 PennyLane 的核心抽象，它将量子函数（包含量子操作的 Python 函数）转换为可在量子设备（模拟器或真实硬件）上执行的对象，并确保其可微性，以支持梯度计算和优化。</p>
 <p>构建一个基本的 QNode包含三个关键步骤：</p>
 <ul>
-<li>
-<p><strong>定义量子设备</strong>：指定运行量子线路的后端。</p>
-</li>
-<li>
-<p><strong>使用 @qml.qnode装饰器</strong>：将经典的 Python 函数转换为量子节点。</p>
-</li>
-<li>
-<p><strong>在函数内定义量子线路</strong>：在被装饰的函数中，通过添加量子门操作来构建线路，并最终返回一个测量值。</p>
-</li>
-</ul></div>
+<li><strong>定义量子设备</strong>：指定运行量子线路的后端。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">pennylane</span> <span class="pl-k">as</span> <span class="pl-s1">qml</span>
+<span class="pl-c"># 创建一个使用 2 个量子比特的默认量子模拟器</span>
+<span class="pl-s1">dev</span> <span class="pl-c1">=</span> <span class="pl-s1">qml</span>.<span class="pl-c1">device</span>(<span class="pl-s">"default.qubit"</span>, <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-c1">2</span>)</pre></div>
+<p>这里的 wires参数定义了可用的量子比特数量(线路数目)</p>
+<ul>
+<li><strong>使用 @qml.qnode装饰器</strong>：将经典的 Python 函数转换为量子节点。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">@<span class="pl-s1">qml</span>.<span class="pl-c1">qnode</span>(<span class="pl-s1">dev</span>)  <span class="pl-c"># 将 quantum_circuit 函数绑定到设备 dev</span></span>
+<span class="pl-k">def</span> <span class="pl-en">quantum_circuit</span>(<span class="pl-s1">x</span>):
+    <span class="pl-c"># 量子操作将在这里定义</span>
+    ...
+    <span class="pl-k">return</span> ...  <span class="pl-c"># 返回测量结果</span></pre></div>
+<ul>
+<li><strong>在函数内定义量子线路</strong>：在被装饰的函数中，通过添加量子门操作来构建线路，并最终返回一个测量值。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">@<span class="pl-s1">qml</span>.<span class="pl-c1">qnode</span>(<span class="pl-s1">dev</span>)</span>
+<span class="pl-k">def</span> <span class="pl-en">quantum_circuit</span>(<span class="pl-s1">x</span>):
+    <span class="pl-s1">qml</span>.<span class="pl-c1">Hadamard</span>(<span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-c1">0</span>)       <span class="pl-c"># 对第0个量子比特应用H门，创建叠加态</span>
+    <span class="pl-s1">qml</span>.<span class="pl-c1">RY</span>(<span class="pl-s1">x</span>, <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-c1">0</span>)          <span class="pl-c"># 使用参数 x 进行Y轴旋转</span>
+    <span class="pl-s1">qml</span>.<span class="pl-c1">CNOT</span>(<span class="pl-s1">wires</span><span class="pl-c1">=</span>[<span class="pl-c1">0</span>, <span class="pl-c1">1</span>])      <span class="pl-c"># 在量子比特0和1之间应用CNOT门，生成纠缠</span>
+    <span class="pl-k">return</span> <span class="pl-s1">qml</span>.<span class="pl-c1">expval</span>(<span class="pl-s1">qml</span>.<span class="pl-c1">PauliZ</span>(<span class="pl-c1">0</span>))  <span class="pl-c"># 返回第一个量子比特的Pauli-Z期望值</span></pre></div>
+<p>执行此函数（如 result = quantum_circuit(0.5)）会在指定的设备上运行线路并返回测量结果</p>
+<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">flowchart</span> <span class="pl-c1">TD</span>
+    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>选择并定义量子设备<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>创建量子节点&lt;<span class="pl-ent">br</span>&gt;（QNode）<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>在QNode函数中定义量子操作<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">{</span></span><span class="pl-s"><span class="pl-pds">"</span>目标量子态<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">}</span></span></span>
+    
+    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>基态 |0⟩<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>叠加态&lt;<span class="pl-ent">br</span>&gt;（如 |+⟩）<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>任意叠加态<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    
+    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E1</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>设备默认初始状态<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">F</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F1</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>应用 Hadamard 门<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G1</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>应用旋转门&lt;<span class="pl-ent">br</span>&gt;（如 RX, RY）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    
+    <span class="pl-ent">E1</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>测量并返回结果<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">F1</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span>
+    <span class="pl-ent">G1</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span></pre></div>
+<h2>1.2 测量线路</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>测量类型(QNode返回)</th>
+<th>函数</th>
+<th>输出含义</th>
+<th>经典类比(近似理解)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>期望值</strong></td>
+<td><code class="notranslate">qml.expval(Observable)</code></td>
+<td>对某个可观测量（如自旋方向）的平均值。</td>
+<td>预测一个随机变量的<strong>平均值</strong>。</td>
+</tr>
+<tr>
+<td><strong>概率</strong></td>
+<td><code class="notranslate">qml.probs(wires)</code></td>
+<td>测量得到每个计算基态的概率。</td>
+<td>一个概率分布，如 <code class="notranslate">[0.7, 0.3]</code>。</td>
+</tr>
+<tr>
+<td><strong>样本</strong></td>
+<td><code class="notranslate">qml.sample(Observable)</code></td>
+<td>对可观测量进行多次重复测量，得到具体结果。</td>
+<td>掷骰子N次，记录每次的点数。</td>
+</tr>
+<tr>
+<td><strong>量子态</strong></td>
+<td><code class="notranslate">qml.state()</code></td>
+<td>直接获取模拟的量子态向量（仅仿真器可用）。</td>
+<td>获取一个随机过程的完整概率幅。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>🔬需要说明的是：直接获取模拟的量子态向量，能不用就尽量不用，毕竟量子计算研究的目的最后是应用在真实的量子硬件上的。量子态会在测量后坍缩，这是不可逆的，如果想知道某个具体的量子态，测量后它就失去意义了。而根据不可克隆定理，你没法通过简单的开销（需要额外的辅助qubit）就造出一个一样的量子态来。仿真中你当然可以直接获取某个qubit的密度矩阵来复制它和测量它，但在真实硬件中没法这么做，属于是“作弊”行为。</p>
+<h2>1.3 量子门函数</h2>
+<p>量子门是操控量子态的基本单元。PennyLane 提供了丰富的门函数，以下是一些核心类别：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>门类型</th>
+<th>函数示例</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pauli门</td>
+<td><code class="notranslate">qml.PauliX(wires=i)</code></td>
+<td>比特翻转（绕X轴旋转π）</td>
+</tr>
+<tr>
+<td></td>
+<td><code class="notranslate">qml.PauliY(wires=i)</code></td>
+<td>绕Y轴旋转π</td>
+</tr>
+<tr>
+<td></td>
+<td><code class="notranslate">qml.PauliZ(wires=i)</code></td>
+<td>相位翻转（绕Z轴旋转π）</td>
+</tr>
+<tr>
+<td>旋转门</td>
+<td><code class="notranslate">qml.RX(phi, wires=i)</code></td>
+<td>绕X轴旋转角度φ</td>
+</tr>
+<tr>
+<td></td>
+<td><code class="notranslate">qml.RY(phi, wires=i)</code></td>
+<td>绕Y轴旋转角度φ</td>
+</tr>
+<tr>
+<td></td>
+<td><code class="notranslate">qml.RZ(phi, wires=i)</code></td>
+<td>绕Z轴旋转角度φ</td>
+</tr>
+<tr>
+<td>通用门</td>
+<td><code class="notranslate">qml.Hadamard(wires=i)</code></td>
+<td>创建叠加态: |0⟩ → (|0⟩+|1⟩)/√2</td>
+</tr>
+<tr>
+<td></td>
+<td><code class="notranslate">qml.CNOT(wires=[c, t])</code></td>
+<td>受控非门：控制比特c为1时翻转目标比特t</td>
+</tr>
+<tr>
+<td>特殊门</td>
+<td><code class="notranslate">qml.Rot(a, b, c, wires=i)</code></td>
+<td>依次进行RZ(b)、RY(a)、RZ(c)旋转，用于实现任意单比特酉变换 。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>多量子比特门（如 CNOT）是产生量子纠缠的关键。所有这些门操作都按其在函数中出现的顺序依次执行</p>
+<h2>1.4 线路可视化</h2>
+<p>📐 量子线路可视化</p>
+<p>清晰地查看线路结构对于理解和调试至关重要。PennyLane 提供了便捷的可视化工具。</p>
+<ul>
+<li>基础文本可视化：使用 qml.draw()函数可以生成线路的文本图。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 接上面的代码</span>
+<span class="pl-s1">drawn_circuit</span> <span class="pl-c1">=</span> <span class="pl-s1">qml</span>.<span class="pl-c1">draw</span>(<span class="pl-s1">quantum_circuit</span>)(<span class="pl-c1">0.5</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">drawn_circuit</span>)</pre></div>
+<ul>
+<li>高级绘图功能：对于更复杂的线路，可以使用 qml.draw_mpl函数生成更精美的 matplotlib 图像。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fig</span>, <span class="pl-s1">ax</span> <span class="pl-c1">=</span> <span class="pl-s1">qml</span>.<span class="pl-c1">draw_mpl</span>(<span class="pl-s1">quantum_circuit</span>, <span class="pl-s1">decimals</span><span class="pl-c1">=</span><span class="pl-c1">2</span>)(<span class="pl-c1">0.5</span>)
+<span class="pl-s1">plt</span>.<span class="pl-c1">show</span>()</pre></div>
+<h2>1.5 示例</h2>
+<p>以下是一段量子线路实现和可视化的完整示例：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 1. 定义量子设备（使用默认的模拟器）</span>
+<span class="pl-s1">dev</span> <span class="pl-c1">=</span> <span class="pl-s1">qml</span>.<span class="pl-c1">device</span>(<span class="pl-s">"default.qubit"</span>, <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-c1">2</span>)
+
+<span class="pl-c"># 2. 创建量子节点，并指定使用PyTorch接口</span>
+<span class="pl-en">@<span class="pl-s1">qml</span>.<span class="pl-c1">qnode</span>(<span class="pl-s1">dev</span>, <span class="pl-s1">interface</span><span class="pl-c1">=</span><span class="pl-s">"torch"</span>)</span>
+<span class="pl-k">def</span> <span class="pl-en">circuit</span>(<span class="pl-s1">params</span>):
+    <span class="pl-s1">qml</span>.<span class="pl-c1">RX</span>(<span class="pl-s1">params</span>[<span class="pl-c1">0</span>], <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-c1">0</span>)  <span class="pl-c"># 用参数params[0]进行X旋转</span>
+    <span class="pl-s1">qml</span>.<span class="pl-c1">RY</span>(<span class="pl-s1">params</span>[<span class="pl-c1">1</span>], <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)  <span class="pl-c"># 用参数params[1]进行Y旋转</span>
+    <span class="pl-s1">qml</span>.<span class="pl-c1">CNOT</span>(<span class="pl-s1">wires</span><span class="pl-c1">=</span>[<span class="pl-c1">0</span>, <span class="pl-c1">1</span>])      <span class="pl-c"># 添加一个CNOT门</span>
+    <span class="pl-k">return</span> <span class="pl-s1">qml</span>.<span class="pl-c1">expval</span>(<span class="pl-s1">qml</span>.<span class="pl-c1">PauliZ</span>(<span class="pl-c1">0</span>))  <span class="pl-c"># 返回量子比特0上Pauli Z算符的期望值</span>
+
+<span class="pl-c"># 3. 可视化</span>
+<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>=== 量子线路图形可视化 ==="</span>)
+<span class="pl-k">try</span>:
+    <span class="pl-c"># 使用qml.draw_mpl()生成图形化电路图[1,6](@ref)</span>
+    <span class="pl-c"># 使用Windows系统自带的微软雅黑（适用于Windows用户）</span>
+    <span class="pl-s1">plt</span>.<span class="pl-c1">rcParams</span>[<span class="pl-s">'font.sans-serif'</span>] <span class="pl-c1">=</span> [<span class="pl-s">'Microsoft YaHei'</span>]  <span class="pl-c"># 或 ['SimHei'] 对应黑体</span>
+    <span class="pl-s1">fig</span>, <span class="pl-s1">ax</span> <span class="pl-c1">=</span> <span class="pl-s1">qml</span>.<span class="pl-c1">draw_mpl</span>(<span class="pl-s1">circuit</span>)(<span class="pl-s1">params</span>)
+    <span class="pl-s1">plt</span>.<span class="pl-c1">title</span>(<span class="pl-s">"参数化量子电路可视化"</span>)
+    <span class="pl-s1">plt</span>.<span class="pl-c1">tight_layout</span>()
+    <span class="pl-s1">plt</span>.<span class="pl-c1">show</span>()
+    <span class="pl-en">print</span>(<span class="pl-s">"图形可视化已显示，关闭窗口继续执行..."</span>)
+<span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">f"图形可视化失败: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
+    <span class="pl-en">print</span>(<span class="pl-s">"请确保已安装matplotlib: pip install matplotlib"</span>)</pre></div>
+<p>输出：</p>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/e59ec9e3-db03-48fa-a5b9-778da823514d"><img width="519" height="342" alt="Image" src="https://github.com/user-attachments/assets/e59ec9e3-db03-48fa-a5b9-778da823514d" style="max-width: 100%; height: auto; max-height: 342px;"></a></p>
+<h1>2.搭建量子层</h1>
+<p>搭建量子层（随机静态/PQC）的逻辑流程如下：</p>
+<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">flowchart</span> <span class="pl-c1">TD</span>
+    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>初始化空白量子线路<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>添加参数化量子门&lt;<span class="pl-ent">br</span>&gt;（如RX， RY， RZ）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>添加固定量子门&lt;<span class="pl-ent">br</span>&gt;（如CNOT， H）以制造纠缠<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>定义测量方式&lt;<span class="pl-ent">br</span>&gt;（如期望值， 概率， 样本）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>绑定至量子设备&lt;<span class="pl-ent">br</span>&gt;（模拟器或真实量子计算机）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>优化参数&lt;<span class="pl-ent">br</span>&gt;（通过经典优化器调整参数）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    
+    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>参数化量子门<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>固定量子门<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">I</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>测量操作<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">J</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>量子设备<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">F</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">K</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>经典优化器<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    
+    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">L</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>线路结构固定<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">H</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">L</span>
+    <span class="pl-ent">I</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">M</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>参数可调<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">J</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">M</span>
+    <span class="pl-ent">L</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">N</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>变分量子算法&lt;<span class="pl-ent">br</span>&gt;（VQE， QAOA）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
+    <span class="pl-ent">M</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">N</span></pre></div>
+<h2>2.1 区别与选择</h2>
+<p>理解可训练的参数化量子电路（PQC）和静态量子线路的区别，是掌握量子机器学习的关键。下面这个表格能帮你快速抓住它们的核心不同。</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>特性维度</th>
+<th>参数化量子电路(PQC)</th>
+<th>静态量子线路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心参数</td>
+<td>包含可训练的参数（如旋转门角度θ）</td>
+<td>由固定的量子门序列组成，无训练参数</td>
+</tr>
+<tr>
+<td>设计目标</td>
+<td>寻求最优解，通过训练调整参数以最小化损失函数</td>
+<td>执行确定运算，实现设计好的特定量子逻辑</td>
+</tr>
+<tr>
+<td>与经典系统交互</td>
+<td>深度耦合，构成量子-经典混合计算闭环的一部分</td>
+<td>弱交互，通常一次性输入经典数据并输出结果</td>
+</tr>
+<tr>
+<td>测量输出</td>
+<td>测量结果（如期望值）用于计算损失函数，并指导参数更新</td>
+<td>测量结果即为计算的最终答案</td>
+</tr>
+<tr>
+<td>典型应用</td>
+<td>量子机器学习、变分量子算法（VQE, QAOA）</td>
+<td>量子傅里叶变换、Grover搜索算法等</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>🧠 可训练PQC的运作方式</p>
+<p>PQC的强大之处在于它和经典机器学习流程的无缝融合。</p>
+<p>电路构建：首先，你需要设计一个线路架构（Ansatz）。这个架构中包含了一些由参数控制的量子门，最常见的是单量子比特旋转门（如 RX(θ), RY(θ), RZ(θ)），其中的角度 θ就是可训练的参数。</p>
+<p>混合计算闭环：PQC的运作是一个典型的“量子-经典混合”过程：</p>
+<ul>
+<li>经典侧：初始化参数，将参数 θ和输入数据（通过特定编码方式注入量子态）传给量子设备。</li>
+<li>量子侧：在量子设备上运行PQC，并进行测量，得到期望值等结果。</li>
+<li>经典侧：根据测量结果计算损失函数，然后利用经典优化器（如梯度下降）根据梯度信息更新参数 θ。这个循环会持续进行，直到模型收敛。</li>
+</ul>
+<p>在PennyLane中，@qml.qnode装饰器封装了量子计算部分，而自动微分功能使得计算这些梯度变得非常简单。</p>
+<p>⚙️ 静态线路的确定性逻辑</p>
+<p>静态线路的设计和运行逻辑与PQC有本质区别。</p>
+<p>固定流程：静态线路的门序列和所有参数在构建时就已经完全确定。每次运行同一线路，只要输入相同，得到的输出在概率分布上就是一致的。</p>
+<p>核心在于设计：对于静态线路，工作的重点在于设计出正确的门序列来实现特定算法，例如在量子傅里叶变换中精确安排受控门的位置和相位旋转门的角度。</p>
+<p>💡 如何选择？</p>
+<p>选择PQC：当你面对的问题没有已知的高效量子算法，或者需要在含噪声的中等规模量子（NISQ）设备上解决优化、机器学习任务时，PQC和变分量子算法是首选。</p>
+<p>选择静态线路：当你需要执行已被严格证明具有量子优势的算法（如Shor算法、Grover算法）时，静态线路是实现这些算法的标准方式。</p>
+<h2>2.2 搭建静态与动态量子层</h2>
+<p>💻 代码实现详解</p>
+<p>下面我们看看在PyTorch和PennyLane的混合模型中，这两种线路如何具体实现。</p>
+<h3>公共设置</h3>
+<p>首先，我们需要导入必要的库并定义一些公共参数。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">torch</span>
+<span class="pl-k">import</span> <span class="pl-s1">torch</span>.<span class="pl-s1">nn</span> <span class="pl-k">as</span> <span class="pl-s1">nn</span>
+<span class="pl-k">import</span> <span class="pl-s1">pennylane</span> <span class="pl-k">as</span> <span class="pl-s1">qml</span>
+<span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
+
+<span class="pl-c"># 定义量子设备</span>
+<span class="pl-s1">n_qubits</span> <span class="pl-c1">=</span> <span class="pl-c1">4</span>
+<span class="pl-s1">dev</span> <span class="pl-c1">=</span> <span class="pl-s1">qml</span>.<span class="pl-c1">device</span>(<span class="pl-s">"default.qubit"</span>, <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-s1">n_qubits</span>)
+
+<span class="pl-c"># 定义用于数据编码的量子节点（公共部分）</span>
+<span class="pl-en">@<span class="pl-s1">qml</span>.<span class="pl-c1">qnode</span>(<span class="pl-s1">dev</span>, <span class="pl-s1">interface</span><span class="pl-c1">=</span><span class="pl-s">"torch"</span>)</span>
+<span class="pl-k">def</span> <span class="pl-en">data_encoder</span>(<span class="pl-s1">inputs</span>):
+    <span class="pl-c"># 将经典数据编码到量子态，例如通过旋转门</span>
+    <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">n_qubits</span>):
+        <span class="pl-s1">qml</span>.<span class="pl-c1">RY</span>(<span class="pl-s1">inputs</span>[<span class="pl-s1">i</span>], <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-s1">i</span>)  <span class="pl-c"># 使用输入数据的每个元素作为旋转角度</span>
+    <span class="pl-k">return</span> <span class="pl-s1">qml</span>.<span class="pl-c1">state</span>()</pre></div>
+<h3>静态线路实现</h3>
+<p>静态线路的参数是固定的，不参与训练。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># --- 静态线路部分 ---</span>
+<span class="pl-c"># 定义一个固定的、不训练的参数</span>
+<span class="pl-s1">fixed_angle</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-s1">np</span>.<span class="pl-c1">pi</span> <span class="pl-c1">/</span> <span class="pl-c1">4</span>])  <span class="pl-c"># 例如，固定为45度</span>
+
+<span class="pl-en">@<span class="pl-s1">qml</span>.<span class="pl-c1">qnode</span>(<span class="pl-s1">dev</span>, <span class="pl-s1">interface</span><span class="pl-c1">=</span><span class="pl-s">"torch"</span>)</span>
+<span class="pl-k">def</span> <span class="pl-en">static_quantum_conv</span>(<span class="pl-s1">inputs</span>):
+    <span class="pl-c"># 1. 数据编码（与PQC共享）</span>
+    <span class="pl-en">data_encoder</span>(<span class="pl-s1">inputs</span>)
+    
+    <span class="pl-c"># 2. 应用静态的量子卷积操作</span>
+    <span class="pl-c"># 例如，使用固定的角度和固定的纠缠结构</span>
+    <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">n_qubits</span> <span class="pl-c1">-</span> <span class="pl-c1">1</span>):
+        <span class="pl-s1">qml</span>.<span class="pl-c1">CNOT</span>(<span class="pl-s1">wires</span><span class="pl-c1">=</span>[<span class="pl-s1">i</span>, <span class="pl-s1">i</span><span class="pl-c1">+</span><span class="pl-c1">1</span>])
+    <span class="pl-s1">qml</span>.<span class="pl-c1">RZ</span>(<span class="pl-s1">fixed_angle</span>, <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-s1">n_qubits</span><span class="pl-c1">-</span><span class="pl-c1">1</span>)  <span class="pl-c"># 使用固定参数</span>
+    
+    <span class="pl-k">return</span> [<span class="pl-s1">qml</span>.<span class="pl-c1">expval</span>(<span class="pl-s1">qml</span>.<span class="pl-c1">PauliZ</span>(<span class="pl-s1">i</span>)) <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">n_qubits</span>)]
+
+<span class="pl-c"># 定义包含静态量子层的PyTorch模型</span>
+<span class="pl-k">class</span> <span class="pl-v">QCNN_Static</span>(<span class="pl-s1">nn</span>.<span class="pl-c1">Module</span>):
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">super</span>().<span class="pl-c1">__init__</span>()
+        <span class="pl-c"># 注意：静态线路的参数（如fixed_angle）不注册为nn.Parameter</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">classical_fc</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Linear</span>(<span class="pl-s1">n_qubits</span>, <span class="pl-c1">1</span>)  <span class="pl-c"># 后续经典层</span>
+        
+    <span class="pl-k">def</span> <span class="pl-en">forward</span>(<span class="pl-s1">self</span>, <span class="pl-s1">x</span>):
+        <span class="pl-c"># 量子部分：静态线路，每次计算行为一致</span>
+        <span class="pl-s1">quantum_out</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-en">static_quantum_conv</span>(<span class="pl-s1">x_i</span>) <span class="pl-k">for</span> <span class="pl-s1">x_i</span> <span class="pl-c1">in</span> <span class="pl-s1">x</span>])
+        <span class="pl-c"># 经典部分</span>
+        <span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">classical_fc</span>(<span class="pl-s1">quantum_out</span>)
+        <span class="pl-k">return</span> <span class="pl-s1">output</span></pre></div>
+<h3>参数化量子线路（PQC）实现</h3>
+<p>PQC的核心在于其参数是可训练的。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># --- PQC部分 ---</span>
+<span class="pl-c"># 定义可训练参数的维度：假设有2层，每层为每个量子比特准备一个参数</span>
+<span class="pl-s1">depth</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span>
+<span class="pl-s1">quantum_weights_shape</span> <span class="pl-c1">=</span> (<span class="pl-s1">depth</span>, <span class="pl-s1">n_qubits</span>)
+
+<span class="pl-en">@<span class="pl-s1">qml</span>.<span class="pl-c1">qnode</span>(<span class="pl-s1">dev</span>, <span class="pl-s1">interface</span><span class="pl-c1">=</span><span class="pl-s">"torch"</span>)</span>
+<span class="pl-k">def</span> <span class="pl-en">pqc_quantum_conv</span>(<span class="pl-s1">inputs</span>, <span class="pl-s1">weights</span>):  <span class="pl-c"># 注意：线路函数接收权重参数</span>
+    <span class="pl-c"># 1. 数据编码（与静态线路共享）</span>
+    <span class="pl-en">data_encoder</span>(<span class="pl-s1">inputs</span>)
+    
+    <span class="pl-c"># 2. 应用参数化的量子卷积操作（变分层）</span>
+    <span class="pl-c"># 使用可训练的权重！这是与静态线路最根本的区别。</span>
+    <span class="pl-k">for</span> <span class="pl-s1">layer</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">depth</span>):
+        <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">n_qubits</span>):
+            <span class="pl-s1">qml</span>.<span class="pl-c1">RY</span>(<span class="pl-s1">weights</span>[<span class="pl-s1">layer</span>][<span class="pl-s1">i</span>], <span class="pl-s1">wires</span><span class="pl-c1">=</span><span class="pl-s1">i</span>)
+        <span class="pl-c"># 添加纠缠以增加复杂性</span>
+        <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">n_qubits</span> <span class="pl-c1">-</span> <span class="pl-c1">1</span>):
+            <span class="pl-s1">qml</span>.<span class="pl-c1">CNOT</span>(<span class="pl-s1">wires</span><span class="pl-c1">=</span>[<span class="pl-s1">i</span>, <span class="pl-s1">i</span><span class="pl-c1">+</span><span class="pl-c1">1</span>])
+    
+    <span class="pl-k">return</span> [<span class="pl-s1">qml</span>.<span class="pl-c1">expval</span>(<span class="pl-s1">qml</span>.<span class="pl-c1">PauliZ</span>(<span class="pl-s1">i</span>)) <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">n_qubits</span>)]
+
+<span class="pl-c"># 定义包含PQC的PyTorch模型</span>
+<span class="pl-k">class</span> <span class="pl-c1">QCNN_PQC</span>(<span class="pl-s1">nn</span>.<span class="pl-c1">Module</span>):
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">super</span>().<span class="pl-c1">__init__</span>()
+        <span class="pl-c"># 关键区别：将量子线路的权重注册为PyTorch模型参数</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">quantum_weights</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Parameter</span>(<span class="pl-s1">torch</span>.<span class="pl-c1">randn</span>(<span class="pl-s1">quantum_weights_shape</span>))
+        <span class="pl-s1">self</span>.<span class="pl-c1">classical_fc</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Linear</span>(<span class="pl-s1">n_qubits</span>, <span class="pl-c1">1</span>)
+        
+    <span class="pl-k">def</span> <span class="pl-en">forward</span>(<span class="pl-s1">self</span>, <span class="pl-s1">x</span>):
+        <span class="pl-c"># 量子部分：PQC，将可训练参数quantum_weights传入量子节点</span>
+        <span class="pl-c"># 每次前向传播都使用当前优化器更新后的权重值</span>
+        <span class="pl-s1">quantum_out</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">stack</span>([<span class="pl-en">pqc_quantum_conv</span>(<span class="pl-s1">x_i</span>, <span class="pl-s1">self</span>.<span class="pl-c1">quantum_weights</span>) <span class="pl-k">for</span> <span class="pl-s1">x_i</span> <span class="pl-c1">in</span> <span class="pl-s1">x</span>])
+        <span class="pl-c"># 经典部分</span>
+        <span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">classical_fc</span>(<span class="pl-s1">quantum_out</span>)
+        <span class="pl-k">return</span> <span class="pl-s1">output</span></pre></div>
+<blockquote>
+<p>最直观的区别:静态线路的参数是普通Tensor，而PQC的参数是nn.Parameter，这会告诉PyTorch这些值需要在训练中被优化。</p>
+</blockquote></div>
 <div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
