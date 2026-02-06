@@ -117,22 +117,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-s1">qml</span>.<span class="pl-c1">CNOT</span>(<span class="pl-s1">wires</span><span class="pl-c1">=</span>[<span class="pl-c1">0</span>, <span class="pl-c1">1</span>])      <span class="pl-c"># 在量子比特0和1之间应用CNOT门，生成纠缠</span>
     <span class="pl-k">return</span> <span class="pl-s1">qml</span>.<span class="pl-c1">expval</span>(<span class="pl-s1">qml</span>.<span class="pl-c1">PauliZ</span>(<span class="pl-c1">0</span>))  <span class="pl-c"># 返回第一个量子比特的Pauli-Z期望值</span></pre></div>
 <p>执行此函数（如 result = quantum_circuit(0.5)）会在指定的设备上运行线路并返回测量结果</p>
-<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">flowchart</span> <span class="pl-c1">TD</span>
-    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>选择并定义量子设备<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>创建量子节点&lt;<span class="pl-ent">br</span>&gt;（QNode）<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>在QNode函数中定义量子操作<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">{</span></span><span class="pl-s"><span class="pl-pds">"</span>目标量子态<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">}</span></span></span>
-    
-    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>基态 |0⟩<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>叠加态&lt;<span class="pl-ent">br</span>&gt;（如 |+⟩）<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span><span class="pl-s"><span class="pl-pds">"</span>任意叠加态<span class="pl-pds">"</span></span><span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    
-    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E1</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>设备默认初始状态<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">F</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F1</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>应用 Hadamard 门<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G1</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>应用旋转门&lt;<span class="pl-ent">br</span>&gt;（如 RX, RY）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    
-    <span class="pl-ent">E1</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>测量并返回结果<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">F1</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span>
-    <span class="pl-ent">G1</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span></pre></div>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/4a671b06-9900-4c72-923c-1105a4cbc027"><img width="1387" height="1820" alt="Image" src="https://github.com/user-attachments/assets/4a671b06-9900-4c72-923c-1105a4cbc027" style="max-width: 100%; height: auto; max-height: 1820px;"></a></p>
 <h2>1.2 测量线路</h2>
 <markdown-accessiblity-table><table role="table">
 <thead>
@@ -275,25 +260,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/e59ec9e3-db03-48fa-a5b9-778da823514d"><img width="519" height="342" alt="Image" src="https://github.com/user-attachments/assets/e59ec9e3-db03-48fa-a5b9-778da823514d" style="max-width: 100%; height: auto; max-height: 342px;"></a></p>
 <h1>2.搭建量子层</h1>
 <p>搭建量子层（随机静态/PQC）的逻辑流程如下：</p>
-<div class="highlight highlight-source-mermaid"><pre class="notranslate"><span class="pl-k">flowchart</span> <span class="pl-c1">TD</span>
-    <span class="pl-ent">A</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>初始化空白量子线路<span class="pl-pds"><span class="pl-sg">]</span></span></span> <span class="pl-k">--&gt;</span> <span class="pl-ent">B</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>添加参数化量子门&lt;<span class="pl-ent">br</span>&gt;（如RX， RY， RZ）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">C</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>添加固定量子门&lt;<span class="pl-ent">br</span>&gt;（如CNOT， H）以制造纠缠<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">D</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>定义测量方式&lt;<span class="pl-ent">br</span>&gt;（如期望值， 概率， 样本）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">E</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>绑定至量子设备&lt;<span class="pl-ent">br</span>&gt;（模拟器或真实量子计算机）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">F</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>优化参数&lt;<span class="pl-ent">br</span>&gt;（通过经典优化器调整参数）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    
-    <span class="pl-ent">B</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">G</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>参数化量子门<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">C</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">H</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>固定量子门<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">D</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">I</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>测量操作<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">E</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">J</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>量子设备<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">F</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">K</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>经典优化器<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    
-    <span class="pl-ent">G</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">L</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>线路结构固定<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">H</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">L</span>
-    <span class="pl-ent">I</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">M</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>参数可调<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">J</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">M</span>
-    <span class="pl-ent">L</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">N</span><span class="pl-s"><span class="pl-pds"><span class="pl-sg">[</span></span>变分量子算法&lt;<span class="pl-ent">br</span>&gt;（VQE， QAOA）<span class="pl-pds"><span class="pl-sg">]</span></span></span>
-    <span class="pl-ent">M</span> <span class="pl-k">--&gt;</span> <span class="pl-ent">N</span></pre></div>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/93acf066-ada4-42a5-9deb-6f8d82178831"><img width="2000" height="1964" alt="Image" src="https://github.com/user-attachments/assets/93acf066-ada4-42a5-9deb-6f8d82178831" style="max-width: 100%; height: auto; max-height: 1964px;"></a></p>
 <h2>2.1 区别与选择</h2>
 <p>理解可训练的参数化量子电路（PQC）和静态量子线路的区别，是掌握量子机器学习的关键。下面这个表格能帮你快速抓住它们的核心不同。</p>
 <markdown-accessiblity-table><table role="table">

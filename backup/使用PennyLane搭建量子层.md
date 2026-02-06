@@ -42,24 +42,8 @@ def quantum_circuit(x):
     return qml.expval(qml.PauliZ(0))  # 返回第一个量子比特的Pauli-Z期望值
 ```
 执行此函数（如 result = quantum_circuit(0.5)）会在指定的设备上运行线路并返回测量结果
-```mermaid
-flowchart TD
-    A["选择并定义量子设备"] --> B["创建量子节点<br>（QNode）"]
-    B --> C["在QNode函数中定义量子操作"]
-    C --> D{"目标量子态"}
-    
-    D --> E["基态 |0⟩"]
-    D --> F["叠加态<br>（如 |+⟩）"]
-    D --> G["任意叠加态"]
-    
-    E --> E1[设备默认初始状态]
-    F --> F1[应用 Hadamard 门]
-    G --> G1[应用旋转门<br>（如 RX, RY）]
-    
-    E1 --> H[测量并返回结果]
-    F1 --> H
-    G1 --> H
-```
+
+<img width="1387" height="1820" alt="Image" src="https://github.com/user-attachments/assets/4a671b06-9900-4c72-923c-1105a4cbc027" />
 
 ## 1.2 测量线路
 
@@ -148,27 +132,8 @@ except Exception as e:
 
 搭建量子层（随机静态/PQC）的逻辑流程如下：
 
-```mermaid
-flowchart TD
-    A[初始化空白量子线路] --> B[添加参数化量子门<br>（如RX， RY， RZ）]
-    B --> C[添加固定量子门<br>（如CNOT， H）以制造纠缠]
-    C --> D[定义测量方式<br>（如期望值， 概率， 样本）]
-    D --> E[绑定至量子设备<br>（模拟器或真实量子计算机）]
-    E --> F[优化参数<br>（通过经典优化器调整参数）]
-    
-    B --> G[参数化量子门]
-    C --> H[固定量子门]
-    D --> I[测量操作]
-    E --> J[量子设备]
-    F --> K[经典优化器]
-    
-    G --> L[线路结构固定]
-    H --> L
-    I --> M[参数可调]
-    J --> M
-    L --> N[变分量子算法<br>（VQE， QAOA）]
-    M --> N
-```
+<img width="2119" height="1964" alt="Image" src="https://github.com/user-attachments/assets/93acf066-ada4-42a5-9deb-6f8d82178831" />
+
 ## 2.1 区别与选择
 
 理解可训练的参数化量子电路（PQC）和静态量子线路的区别，是掌握量子机器学习的关键。下面这个表格能帮你快速抓住它们的核心不同。
