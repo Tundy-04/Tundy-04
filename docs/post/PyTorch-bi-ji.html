@@ -29,7 +29,7 @@
 <meta property="og:url" content="https://Tundy-04.github.io/Tundy-04/post/PyTorch-bi-ji.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/172103124?s=400&u=b7a8945af2f0859ce28b8e3895a5e3acb62de8b5&v=4">
 <title>PyTorch笔记</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -106,25 +106,26 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>NumPy 数组和 PyTorch 张量可以方便转换，但其中有冲突的隐患。</p>
 <p>NumPy → PyTorch</p>
 <p>使用<strong>torch.from_numpy</strong>()时，生成的 PyTorch 张量和原始 NumPy 数组在 CPU 上共享相同的底层内存位置。这意味着修改一个对象会影响另一个。这种行为很高效，因为它避免了数据复制，但你需要注意这一点。</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个 NumPy 数组</span>
-<span class="pl-s1">numpy_array</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [<span class="pl-c1">3</span>, <span class="pl-c1">4</span>]], <span class="pl-s1">dtype</span><span class="pl-c1">=</span><span class="pl-s1">np</span>.<span class="pl-c1">float32</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"NumPy 数组:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"NumPy 数组类型: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array</span>.<span class="pl-c1">dtype</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 创建一个 NumPy 数组
+numpy_array = np.array([[1, 2], [3, 4]], dtype=np.float32)
+print(f"NumPy 数组:\n{numpy_array}")
+print(f"NumPy 数组类型: {numpy_array.dtype}")
 
-<span class="pl-c"># 将 NumPy 数组转换为 PyTorch 张量</span>
-<span class="pl-s1">pytorch_tensor</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">from_numpy</span>(<span class="pl-s1">numpy_array</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>PyTorch 张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">pytorch_tensor</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"PyTorch 张量类型: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">pytorch_tensor</span>.<span class="pl-c1">dtype</span><span class="pl-kos">}</span></span>"</span>)
+# 将 NumPy 数组转换为 PyTorch 张量
+pytorch_tensor = torch.from_numpy(numpy_array)
+print(f"\nPyTorch 张量:\n{pytorch_tensor}")
+print(f"PyTorch 张量类型: {pytorch_tensor.dtype}")
 
-<span class="pl-c"># 修改 NumPy 数组</span>
-<span class="pl-s1">numpy_array</span>[<span class="pl-c1">0</span>, <span class="pl-c1">0</span>] <span class="pl-c1">=</span> <span class="pl-c1">99</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>修改后的 NumPy 数组:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"修改 NumPy 数组后的 PyTorch 张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">pytorch_tensor</span><span class="pl-kos">}</span></span>"</span>)
+# 修改 NumPy 数组
+numpy_array[0, 0] = 99
+print(f"\n修改后的 NumPy 数组:\n{numpy_array}")
+print(f"修改 NumPy 数组后的 PyTorch 张量:\n{pytorch_tensor}")
 
-<span class="pl-c"># 修改 PyTorch 张量</span>
-<span class="pl-s1">pytorch_tensor</span>[<span class="pl-c1">1</span>, <span class="pl-c1">1</span>] <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">1</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>修改后的 PyTorch 张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">pytorch_tensor</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"修改 PyTorch 张量后的 NumPy 数组:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+# 修改 PyTorch 张量
+pytorch_tensor[1, 1] = -1
+print(f"\n修改后的 PyTorch 张量:\n{pytorch_tensor}")
+print(f"修改 PyTorch 张量后的 NumPy 数组:\n{numpy_array}")
+</code></pre>
 <details>
   <summary>点我看输出</summary>
   <pre class="notranslate"><code class="notranslate">
@@ -152,24 +153,25 @@ tensor([[99.,  2.],<br>
 </details>
 <p>PyTorch → Numpy</p>
 <p>反之，你可以使用 .numpy() 方法将位于 CPU 上的 PyTorch 张量转换回 NumPy 数组。同样，生成的 NumPy 数组和原始 <strong>CPU</strong> 张量共享相同的底层内存。对一个的修改会影响另一个。</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 在 CPU 上创建一个 PyTorch 张量</span>
-<span class="pl-s1">cpu_tensor</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([[<span class="pl-c1">10.0</span>, <span class="pl-c1">20.0</span>], [<span class="pl-c1">30.0</span>, <span class="pl-c1">40.0</span>]])
-<span class="pl-en">print</span>(<span class="pl-s">f"原始 PyTorch 张量 (CPU):<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">cpu_tensor</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 在 CPU 上创建一个 PyTorch 张量
+cpu_tensor = torch.tensor([[10.0, 20.0], [30.0, 40.0]])
+print(f"原始 PyTorch 张量 (CPU):\n{cpu_tensor}")
 
-<span class="pl-c"># 将张量转换为 NumPy 数组</span>
-<span class="pl-s1">numpy_array_converted</span> <span class="pl-c1">=</span> <span class="pl-s1">cpu_tensor</span>.<span class="pl-c1">numpy</span>()
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>转换后的 NumPy 数组:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array_converted</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"NumPy 数组类型: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array_converted</span>.<span class="pl-c1">dtype</span><span class="pl-kos">}</span></span>"</span>)
+# 将张量转换为 NumPy 数组
+numpy_array_converted = cpu_tensor.numpy()
+print(f"\n转换后的 NumPy 数组:\n{numpy_array_converted}")
+print(f"NumPy 数组类型: {numpy_array_converted.dtype}")
 
-<span class="pl-c"># 修改张量</span>
-<span class="pl-s1">cpu_tensor</span>[<span class="pl-c1">0</span>, <span class="pl-c1">1</span>] <span class="pl-c1">=</span> <span class="pl-c1">25.0</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>修改后的 PyTorch 张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">cpu_tensor</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"修改张量后的 NumPy 数组:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array_converted</span><span class="pl-kos">}</span></span>"</span>)
+# 修改张量
+cpu_tensor[0, 1] = 25.0
+print(f"\n修改后的 PyTorch 张量:\n{cpu_tensor}")
+print(f"修改张量后的 NumPy 数组:\n{numpy_array_converted}")
 
-<span class="pl-c"># 修改 NumPy 数组</span>
-<span class="pl-s1">numpy_array_converted</span>[<span class="pl-c1">1</span>, <span class="pl-c1">0</span>] <span class="pl-c1">=</span> <span class="pl-c1">35.0</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>修改后的 NumPy 数组:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">numpy_array_converted</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"修改 NumPy 数组后的张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">cpu_tensor</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+# 修改 NumPy 数组
+numpy_array_converted[1, 0] = 35.0
+print(f"\n修改后的 NumPy 数组:\n{numpy_array_converted}")
+print(f"修改 NumPy 数组后的张量:\n{cpu_tensor}")
+</code></pre>
 <details>
   <summary>点我看输出</summary>
   <pre class="notranslate"><code class="notranslate">
@@ -198,12 +200,13 @@ tensor([[10., 25.],<br>
 <p>轻松地在 NumPy 数组和 PyTorch 张量之间转换的能力非常实用。你可能使用熟悉的 NumPy 函数或其他操作 NumPy 数组的库来执行初始数据加载和预处理。然后，当需要构建或训练深度学习模型时，你可以将数据转换为 PyTorch 张量，以借助于 GPU 加速和自动微分。同样，模型输出（即张量）可以转换回 NumPy 数组，以便使用 Matplotlib 或 Seaborn 等库进行分析或可视化。</p>
 <h2>原地操作函数</h2>
 <p>原地操作是指直接修改变量本身，而不创建新的对象。这种操作在深度学习中非常常见，尤其是在处理大规模数据时，可以显著提高效率并节省内存。在 PyTorch 中，原地操作的函数通常以 _ 结尾，例如 add_()、mul_() 等。以下是一个简单的示例：</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>])
-<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">4</span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>])
-<span class="pl-s1">x</span>.<span class="pl-c1">add_</span>(<span class="pl-s1">y</span>) <span class="pl-c"># 原地加法操作</span>
-<span class="pl-en">print</span>(<span class="pl-s1">x</span>) <span class="pl-c"># 输出: tensor([5, 7, 9])</span>
-<span class="pl-s1">x</span>.<span class="pl-c1">add_</span>(<span class="pl-s1">y</span>).<span class="pl-c1">mul_</span>(<span class="pl-c1">2</span>) <span class="pl-c"># 原地加法和乘法</span>
-<span class="pl-en">print</span>(<span class="pl-s1">x</span>) <span class="pl-c"># 输出: tensor([18, 24, 30])</span></pre></div>
+<pre lang="python" class="notranslate"><code class="notranslate">x = torch.tensor([1, 2, 3])
+y = torch.tensor([4, 5, 6])
+x.add_(y) # 原地加法操作
+print(x) # 输出: tensor([5, 7, 9])
+x.add_(y).mul_(2) # 原地加法和乘法
+print(x) # 输出: tensor([18, 24, 30])
+</code></pre>
 <p>原地操作具有以下几个显著优势：</p>
 <ul>
 <li>
@@ -230,22 +233,23 @@ tensor([[10., 25.],<br>
 </ul>
 <h2>切片操作</h2>
 <p>切片的一个重要特性（与某些其他形式的索引不同）是，返回的张量通常与原始张量共享底层存储。修改切片会修改原始张量。</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个二维张量 (例如，一个小矩阵)</span>
-<span class="pl-s1">x_2d</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>],
-                     [<span class="pl-c1">4</span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>],
-                     [<span class="pl-c1">7</span>, <span class="pl-c1">8</span>, <span class="pl-c1">9</span>]])
-<span class="pl-en">print</span>(<span class="pl-s">f"原始二维张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x_2d</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 创建一个二维张量 (例如，一个小矩阵)
+x_2d = torch.tensor([[1, 2, 3],
+                     [4, 5, 6],
+                     [7, 8, 9]])
+print(f"原始二维张量:\n{x_2d}")
 
-<span class="pl-en">print</span>(<span class="pl-s">f"修改切片前的原始 x_2d:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x_2d</span><span class="pl-kos">}</span></span>"</span>)
+print(f"修改切片前的原始 x_2d:\n{x_2d}")
 
-<span class="pl-c"># 获取一个切片</span>
-<span class="pl-s1">sub_tensor</span> <span class="pl-c1">=</span> <span class="pl-s1">x_2d</span>[<span class="pl-c1">0</span>:<span class="pl-c1">2</span>, <span class="pl-c1">1</span>:<span class="pl-c1">3</span>]
+# 获取一个切片
+sub_tensor = x_2d[0:2, 1:3]
 
-<span class="pl-c"># 修改切片</span>
-<span class="pl-s1">sub_tensor</span>[<span class="pl-c1">0</span>, <span class="pl-c1">0</span>] <span class="pl-c1">=</span> <span class="pl-c1">101</span>
+# 修改切片
+sub_tensor[0, 0] = 101
 
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>修改后的切片:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">sub_tensor</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>修改切片后的原始 x_2d:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x_2d</span><span class="pl-kos">}</span></span>"</span>) <span class="pl-c"># 注意变化！</span></pre></div>
+print(f"\n修改后的切片:\n{sub_tensor}")
+print(f"\n修改切片后的原始 x_2d:\n{x_2d}") # 注意变化！
+</code></pre>
 <details>
   <summary>点我看输出</summary>
   <pre class="notranslate"><code class="notranslate">
@@ -271,33 +275,34 @@ tensor([[  1, 101,   3],<br>
 <p>view() 方法返回一个新的张量，该张量与原始张量共享相同的底层数据，但具有不同的形状。它非常高效，因为它避免了数据复制。然而，view() 要求张量在内存中是连续的。一般用的比较多的是.reshape</p>
 <p>连续张量是指其元素在内存中按维度顺序连续存储，没有间隙的张量。大多数新创建的张量是连续的，但某些操作（如切片或使用 t() 进行转置）会产生非连续张量。</p>
 <p>你可以在 view() 调用中对一个维度使用 -1，PyTorch 将根据总元素数量和其它维度的尺寸自动推断出该维度的正确尺寸。</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个连续张量</span>
-<span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">12</span>) <span class="pl-c"># tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"原始张量: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"原始形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"是否连续? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span>.<span class="pl-c1">is_contiguous</span>()<span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 创建一个连续张量
+x = torch.arange(12) # tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+print(f"原始张量: {x}")
+print(f"原始形状: {x.shape}")
+print(f"是否连续? {x.is_contiguous()}")
 
-<span class="pl-c"># 使用 view() 重塑</span>
-<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>.<span class="pl-c1">view</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>)
-<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>view(3, 4) 后的张量:"</span>)
-<span class="pl-en">print</span>(<span class="pl-s1">y</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"新形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"与 x 共享存储吗? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>() <span class="pl-c1">==</span> <span class="pl-s1">x</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>()<span class="pl-kos">}</span></span>"</span>) <span class="pl-c"># 检查它们是否共享内存</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"y 是否连续? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span>.<span class="pl-c1">is_contiguous</span>()<span class="pl-kos">}</span></span>"</span>)
+# 使用 view() 重塑
+y = x.view(3, 4)
+print("\nview(3, 4) 后的张量:")
+print(y)
+print(f"新形状: {y.shape}")
+print(f"与 x 共享存储吗? {y.storage().data_ptr() == x.storage().data_ptr()}") # 检查它们是否共享内存
+print(f"y 是否连续? {y.is_contiguous()}")
 
-<span class="pl-c"># 尝试另一个视图</span>
-<span class="pl-s1">z</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>.<span class="pl-c1">view</span>(<span class="pl-c1">2</span>, <span class="pl-c1">6</span>)
-<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>view(2, 6) 后的张量:"</span>)
-<span class="pl-en">print</span>(<span class="pl-s1">z</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"新形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"与 x 共享存储吗? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>() <span class="pl-c1">==</span> <span class="pl-s1">x</span>.<span class="pl-c1">storage</span>().<span class="pl-c1">data_ptr</span>()<span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"z 是否连续? <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>.<span class="pl-c1">is_contiguous</span>()<span class="pl-kos">}</span></span>"</span>)
+# 尝试另一个视图
+z = y.view(2, 6)
+print("\nview(2, 6) 后的张量:")
+print(z)
+print(f"新形状: {z.shape}")
+print(f"与 x 共享存储吗? {z.storage().data_ptr() == x.storage().data_ptr()}")
+print(f"z 是否连续? {z.is_contiguous()}")
 
-<span class="pl-c"># 使用 -1 进行推断</span>
-<span class="pl-s1">w</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>.<span class="pl-c1">view</span>(<span class="pl-c1">2</span>, <span class="pl-c1">2</span>, <span class="pl-c1">-</span><span class="pl-c1">1</span>) <span class="pl-c"># 推断出最后一个维度为 3 (12 / (2*2) = 3)</span>
-<span class="pl-en">print</span>(<span class="pl-s">"<span class="pl-cce">\n</span>view(2, 2, -1) 后的张量:"</span>)
-<span class="pl-en">print</span>(<span class="pl-s1">w</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"新形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">w</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+# 使用 -1 进行推断
+w = x.view(2, 2, -1) # 推断出最后一个维度为 3 (12 / (2*2) = 3)
+print("\nview(2, 2, -1) 后的张量:")
+print(w)
+print(f"新形状: {w.shape}")
+</code></pre>
 <details>
   <summary>点我看输出</summary>
   <pre class="notranslate"><code class="notranslate">
@@ -334,50 +339,52 @@ tensor([[[ 0,  1,  2],<br>
 <h3>切片</h3>
 <p>切片允许您沿张量维度选择一系列元素。语法是 start:stop:step，其中 start 是包含的，stop 是<strong>不包含</strong>的，而 step 定义了间隔。省略 start 默认为0，省略 stop 默认为维度的末尾，省略 step 默认为1。</p>
 <p>当step设置为-1时，可以简单地翻转张量</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个一维张量</span>
-<span class="pl-s1">y_1d</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">10</span>) <span class="pl-c"># Tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"原始一维张量: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y_1d</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 创建一个一维张量
+y_1d = torch.arange(10) # Tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+print(f"原始一维张量: {y_1d}")
 
-<span class="pl-c"># 选择每隔一个的元素</span>
-<span class="pl-s1">slice4</span> <span class="pl-c1">=</span> <span class="pl-s1">y_1d</span>[::<span class="pl-c1">2</span>]
-<span class="pl-en">print</span>(<span class="pl-s">f"切片 y_1d[::2]: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">slice4</span><span class="pl-kos">}</span></span>"</span>)
+# 选择每隔一个的元素
+slice4 = y_1d[::2]
+print(f"切片 y_1d[::2]: {slice4}")
 
-<span class="pl-c"># 选择从索引1到7的元素，步长为2</span>
-<span class="pl-s1">slice5</span> <span class="pl-c1">=</span> <span class="pl-s1">y_1d</span>[<span class="pl-c1">1</span>:<span class="pl-c1">8</span>:<span class="pl-c1">2</span>]
-<span class="pl-en">print</span>(<span class="pl-s">f"切片 y_1d[1:8:2]: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">slice5</span><span class="pl-kos">}</span></span>"</span>)
+# 选择从索引1到7的元素，步长为2
+slice5 = y_1d[1:8:2]
+print(f"切片 y_1d[1:8:2]: {slice5}")
 
-<span class="pl-c"># 反转张量</span>
-<span class="pl-s1">slice6</span> <span class="pl-c1">=</span> <span class="pl-s1">y_1d</span>[::<span class="pl-c1">-</span><span class="pl-c1">1</span>]
-<span class="pl-en">print</span>(<span class="pl-s">f"切片 y_1d[::-1]: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">slice6</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+# 反转张量
+slice6 = y_1d[::-1]
+print(f"切片 y_1d[::-1]: {slice6}")
+</code></pre>
 <p>切片的一个重要特性（与某些其他形式的索引不同）是，返回的张量通常与原始张量共享底层存储。修改切片会修改原始张量。在上面有提到。</p>
 <h3>数组索引</h3>
 <h4>布尔索引 (遮罩)：</h4>
 <p>您可以使用布尔张量来索引另一个张量。布尔张量的形状必须能够广播到被索引张量的形状（通常，它们的形状完全相同）。只有布尔张量中对应 True 值的元素（即“遮罩”）才会被选中。这对于根据条件筛选数据非常有用。</p>
 <p>布尔索引通常返回一个包含所有选定元素的<strong>一维张量</strong>。与切片不同，它不保留原始形状。此外，布尔索引通常会创建一个副本，而不是一个视图。</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个张量</span>
-<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [<span class="pl-c1">3</span>, <span class="pl-c1">4</span>], [<span class="pl-c1">5</span>, <span class="pl-c1">6</span>]])
-<span class="pl-en">print</span>(<span class="pl-s">f"原始数据张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">data</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate"># 创建一个张量
+data = torch.tensor([[1, 2], [3, 4], [5, 6]])
+print(f"原始数据张量:\n{data}")
 
-<span class="pl-c"># 创建一个布尔遮罩 (例如，选择大于3的元素)</span>
-<span class="pl-s1">mask</span> <span class="pl-c1">=</span> <span class="pl-s1">data</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">3</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>布尔遮罩 (data &gt; 3):<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">mask</span><span class="pl-kos">}</span></span>"</span>)
+# 创建一个布尔遮罩 (例如，选择大于3的元素)
+mask = data &gt; 3
+print(f"\n布尔遮罩 (data &gt; 3):\n{mask}")
 
-<span class="pl-c"># 应用遮罩</span>
-<span class="pl-s1">selected_elements</span> <span class="pl-c1">=</span> <span class="pl-s1">data</span>[<span class="pl-s1">mask</span>]
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>通过遮罩选择的元素:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected_elements</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"所选元素的形状: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected_elements</span>.<span class="pl-c1">shape</span><span class="pl-kos">}</span></span>"</span>)
+# 应用遮罩
+selected_elements = data[mask]
+print(f"\n通过遮罩选择的元素:\n{selected_elements}")
+print(f"所选元素的形状: {selected_elements.shape}")
 
-<span class="pl-c"># 根据条件修改元素</span>
-<span class="pl-s1">data</span>[<span class="pl-s1">data</span> <span class="pl-c1">&lt;=</span> <span class="pl-c1">3</span>] <span class="pl-c1">=</span> <span class="pl-c1">0</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>将小于等于3的元素设置为零后的数据:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">data</span><span class="pl-kos">}</span></span>"</span>)
+# 根据条件修改元素
+data[data &lt;= 3] = 0
+print(f"\n将小于等于3的元素设置为零后的数据:\n{data}")
 
-<span class="pl-c"># 选择第一列大于2的行</span>
-<span class="pl-s1">row_mask</span> <span class="pl-c1">=</span> <span class="pl-s1">data</span>[:, <span class="pl-c1">0</span>] <span class="pl-c1">&gt;</span> <span class="pl-c1">2</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>行遮罩 (data[:, 0] &gt; 2): <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row_mask</span><span class="pl-kos">}</span></span>"</span>)
+# 选择第一列大于2的行
+row_mask = data[:, 0] &gt; 2
+print(f"\n行遮罩 (data[:, 0] &gt; 2): {row_mask}")
 
-<span class="pl-s1">selected_rows</span> <span class="pl-c1">=</span> <span class="pl-s1">data</span>[<span class="pl-s1">row_mask</span>, :] <span class="pl-c"># 使用 ':' 选择所选行中的所有列</span>
-<span class="pl-c"># Or simply: data[row_mask] - PyTorch 通常会推断出完整的行选择</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>第一列大于2的行:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected_rows</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+selected_rows = data[row_mask, :] # 使用 ':' 选择所选行中的所有列
+# Or simply: data[row_mask] - PyTorch 通常会推断出完整的行选择
+print(f"\n第一列大于2的行:\n{selected_rows}")
+</code></pre>
 <details>
   <summary>点我看输出</summary>
   <pre class="notranslate"><code class="notranslate">
@@ -404,35 +411,36 @@ tensor([[5, 6]])<br>
 <h4>整数数组索引</h4>
 <p>除了单个整数和切片，您还可以使用列表或一维整数张量沿维度进行索引。这使得您可以按任意顺序选择元素，或多次选择相同的元素。</p>
 <p>与布尔索引类似，整数数组索引通常返回一个新的张量（一个副本），而不是原始张量存储的视图。输出的<strong>形状取决于索引方法</strong>。当选择完整的行或列时，其他维度会被保留。当为多个维度提供索引数组（例如 y[row_idx, col_idx]）时，结果通常是一个对应于所选元素的一维张量。</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>) <span class="pl-c"># Tensor([10, 11, 12, 13, 14, 15, 16, 17, 18, 19])</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"原始一维张量: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span><span class="pl-kos">}</span></span>"</span>)
+<pre lang="python" class="notranslate"><code class="notranslate">x = torch.arange(10, 20) # Tensor([10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+print(f"原始一维张量: {x}")
 
-<span class="pl-s1">indices</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">0</span>, <span class="pl-c1">4</span>, <span class="pl-c1">2</span>, <span class="pl-c1">2</span>]) <span class="pl-c"># 注意索引2的重复</span>
-<span class="pl-s1">selected</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>[<span class="pl-s1">indices</span>]
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>使用索引 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">indices</span><span class="pl-kos">}</span></span> 选择的元素: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected</span><span class="pl-kos">}</span></span>"</span>)
+indices = torch.tensor([0, 4, 2, 2]) # 注意索引2的重复
+selected = x[indices]
+print(f"\n使用索引 {indices} 选择的元素: {selected}")
 
-<span class="pl-c"># 对于二维张量</span>
-<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">12</span>).<span class="pl-c1">reshape</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>)
-<span class="pl-c"># [[ 0,  1,  2,  3],</span>
-<span class="pl-c">#  [ 4,  5,  6,  7],</span>
-<span class="pl-c">#  [ 8,  9, 10, 11]]</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>原始二维张量:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">y</span><span class="pl-kos">}</span></span>"</span>)
+# 对于二维张量
+y = torch.arange(12).reshape(3, 4)
+# [[ 0,  1,  2,  3],
+#  [ 4,  5,  6,  7],
+#  [ 8,  9, 10, 11]]
+print(f"\n原始二维张量:\n{y}")
 
-<span class="pl-c"># 选择特定行</span>
-<span class="pl-s1">row_indices</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">0</span>, <span class="pl-c1">2</span>])
-<span class="pl-s1">selected_rows</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>[<span class="pl-s1">row_indices</span>] <span class="pl-c"># 选择第0行和第2行</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>使用索引 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row_indices</span><span class="pl-kos">}</span></span> 选择的行:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected_rows</span><span class="pl-kos">}</span></span>"</span>)
+# 选择特定行
+row_indices = torch.tensor([0, 2])
+selected_rows = y[row_indices] # 选择第0行和第2行
+print(f"\n使用索引 {row_indices} 选择的行:\n{selected_rows}")
 
-<span class="pl-c"># 选择特定列</span>
-<span class="pl-s1">col_indices</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">1</span>, <span class="pl-c1">3</span>])
-<span class="pl-s1">selected_cols</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>[:, <span class="pl-s1">col_indices</span>] <span class="pl-c"># 从所有行中选择第1列和第3列</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>使用索引 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">col_indices</span><span class="pl-kos">}</span></span> 选择的列:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected_cols</span><span class="pl-kos">}</span></span>"</span>)
+# 选择特定列
+col_indices = torch.tensor([1, 3])
+selected_cols = y[:, col_indices] # 从所有行中选择第1列和第3列
+print(f"\n使用索引 {col_indices} 选择的列:\n{selected_cols}")
 
-<span class="pl-c"># 使用索引对选择特定元素</span>
-<span class="pl-s1">row_idx</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-c1">2</span>])
-<span class="pl-s1">col_idx</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">tensor</span>([<span class="pl-c1">1</span>, <span class="pl-c1">3</span>, <span class="pl-c1">0</span>])
-<span class="pl-s1">selected_elements</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>[<span class="pl-s1">row_idx</span>, <span class="pl-s1">col_idx</span>] <span class="pl-c"># 选择 (0,1), (1,3), (2,0) -&gt; [1, 7, 8]</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-cce">\n</span>使用 (row_idx, col_idx) 选择的特定元素:<span class="pl-cce">\n</span><span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">selected_elements</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+# 使用索引对选择特定元素
+row_idx = torch.tensor([0, 1, 2])
+col_idx = torch.tensor([1, 3, 0])
+selected_elements = y[row_idx, col_idx] # 选择 (0,1), (1,3), (2,0) -&gt; [1, 7, 8]
+print(f"\n使用 (row_idx, col_idx) 选择的特定元素:\n{selected_elements}")
+</code></pre>
 <details>
   <summary>点我看输出</summary>
   <pre class="notranslate"><code class="notranslate">
