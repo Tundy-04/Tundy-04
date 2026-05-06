@@ -236,7 +236,7 @@ b-ci &amp; d \end{pmatrix} $$</p>
 <p><strong>区分幺正演化与非幺正过程</strong></p>
 <p>并非所有量子过程都是幺正的：当量子系统与环境发生相互作用（比如测量、退相干）时，过程是非幺正的，此时量子态会从纯态退化为混合态，需要用密度矩阵描述。</p>
 <p>对比：量子门操作（幺正）是 “可逆、保概率” 的；量子测量（非幺正）是 “不可逆、概率坍缩” 的 —— 这正是量子计算中 “幺正操作构建算法，测量读取结果” 的核心逻辑。</p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>幺正算子描述量子态演化、量子门操作；厄米算子描述量子可观测量（如能量、自旋）和密度矩阵。</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>幺正算子描述量子态演化、量子门操作；厄米算子描述量子可观测量（如能量、自旋）和密度矩阵。</p>
 </div>
 <h2>3.矩阵本征分解</h2>
 <p>对于一个矩阵 $A$，其<strong>特征方程</strong>定义为：</p>
@@ -265,7 +265,7 @@ $|\nu_j\rangle$ 是特征值 $\lambda_j$ 对应的特征向量。</li>
 $$</p>
 <p>其中 $p_i$ 是本征值（满足 $\sum_i p_i = 1$ ），对应混合态中各纯态 $| v_i \rangle$ 的概率。</p>
 <p>这一分解直接揭示了混合态的组成，是分析量子系统退相干、噪声影响的关键工具——而 QCNN 需要处理量子态的噪声问题，本征分解是核心分析手段。</p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>QCNN 的目标是从量子数据中提取特征，而本征分解是量子特征提取的数学基础：<br>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg data-component="Octicon" class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>QCNN 的目标是从量子数据中提取特征，而本征分解是量子特征提取的数学基础：<br>
 量子卷积核对应的算子，其本征值就是 QCNN 提取到的 “量子特征”；本征向量则对应这些特征的 “量子特征态”，决定了特征的物理意义。</p>
 </div>
 <h2>4.矩阵函数</h2>
